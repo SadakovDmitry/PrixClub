@@ -1,0 +1,24 @@
+{
+  "nav": {
+    "services": "Services",
+    "clients": "Clients",
+    "team": "Team",
+    "contacts": "Contacts",
+    "login": "Sign in"
+  },
+  "hero": {
+    "title": "Full-cycle digital agency",
+    "subtitle": "We grow brands with websites, campaigns and measurable advertising.",
+    "cta": "Get a consultation"
+  },
+  "sections": {
+    "services": "Our Services",
+    "clients": "Our Clients",
+    "team": "Team"
+  },
+  "footer": {
+    "contacts": "Contacts",
+    "nav": "Navigation",
+    "copy": "© PRIX Club, 2025"
+  }
+}

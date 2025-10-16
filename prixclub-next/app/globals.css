@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root{
+  --bg:#0b2622;
+  --bg-2:#133a33;
+  --brand:#74AA9C;
+  --brand-2:#53897B;
+}
+
+/* Geometria will be used if installed locally; to host it, place files in public/fonts and re-add @font-face. */
+
+html,body{height:100%}
+body{background:var(--bg);font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif}
+
+.container-max{width:min(1160px,100%);margin-inline:auto;padding-inline:20px}
+
+.btn-primary{@apply inline-flex items-center gap-2 rounded-xl bg-brand px-5 py-3 font-extrabold text-[#0a261f] shadow-glow transition hover:brightness-105}
+.btn-outline{@apply inline-flex items-center gap-2 rounded-xl border border-brand px-4 py-2 font-semibold text-white/90 hover:bg-white/10}
+
+.section{@apply relative py-20}
+.section-title{@apply text-3xl font-extrabold mb-6}
+.card{@apply rounded-2xl border border-white/10 bg-white/5 backdrop-blur p-5}
