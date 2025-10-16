@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import { useMemo, useState } from 'react'
+import { useMemo, useState, useRef, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { geometria } from '../../src/fonts/geometria'
@@ -41,7 +41,7 @@ export default function Page() {
         <Hero msg={msg} locale={locale} />
         <Services msg={msg} locale={locale} />
         <Stats locale={locale} />
-        {/* <Clients msg={msg} /> */}
+        <ClientsSection locale={locale} />
         <Team msg={msg} locale={locale} />
       </main>
       <Footer msg={msg} />
@@ -67,78 +67,254 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
       clients: 'Ключевые клиенты',
       list: ['НКО', 'ДЕВЕЛОПМЕНТ', 'МЕДИА', 'МАРКЕТИНГ', 'МЕЖДУНАР.', 'ТОРГОВЛЯ'],
     }
+
+  // refs на фон (картинка) для корректной выборки текстуры
+  const sectionRef = useRef<HTMLDivElement | null>(null)
+  const bgImgWrapRef = useRef<HTMLDivElement | null>(null)
+
   return (
     <section id="stats" className="relative">
-      {/* Background image defines height; no cropping */}
-      <div className="relative">
-        <Image
-          src="/images/up_background.svg"
-          alt=""
-          width={1920}
-          height={1080}
-          className="w-full h-auto select-none pointer-events-none [filter:saturate(1)_contrast(1)]"
-          priority
-        />
-        {/* Green multiply overlay over entire block */}
-        <div className="absolute inset-0" style={{ background: '#74AA9C', mixBlendMode: 'color', opacity: 0.75 }} />
-        {/* Content overlays the image */}
+      <div ref={sectionRef} className="relative">
+        {/* Фон (тот самый, из которого будем сэмплить в шейдере) */}
+        <div ref={bgImgWrapRef} className="relative">
+          <Image
+            src="/images/up_background_green.svg"
+            alt=""
+            width={1920}
+            height={1080}
+            className="w-full h-auto select-none pointer-events-none"
+            priority
+          />
+        </div>
+
+        {/* Контент поверх фона */}
         <div className="absolute inset-0">
           <div className={`container-max h-full py-8 md:py-14 ${geometria.className}`}>
-            {/* Grid mimicking layout with explicit placement */}
             <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:auto-rows-[120px]">
-              {/* Left small top card (empty decorative) - slightly narrower */}
-              <div className="md:col-start-1 md:col-span-2 md:row-start-1 md:row-span-1 rounded-[14px] border border-white/20 bg-white/5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05)]" />
 
-              {/* Center big number card - typography per reference */}
-              <div className={`md:col-start-3 md:col-span-4 md:row-start-1 md:row-span-3 rounded-[18px] border border-white/20 bg-white/5 p-8 flex flex-col`}>
+              <PhysicalLensCard
+                sectionRef={sectionRef}
+                bgImgWrapRef={bgImgWrapRef}
+                edgePx={50}
+                eyeOffsetX={-10}
+                eyeOffsetY={-10}
+                className="md:col-start-1 md:col-span-2 md:row-start-1 md:row-span-1 rounded-[14px] border border-white/20 bg-white/5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05)]"
+              />
+
+              <PhysicalLensCard
+                sectionRef={sectionRef}
+                bgImgWrapRef={bgImgWrapRef}
+                edgePx={50}
+                eyeOffsetX={0}
+                eyeOffsetY={0}
+                className="md:col-start-3 md:col-span-4 md:row-start-1 md:row-span-3 rounded-[18px] border border-white/20 bg-white/5 p-8 flex flex-col"
+              >
                 <div className="text-white/95 text-[72px] md:text-[88px] leading-none font-light">52</div>
                 <div className="mt-auto text-white whitespace-pre-line text-[24px] md:text-[28px] font-light">{t.realised}</div>
-              </div>
+              </PhysicalLensCard>
 
-              {/* Right top: Years of work - number top-left, label bottom-left */}
-              <div className={`md:col-start-7 md:col-span-4 md:row-start-1 md:row-span-2 rounded-[14px] border border-white/20 bg-white/5 p-6 flex flex-col`}>
+              <PhysicalLensCard
+                sectionRef={sectionRef}
+                bgImgWrapRef={bgImgWrapRef}
+                edgePx={50}
+                eyeOffsetX={12}
+                eyeOffsetY={-8}
+                className="md:col-start-7 md:col-span-4 md:row-start-1 md:row-span-2 rounded-[14px] border border-white/20 bg-white/5 p-6 flex flex-col"
+              >
                 <div className="text-white/90 text-[72px] md:text-[88px] leading-none font-light">8</div>
                 <div className="mt-auto text-white/80 text-[24px] md:text-[28px] font-light">{t.years}</div>
-              </div>
+              </PhysicalLensCard>
 
-              {/* Right top small decorative card - widened */}
-              <div className="md:col-start-11 md:col-span-2 md:row-start-1 md:row-span-2 rounded-[14px] border border-white/20 bg-white/5" />
+              <PhysicalLensCard
+                sectionRef={sectionRef}
+                bgImgWrapRef={bgImgWrapRef}
+                edgePx={50}
+                eyeOffsetX={18}
+                eyeOffsetY={12}
+                className="md:col-start-11 md:col-span-2 md:row-start-1 md:row-span-2 rounded-[14px] border border-white/20 bg-white/5"
+              />
 
-              {/* Left tall list card - uppercase list, label at bottom */}
-              <div className="md:col-start-1 md:col-span-2 md:row-start-2 md:row-span-4 rounded-[18px] border border-white/20 bg-white/5 p-6 flex flex-col">
+              <PhysicalLensCard
+                sectionRef={sectionRef}
+                bgImgWrapRef={bgImgWrapRef}
+                edgePx={50}
+                eyeOffsetX={-14}
+                eyeOffsetY={10}
+                className="md:col-start-1 md:col-span-2 md:row-start-2 md:row-span-4 rounded-[18px] border border-white/20 bg-white/5 p-6 flex flex-col"
+              >
                 <ul className="text-white/80 space-y-2 uppercase tracking-wide text-[15px] md:text-[16px] font-medium">
                   {t.list.map((x) => (
                     <li key={x} className="tracking-wide">{x}</li>
                   ))}
                 </ul>
-                <div className="mt-auto text-white/70 whitespace-pre-line text-[24px] md:text-[28px] font-light normal-case">{t.industries}</div>
-              </div>
+                <div className="mt-auto text-white/70 whitespace-pre-line text-[24px] md:text-[28px] font-light normal-case">
+                  {t.industries}
+                </div>
+              </PhysicalLensCard>
 
-              {/* Right middle: Awards - label left, icons right */}
-              <div className="md:col-start-7 md:col-span-6 md:row-start-3 md:row-span-1 rounded-[14px] border border-white/20 bg-white/5 p-6 flex items-center justify-between">
+              <PhysicalLensCard
+                sectionRef={sectionRef}
+                bgImgWrapRef={bgImgWrapRef}
+                edgePx={50}
+                eyeOffsetX={6}
+                eyeOffsetY={0}
+                className="md:col-start-7 md:col-span-6 md:row-start-3 md:row-span-1 rounded-[14px] border border-white/20 bg-white/5 p-6 flex items-center justify-between"
+              >
                 <div className="text-white/85 text-[24px] md:text-[28px] font-light">{t.awards}</div>
                 <div className="flex items-center gap-8 opacity-90">
                   {Array.from({ length: 3 }).map((_, i) => (
                     <Image key={i} src="/images/awards_logo.svg" alt="award" width={72} height={44} className="opacity-85" />
                   ))}
                 </div>
-              </div>
+              </PhysicalLensCard>
 
-              {/* Bottom wide: Major clients - big heart top-left, label bottom-left */}
-              <div className="relative md:col-start-3 md:col-span-10 md:row-start-4 md:row-span-2 rounded-[14px] border border-white/20 bg-white/5 p-6 overflow-hidden">
-                {/* Big heart icon in top-left (larger) */}
+              <PhysicalLensCard
+                sectionRef={sectionRef}
+                bgImgWrapRef={bgImgWrapRef}
+                edgePx={50}
+                eyeOffsetX={12}
+                eyeOffsetY={8}
+                className="relative md:col-start-3 md:col-span-10 md:row-start-4 md:row-span-2 rounded-[14px] border border-white/20 bg-white/5 p-6 overflow-hidden"
+              >
                 <Image src="/images/Heart_icon.svg" alt="heart" width={120} height={120} className="absolute left-6 top-5 opacity-90" />
-
-                {/* Client logos row (aligned to the right) */}
                 <div className="h-full flex items-center justify-end gap-10 pr-2 opacity-90">
                   {['/images/tryangle_logo.svg', '/images/ФРСК_logo.svg', '/images/tryangle_logo.svg', '/images/ФРСК_logo.svg', '/images/tryangle_logo.svg'].map((p, i) => (
                     <Image key={i} src={p} alt="client" width={72} height={40} className="opacity-85" />
                   ))}
                 </div>
-
-                {/* Label in bottom-left */}
                 <div className="absolute left-5 bottom-4 text-white/80 text-[24px] md:text-[28px] font-light">
                   {t.clients}
+                </div>
+              </PhysicalLensCard>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
+  const logos = ['/images/Frsk_logo.svg', '/images/Frsk_logo.svg', '/images/Frsk_logo.svg', '/images/Frsk_logo.svg', '/images/Frsk_logo.svg']
+  const [idx, setIdx] = useState(0)
+  const logoBoxRef = useRef<HTMLDivElement | null>(null)
+  const [logoH, setLogoH] = useState<number>(0)
+  const sectionRef = useRef<HTMLDivElement | null>(null)
+  const bgImgWrapRef = useRef<HTMLDivElement | null>(null)
+
+  const title = locale === 'en' ? 'Our Clients' : 'Наши Клиенты'
+  const desc = locale === 'en'
+    ? 'The Foundation for the Advancement of Cosmonautics is a nonprofit organization that supports projects in space technology, science, and education.'
+    : 'Фонд содействия развитию космонавтики — некоммерческая организация, поддерживающая проекты в области космических технологий, науки и образования.'
+
+  return (
+    <section id="clients" className={`relative ${geometria.className}`}>
+      <div ref={sectionRef} className="relative">
+        <div ref={bgImgWrapRef} className="relative">
+          <Image
+            src="/images/our_clients_background_green.svg"
+            alt=""
+            width={1920}
+            height={1080}
+            className="w-full h-auto select-none pointer-events-none"
+            priority
+          />
+        </div>
+
+        <div className="absolute inset-0">
+          <div className={`container-max h-full ${geometria.className}`}>
+            <div className="flex h-full flex-col">
+              <h2 className="pt-14 md:pt-20 text-center text-white text-4xl md:text-5xl font-medium">{title}</h2>
+
+              <div className="flex-1 flex flex-col items-center justify-center">
+                <div className="relative w-full flex items-center justify-center">
+                  <button
+                    type="button"
+                    aria-label="Prev"
+                    onClick={() => setIdx((p) => (p - 1 + logos.length) % logos.length)}
+                    className="group absolute left-10 md:left-2 top-1/2 -translate-y-1/2 p-1"
+                  >
+                    <svg
+                      viewBox="0 0 100 200"
+                      preserveAspectRatio="xMidYMid meet"
+                      style={{ height: logoH ? `${Math.round(logoH * 2.0)}px` : '640px', width: logoH ? `${Math.round(logoH * 1.0)}px` : '320px' }}
+                      className="opacity-80 group-hover:opacity-100 transition-opacity"
+                    >
+                      <defs>
+                        {/* Опака в вершине (x=30), прозрачные концы (x=70) */}
+                        <linearGradient id="gradLeft" x1="30" y1="0" x2="70" y2="0" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stopColor="rgba(255,255,255,1)" />
+                          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                        </linearGradient>
+                      </defs>
+                      {/* Left chevron with 90° apex at (30,100) */}
+                      <path d="M70 60 L30 100 L70 140" stroke="url(#gradLeft)" strokeWidth="1" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                  <div ref={logoBoxRef} className="px-8 md:px-24">
+                    <Image src={logos[idx]} alt="client" width={820} height={280} className="w-[420px] md:w-[820px] h-auto mx-auto" onLoadingComplete={() => {
+                      const el = logoBoxRef.current?.querySelector('img')
+                      if (el) setLogoH(el.getBoundingClientRect().height)
+                    }} />
+                  </div>
+                  <button
+                    type="button"
+                    aria-label="Next"
+                    onClick={() => setIdx((p) => (p + 1) % logos.length)}
+                    className="group absolute right-10 md:right-2 top-1/2 -translate-y-1/2 p-1"
+                  >
+                    <svg
+                      viewBox="0 0 100 200"
+                      preserveAspectRatio="xMidYMid meet"
+                      style={{ height: logoH ? `${Math.round(logoH * 2.0)}px` : '640px', width: logoH ? `${Math.round(logoH * 1.0)}px` : '320px' }}
+                      className="opacity-80 group-hover:opacity-100 transition-opacity"
+                    >
+                      <defs>
+                        {/* Опака в вершине (x=70), прозрачные концы (x=30) */}
+                        <linearGradient id="gradRight" x1="70" y1="0" x2="30" y2="0" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stopColor="rgba(255,255,255,1)" />
+                          <stop offset="100%" stopColor="rgba(255,255,255,0)" />
+                        </linearGradient>
+                      </defs>
+                      {/* Right chevron with 90° apex at (70,100) */}
+                      <path d="M30 60 L70 100 L30 140" stroke="url(#gradRight)" strokeWidth="1" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </button>
+                </div>
+                <div className="mt-2 md:mt-3 flex items-center justify-center gap-3">
+                  {logos.map((_, i) => {
+                    const dist = Math.abs(i - idx)
+                    const op = dist === 0 ? 1 : dist === 1 ? 0.6 : dist === 2 ? 0.35 : 0.2
+                    return (
+                      <button
+                        key={i}
+                        aria-label={`Go to slide ${i + 1}`}
+                        onClick={() => setIdx(i)}
+                        style={{ opacity: op }}
+                        className={`h-2.5 w-2.5 rounded-full bg-white`}
+                      />
+                    )
+                  })}
+                </div>
+              </div>
+
+              <div className="flex-1 flex items-center">
+                <div className="relative max-w-4xl w-full mx-auto">
+                  <div className="h-px w-3/4 md:w-2/3 mx-auto bg-gradient-to-r from-transparent via-white to-transparent" />
+                  <p
+                    className="mt-6 text-center font-light text-[20px] leading-[28px] mx-auto w-[960px] max-w-full"
+                    style={{
+                      background: 'linear-gradient(90deg, rgba(255, 255, 255, 0.25) 0%, #FFFFFF 50%, rgba(255, 255, 255, 0.25) 100%)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      color: 'transparent',
+                    }}
+                  >
+                    {desc}
+                  </p>
+                  <div className="mt-6 h-px w-3/4 md:w-2/3 mx-auto bg-gradient-to-r from-transparent via-white/90 to-transparent" />
                 </div>
               </div>
             </div>
@@ -146,6 +322,362 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
         </div>
       </div>
     </section>
+  )
+}
+
+function PhysicalLensCard({
+  className,
+  children,
+  sectionRef,
+  bgImgWrapRef,
+  edgePx = 0,
+  eyeOffsetX = 0,
+  eyeOffsetY = 0,
+}: {
+  className?: string
+  children?: React.ReactNode
+  sectionRef: React.MutableRefObject<HTMLDivElement | null>
+  bgImgWrapRef: React.MutableRefObject<HTMLDivElement | null>
+  edgePx?: number
+  eyeOffsetX?: number
+  eyeOffsetY?: number
+}) {
+  const wrapRef = useRef<HTMLDivElement | null>(null)
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
+
+  // Параметры «оптики» (единицы — CSS px)
+  const IOR = 1.52            // показатель преломления стекла
+  const R = 20               // радиус кривизны кромки (чуть мягче «выпуклость», меньше геометрического смещения)
+  const THICK = 20            // толщина стекла — меньше, чтобы не «перегибало» центральные искажения
+  const EYE_H = 1240           // ближе «зрачок» — сильнее параллакс и боковые деформации
+  const BG_DEPTH = 10         // фон чуть дальше — больше рефракция относительно фона
+  const TINT = [0, 0, 0] // #74AA9C в линейном приближении
+  const UNFLIP = 1.0          // 1.0 — разворачиваем изображение обратно; 0.0 — чистая физика (перевёрнутое)
+
+  useEffect(() => {
+    const cardEl = wrapRef.current
+    const canvas = canvasRef.current
+    const bgWrap = bgImgWrapRef.current
+    if (!cardEl || !canvas || !bgWrap) return
+
+    const bgImg: HTMLImageElement | null = bgWrap.querySelector('img')
+    if (!bgImg) return
+
+    const gl = canvas.getContext('webgl', { premultipliedAlpha: true, alpha: true, antialias: true })
+    if (!gl) return
+    const glCtx = gl as WebGLRenderingContext
+
+    // ---------- Shaders ----------
+    const vertSrc = `
+      attribute vec2 a_pos;
+      varying vec2 v_uv;
+      void main() {
+        v_uv = a_pos * 0.5 + 0.5;
+        gl_Position = vec4(a_pos, 0.0, 1.0);
+      }
+    `
+
+    // ВАЖНО: добавили uniform u_unflip и разворот B.xy вокруг центра карточки
+    const fragSrc = `
+      precision highp float;
+      varying vec2 v_uv;
+
+      // Фон
+      uniform sampler2D u_bg;
+      uniform vec2 u_bgSize;           // размер отрисованного фона (px)
+      uniform vec2 u_cardToBgOffset;   // вектор от левого-верхнего угла bg к левому-верхнему углу карточки (px)
+
+      // Геометрия карточки
+      uniform vec2 u_cardSize;         // размер карточки (px)
+      uniform float u_edge;            // ширина линзовой кромки (px)
+
+      // Оптика
+      uniform float u_R;               // радиус кривизны кромки (px)
+      uniform float u_thick;           // толщина стекла (px)
+      uniform float u_eyeH;            // высота глаза (px)
+      uniform vec2  u_eyeXY;           // положение глаза в локальных координатах карточки (px, центр = 0,0)
+      uniform float u_bgDepth;         // расстояние до фона под стеклом (px)
+      uniform float u_IOR;             // показатель преломления стекла
+      uniform vec3  u_tint;            // зелёный тон для приближения mix-blend: color
+      uniform float u_tintStrength;    // сила окраски (0..1)
+      uniform float u_unflip;          // 1.0 — разворачиваем изображение обратно (инверсию убираем)
+      uniform float u_flipX;
+      uniform float u_maxBlurPx;       // максимальный ДОБАВОЧНЫЙ радиус блюра у внешнего края (px)
+      uniform float u_baseBlurPx;      // базовый блюр по всей карточке (px)
+      uniform float u_edgeZoom;        // коэффициент «рассеивающей линзы» у краёв (0..1), увеличивает картинку
+      uniform float u_mirrorBandPx;    // ширина полосы у границы, в которой зеркалим Y (px)
+      uniform float u_flip180;         // 1.0 => поворачиваем всё изображение под карточкой на 180° (инвертируем p)
+      uniform float u_flipH;           // 1.0 => отзеркалить всю карточку по горизонтали (X)
+
+      // SDF прямоугольника
+      float sdBox(in vec2 p, in vec2 b) {
+        vec2 q = abs(p) - b;
+        return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0);
+      }
+      vec2 grad_sdBox(vec2 p, vec2 b) {
+        float e = 1.0;
+        float d  = sdBox(p, b);
+        float dx = sdBox(p + vec2(e, 0.0), b) - d;
+        float dy = sdBox(p + vec2(0.0, e), b) - d;
+        return vec2(dx, dy) / e;
+      }
+      vec2 bgUV(vec2 worldPxOnBg) {
+        return clamp(worldPxOnBg / u_bgSize, 0.0, 1.0);
+      }
+
+      void main() {
+        vec2 halfSize = 0.5 * u_cardSize;
+        vec2 p = (v_uv - 0.5) * u_cardSize;
+
+        // SDF прямоугольника: d<0 внутри. Нам нужна глубина внутрь от границы.
+        float d = sdBox(p, halfSize);
+        float distIn = max(0.0, -d);               // 0 на самой границе, растёт к центру
+
+        // Линейное затухание кривизны от края к внутренней границе эффекта
+        float edgeW = max(u_edge, 0.001);
+        float t = clamp(distIn / edgeW, 0.0, 1.0);
+        float k = 1.0 - smoothstep(0.0, 1.0, t);
+        // Отдельная мягкая полоса для зеркала по краю, независимая от edgePx
+        float tMirror = clamp(distIn / max(u_mirrorBandPx, 0.001), 0.0, 1.0);
+        float kMirror = 1.0 - smoothstep(0.0, 1.0, tMirror);
+
+        float zTop = -((distIn*distIn) / (2.0 * u_R)) * k;
+
+        vec2 g = grad_sdBox(p, halfSize);
+        vec2 dz = ((distIn / u_R) * k) * g;
+        vec3 nTop = normalize(vec3(-dz.x, -dz.y, 1.0));
+
+        vec3 E = vec3(u_eyeXY, u_eyeH);
+        vec3 P = vec3(p, zTop);
+        vec3 I = normalize(P - E);
+
+        float etaAir = 1.0;
+        float etaGlass = u_IOR;
+        vec3 T1 = refract(I, nTop, etaAir / etaGlass);
+        if (length(T1) < 1e-5) T1 = reflect(I, nTop);
+
+        float s1 = (-u_thick - P.z) / T1.z;
+        vec3 Q = P + T1 * s1;
+
+        vec3 nBottom = vec3(0.0, 0.0, 1.0);
+        vec3 T2 = refract(T1, nBottom, etaGlass / etaAir);
+        if (length(T2) < 1e-5) T2 = reflect(T1, nBottom);
+
+        float s2 = (-u_thick - u_bgDepth - Q.z) / T2.z;
+        vec3 B = Q + T2 * s2;
+
+        // ----- АНТИ-ИНВЕРСИЯ -----
+        // Реальная линза даёт перевёрнутую картинку относительно оптической оси (центра).
+        // Чтобы «развернуть обратно», зеркалим локальные координаты попадания B.xy вокруг центра.
+        // u_unflip = 1.0 => B.xy := -B.xy;  u_unflip = 0.0 => без изменений.
+        vec2 BlocalBase = mix(B.xy, -B.xy, step(0.5, u_unflip));
+        BlocalBase.x = mix(BlocalBase.x, -BlocalBase.x, step(0.5, u_flipX));
+        // Отзеркаливаем кромку относительно диагонали (y = x): плавно меняем местами X и Y по весу kMirror
+        vec2 Blocal = mix(BlocalBase, vec2(BlocalBase.y, BlocalBase.x), kMirror);
+
+        vec2 hitOnBgPx = u_cardToBgOffset + (Blocal + halfSize);
+
+        // Плавный вес эффекта у кромки (k уже посчитан выше)
+        // Рассеивающая линза: у краёв увеличиваем изображение (zoom-in)
+        // Реализуем через локальное «сжатие» координаты p -> p/(1+zoom), смешанное по k
+        float zoom = clamp(u_edgeZoom, 0.0, 1.0);
+        vec2 pZoom = p / (1.0 + zoom);             // центр без изменения, равномерный zoom-in
+        vec2 pMixed = mix(p, pZoom, k);            // к центру -> исходное p, к краю -> pZoom
+        // Глобальный поворот 180°: инвертируем локальные координаты выборки
+        vec2 pMixedRot = mix(pMixed, -pMixed, step(0.5, u_flip180));
+        // Глобальное горизонтальное зеркало
+        float doFlipH = step(0.5, u_flipH);
+        vec2 pMixedFinal = vec2(mix(pMixedRot.x, -pMixedRot.x, doFlipH), pMixedRot.y);
+        vec2 baseHitPx = u_cardToBgOffset + (pMixedFinal + halfSize);
+        vec2 uv = bgUV(baseHitPx);
+
+        // --- Blur: базовый по всей карточке + усиление к краю ---
+        float wEdge = k;
+        float blurPx = u_baseBlurPx + wEdge * u_maxBlurPx;
+        vec2 texel = 1.0 / u_bgSize;
+        vec2 o = texel * blurPx;
+
+        vec3 sharp = texture2D(u_bg, uv).rgb;
+        // 9-tap box/gauss-ish blur вокруг uv
+        vec3 blurSum = sharp * 0.2;
+        blurSum += texture2D(u_bg, uv + vec2( o.x,  0.0)).rgb * 0.12;
+        blurSum += texture2D(u_bg, uv + vec2(-o.x,  0.0)).rgb * 0.12;
+        blurSum += texture2D(u_bg, uv + vec2( 0.0,  o.y)).rgb * 0.12;
+        blurSum += texture2D(u_bg, uv + vec2( 0.0, -o.y)).rgb * 0.12;
+        blurSum += texture2D(u_bg, uv + vec2( o.x,  o.y)).rgb * 0.08;
+        blurSum += texture2D(u_bg, uv + vec2(-o.x,  o.y)).rgb * 0.08;
+        blurSum += texture2D(u_bg, uv + vec2( o.x, -o.y)).rgb * 0.08;
+        blurSum += texture2D(u_bg, uv + vec2(-o.x, -o.y)).rgb * 0.08;
+        vec3 blurred = blurSum;
+
+        vec3 samp = mix(sharp, blurred, wEdge);
+
+        vec3 tinted = mix(samp, samp * u_tint, clamp(u_tintStrength, 0.0, 1.0));
+        gl_FragColor = vec4(tinted, 1.0);
+      }
+    `
+
+    const compile = (type: number, src: string) => {
+      const sh = gl.createShader(type)!
+      gl.shaderSource(sh, src)
+      gl.compileShader(sh)
+      if (!gl.getShaderParameter(sh, gl.COMPILE_STATUS)) {
+        console.error('Shader error:', gl.getShaderInfoLog(sh))
+        gl.deleteShader(sh)
+        return null
+      }
+      return sh
+    }
+
+    const vs = compile(glCtx.VERTEX_SHADER, vertSrc)
+    const fs = compile(glCtx.FRAGMENT_SHADER, fragSrc)
+    if (!vs || !fs) return
+
+    const prog = glCtx.createProgram()!
+    glCtx.attachShader(prog, vs)
+    glCtx.attachShader(prog, fs)
+    glCtx.linkProgram(prog)
+    if (!glCtx.getProgramParameter(prog, glCtx.LINK_STATUS)) {
+      console.error('Program link error:', glCtx.getProgramInfoLog(prog))
+      return
+    }
+    glCtx.useProgram(prog)
+
+    // Quad
+    const buf = glCtx.createBuffer()
+    glCtx.bindBuffer(glCtx.ARRAY_BUFFER, buf)
+    glCtx.bufferData(glCtx.ARRAY_BUFFER, new Float32Array([
+      -1, -1, 1, -1, -1, 1,
+      1, -1, 1, 1, -1, 1,
+    ]), glCtx.STATIC_DRAW)
+    const locPos = glCtx.getAttribLocation(prog, 'a_pos')
+    glCtx.enableVertexAttribArray(locPos)
+    glCtx.vertexAttribPointer(locPos, 2, glCtx.FLOAT, false, 0, 0)
+
+    // Текстура фона
+    const tex = glCtx.createTexture()!
+    glCtx.bindTexture(glCtx.TEXTURE_2D, tex)
+    glCtx.texParameteri(glCtx.TEXTURE_2D, glCtx.TEXTURE_WRAP_S, glCtx.CLAMP_TO_EDGE)
+    glCtx.texParameteri(glCtx.TEXTURE_2D, glCtx.TEXTURE_WRAP_T, glCtx.CLAMP_TO_EDGE)
+    glCtx.texParameteri(glCtx.TEXTURE_2D, glCtx.TEXTURE_MIN_FILTER, glCtx.LINEAR)
+    glCtx.texParameteri(glCtx.TEXTURE_2D, glCtx.TEXTURE_MAG_FILTER, glCtx.LINEAR)
+
+    // Uniforms
+    const u_bg = glCtx.getUniformLocation(prog, 'u_bg')
+    const u_bgSize = glCtx.getUniformLocation(prog, 'u_bgSize')
+    const u_cardToBgOffset = glCtx.getUniformLocation(prog, 'u_cardToBgOffset')
+    const u_cardSize = glCtx.getUniformLocation(prog, 'u_cardSize')
+    const u_edge = glCtx.getUniformLocation(prog, 'u_edge')
+    const u_R = glCtx.getUniformLocation(prog, 'u_R')
+    const u_thick = glCtx.getUniformLocation(prog, 'u_thick')
+    const u_eyeH = glCtx.getUniformLocation(prog, 'u_eyeH')
+    const u_eyeXY = glCtx.getUniformLocation(prog, 'u_eyeXY')
+    const u_bgDepth = glCtx.getUniformLocation(prog, 'u_bgDepth')
+    const u_IOR = glCtx.getUniformLocation(prog, 'u_IOR')
+    const u_tint = glCtx.getUniformLocation(prog, 'u_tint')
+    const u_tintStrength = glCtx.getUniformLocation(prog, 'u_tintStrength')
+    const u_unflip = glCtx.getUniformLocation(prog, 'u_unflip')
+    const u_flipX = glCtx.getUniformLocation(prog, 'u_flipX')
+    const u_maxBlurPx = glCtx.getUniformLocation(prog, 'u_maxBlurPx')
+    const u_baseBlurPx = glCtx.getUniformLocation(prog, 'u_baseBlurPx')
+    const u_mirrorBandPx = glCtx.getUniformLocation(prog, 'u_mirrorBandPx')
+    const u_flip180 = glCtx.getUniformLocation(prog, 'u_flip180')
+    const u_flipH = glCtx.getUniformLocation(prog, 'u_flipH')
+
+    glCtx.uniform1i(u_bg, 0)
+    glCtx.uniform1f(u_edge, edgePx)
+    glCtx.uniform1f(u_R, R)
+    glCtx.uniform1f(u_thick, THICK)
+    glCtx.uniform1f(u_eyeH, EYE_H)
+    glCtx.uniform1f(u_bgDepth, BG_DEPTH)
+    glCtx.uniform1f(u_IOR, IOR)
+    glCtx.uniform3f(u_tint, TINT[0], TINT[1], TINT[2])
+    // важное: не дублируем окраску — фон уже окрашен overlay'ем в Stats
+    glCtx.uniform1f(u_tintStrength, 0.0)
+    glCtx.uniform1f(u_unflip, UNFLIP) // ВКЛЮЧИЛ «анти-инверсию»
+    glCtx.uniform1f(u_flipX, 1.0)
+    // Поворот подложки на 180° (1.0 = включено)
+    glCtx.uniform1f(u_flip180, 1.0)
+    // Глобальное горизонтальное зеркало
+    glCtx.uniform1f(u_flipH, 1.0)
+    // Базовые значения (перезапишем при ресайзе от размеров карточки)
+    glCtx.uniform1f(u_maxBlurPx, 5.0)
+    glCtx.uniform1f(u_baseBlurPx, 1.5)
+    // Полоса зеркалирования у кромки по умолчанию
+    glCtx.uniform1f(u_mirrorBandPx, Math.max(40, edgePx || 60))
+
+    function resizeAndDraw() {
+      const dpr = Math.max(1, Math.min(3, window.devicePixelRatio || 1))
+      const cardRect = cardEl!.getBoundingClientRect()
+      const bgRect = bgImg!.getBoundingClientRect()
+
+      const w = Math.max(1, Math.floor(cardRect.width))
+      const h = Math.max(1, Math.floor(cardRect.height))
+      canvas!.style.width = `${w}px`
+      canvas!.style.height = `${h}px`
+      canvas!.width = Math.max(1, Math.floor(w * dpr))
+      canvas!.height = Math.max(1, Math.floor(h * dpr))
+      glCtx.viewport(0, 0, canvas!.width, canvas!.height)
+
+      glCtx.uniform2f(u_cardSize, w, h)
+      // Адаптивный блюр: базовый по всему телу + добавка к краю
+      const addEdgeBlur = Math.min(9.0, Math.max(3.0, Math.min(w, h) / 140))
+      const baseBodyBlur = Math.min(3.0, Math.max(1.0, Math.min(w, h) / 420))
+      glCtx.uniform1f(u_maxBlurPx, addEdgeBlur)
+      glCtx.uniform1f(u_baseBlurPx, baseBodyBlur)
+      // Ширина полосы зеркала: берём edgePx если задан, иначе адаптивно от размера
+      const mirrorBand = (edgePx && edgePx > 0) ? edgePx : Math.max(40, Math.min(w, h) / 6)
+      glCtx.uniform1f(u_mirrorBandPx, mirrorBand)
+      // Положение зрачка в локальных координатах карточки: центр (0,0) + смещение из пропсов
+      const eyeLocalX = eyeOffsetX
+      const eyeLocalY = eyeOffsetY
+      glCtx.uniform2f(u_eyeXY, eyeLocalX, eyeLocalY)
+
+      const offsetX = cardRect.left - bgRect.left
+      const offsetY = cardRect.top - bgRect.top
+      glCtx.uniform2f(u_cardToBgOffset, offsetX, offsetY)
+
+      glCtx.activeTexture(glCtx.TEXTURE0)
+      glCtx.bindTexture(glCtx.TEXTURE_2D, tex)
+      try {
+        glCtx.texImage2D(glCtx.TEXTURE_2D, 0, glCtx.RGBA, glCtx.RGBA, glCtx.UNSIGNED_BYTE, bgImg as HTMLImageElement)
+      } catch (_) {
+        // Ок, Safari иногда капризничает с SVG → можно заменить на растровый фон
+      }
+      glCtx.uniform2f(u_bgSize, bgRect.width, bgRect.height)
+
+      glCtx.drawArrays(glCtx.TRIANGLES, 0, 6)
+    }
+
+    const ro = new ResizeObserver(resizeAndDraw)
+    ro.observe(cardEl)
+    ro.observe(bgWrap)
+    window.addEventListener('scroll', resizeAndDraw, { passive: true })
+    const onLoad = () => resizeAndDraw()
+    if (bgImg.complete) resizeAndDraw()
+    else bgImg.addEventListener('load', onLoad)
+
+    return () => {
+      ro.disconnect()
+      window.removeEventListener('scroll', resizeAndDraw)
+      bgImg.removeEventListener('load', onLoad)
+      glCtx.deleteProgram(prog)
+      glCtx.deleteShader(vs)
+      glCtx.deleteShader(fs)
+      glCtx.deleteBuffer(buf)
+      glCtx.deleteTexture(tex)
+    }
+  }, [edgePx, sectionRef, bgImgWrapRef])
+
+  return (
+    <div ref={wrapRef} className={`relative ${className || ''}`}>
+      <canvas
+        ref={canvasRef}
+        className="pointer-events-none absolute inset-0 rounded-[inherit] z-0"
+        aria-hidden
+      />
+      <div className="relative z-10 h-full w-full">{children}</div>
+    </div>
   )
 }
 
