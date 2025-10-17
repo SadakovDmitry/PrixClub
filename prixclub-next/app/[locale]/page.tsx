@@ -19,7 +19,7 @@ export default function Page() {
         cta: 'Получить консультацию'
       },
       sections: { services: 'Наши услуги', clients: 'Наши клиенты', team: 'Команда' },
-      footer: { contacts: 'Контакты', nav: 'Навигация', copy: '© PRIX Club, 2025' }
+      footer: { contacts: 'Контакты', nav: 'Навигация', copy: ' PRIX Club, 2025' }
     },
     en: {
       nav: {
@@ -42,7 +42,10 @@ export default function Page() {
         <Services msg={msg} locale={locale} />
         <Stats locale={locale} />
         <ClientsSection locale={locale} />
-        <Team msg={msg} locale={locale} />
+        <ServicesNew locale={locale} />
+        <TestimonialsNew locale={locale} />
+        <ContactSection locale={locale} />
+        {/* <Team msg={msg} locale={locale} /> */}
       </main>
       <Footer msg={msg} />
     </>
@@ -325,6 +328,180 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
   )
 }
 
+function ServicesNew({ locale }: { locale: 'ru' | 'en' }) {
+  const items =
+    locale === 'en'
+      ? [
+        { t: 'PR strategies', d: 'Development of long-term communication plans to strengthen reputation and increase brand awareness.' },
+        { t: 'Crisis communications', d: 'Managing public image and communications in critical or unexpected situations.' },
+        { t: 'Government relations', d: 'Building effective cooperation with government bodies and regulators.' },
+        { t: 'Media relations', d: 'Building and maintaining positive relationships with journalists and media.' },
+        { t: 'IT solutions', d: 'Creating specialized digital tools and platforms to support business tasks.' },
+        { t: 'Digital and SMM', d: 'Brand promotion via digital platforms, social networks and targeted campaigns.' },
+      ]
+      : [
+        { t: 'PR‑стратегии', d: 'Разработка долгосрочных коммуникационных планов для укрепления репутации и повышения узнаваемости бренда.' },
+        { t: 'Антикризисные коммуникации', d: 'Управление публичным имиджем и коммуникацией в критических или неожиданных ситуациях.' },
+        { t: 'Взаимодействие с государственными структурами', d: 'Развитие эффективного взаимодействия с государственными органами и регуляторами.' },
+        { t: 'Медиа‑рилейшнз', d: 'Выстраивание и поддержание позитивных отношений с журналистами и СМИ.' },
+        { t: 'Разработка IT‑решений', d: 'Создание специализированных цифровых инструментов и платформ для поддержки бизнес‑задач.' },
+        { t: 'Digital и SMM', d: 'Продвижение брендов через цифровые платформы, социальные сети и таргетированные кампании.' },
+      ]
+  const title = locale === 'en' ? 'Our Services' : 'Наши Услуги'
+  return (
+    <section id="services-next" className={`relative ${geometria.className}`}>
+      <div className="relative">
+        <Image
+          src="/images/our_services_background.svg"
+          alt=""
+          width={1920}
+          height={1080}
+          className="w-full h-auto select-none pointer-events-none"
+          priority
+        />
+        <div className="absolute inset-0 bg-white/30" />
+        <div className="absolute inset-0">
+          <div className="container-max h-full">
+            <div className="h-full flex flex-col items-center justify-center">
+              <h2 className="text-center text-[#0a0a0a] text-4xl md:text-6xl font-medium mb-8 md:mb-12">{title}</h2>
+              <div className="mx-auto max-w-[1120px] grid grid-cols-1 md:grid-cols-3 gap-x-14 gap-y-12 text-[#0a0a0a] mt-10 md:mt-16">
+                {items.map((it, i) => (
+                  <div key={i} className="flex items-start gap-4">
+                    <span className="mt-1.5 inline-block h-3 w-3 rotate-45 bg-[#0a0a0a]" />
+                    <div>
+                      <div className="text-[24px] md:text-[26px] leading-[1.25] font-semibold">{it.t}</div>
+                      <div className="mt-2 text-[20px] md:text-[21px] leading-[1.6] text-[#0a0a0a]/70 max-w-[340px]">{it.d}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function TestimonialsNew({ locale }: { locale: 'ru' | 'en' }) {
+  const items =
+    locale === 'en'
+      ? [
+        { name: 'John Doe', text: 'Professional, creative, and always one step ahead — they truly understand how to build a strong brand image.' },
+        { name: 'John Doe', text: 'Professional, creative, and always one step ahead — they truly understand how to build a strong brand image.' },
+        { name: 'John Doe', text: 'Professional, creative, and always one step ahead — they truly understand how to build a strong brand image.' },
+      ]
+      : [
+        { name: 'Иван Иванов', text: 'Профессионально, креативно и всегда на шаг впереди — они действительно понимают, как построить сильный имидж бренда.' },
+        { name: 'Иван Иванов', text: 'Профессионально, креативно и всегда на шаг впереди — они действительно понимают, как построить сильный имидж бренда.' },
+        { name: 'Иван Иванов', text: 'Профессионально, креативно и всегда на шаг впереди — они действительно понимают, как построить сильный имидж бренда.' },
+      ]
+  return (
+    <section id="testimonials" className={`relative ${geometria.className}`}>
+      <div className="relative">
+        <Image
+          src="/images/team_background.svg"
+          alt=""
+          width={1920}
+          height={1080}
+          className="w-full h-auto select-none pointer-events-none"
+          priority
+        />
+        <div className="absolute inset-0 bg-white/30" />
+        <div className="absolute inset-0">
+          <div className="container-max h-full">
+            <div className="h-full grid items-center">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-10 max-w-[1220px] mx-auto">
+                {items.map((it, i) => (
+                  <div key={i} className="relative rounded-[18px] border border-black/5 bg-white/35 backdrop-blur-[2px] shadow-[0_6px_24px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(255,255,255,0.35)]">
+                    {/* inner subtle light gradient */}
+                    <div className="absolute inset-0 rounded-[18px] pointer-events-none" style={{ background: 'radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.08) 100%)' }} />
+                    {/* top-left chevrons */}
+                    <svg className="absolute -top-7 left-4 text-black/70" width="72" height="56" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16 2 L8 12 L16 22" stroke="currentColor" strokeWidth="1" fill="none" />
+                      <path d="M28 2 L20 12 L28 22" stroke="currentColor" strokeWidth="1" fill="none" />
+                    </svg>
+                    {/* bottom-right chevrons */}
+                    <svg className="absolute -bottom-7 right-4 rotate-180 text-black/70" width="72" height="56" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M16 2 L8 12 L16 22" stroke="currentColor" strokeWidth="1" fill="none" />
+                      <path d="M28 2 L20 12 L28 22" stroke="currentColor" strokeWidth="1" fill="none" />
+                    </svg>
+                    <div className="relative p-7 md:p-8 text-[#0a0a0a]">
+                      <div className="text-[22px] md:text-[24px] font-semibold mb-4">{it.name}</div>
+                      <div className="text-[16px] md:text-[17px] leading-[1.6] text-[#0a0a0a]/75">{it.text}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function ContactSection({ locale }: { locale: 'ru' | 'en' }) {
+  const t = locale === 'en'
+    ? {
+      title: 'Contact us to discuss your tasks',
+      cta: 'Get a consultation',
+      dl1: 'Download company presentation',
+      dl2: 'Request price list',
+    }
+    : {
+      title: 'Свяжитесь с нами, чтобы\nобсудить ваши задачи',
+      cta: 'Получить консультацию',
+      dl1: 'Скачать презентацию компании',
+      dl2: 'Запросить прайс‑лист',
+    }
+  return (
+    <section id="contact" className={`relative bg-white py-16 md:py-24 ${geometria.className}`}>
+      <div className="container-max">
+        <h2 className="text-center text-[34px] md:text-[54px] leading-[1.1] font-semibold mb-14 md:mb-20 max-w-[780px] mx-auto">
+          <span
+            className="inline-block bg-clip-text text-transparent"
+            style={{
+              background:
+                'linear-gradient(89.26deg, #53897B 0.3%, #86BCAE 27.76%, #53897B 56.54%, #86BCAE 77.7%, #2E6456 99.68%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >{t.title}</span>
+        </h2>
+
+        <div className="mx-auto flex flex-col items-center gap-6">
+          <button className="relative rounded-full px-8 md:px-10 py-4 md:py-5 text-white text-[18px] md:text-[20px] font-semibold shadow-[0_8px_24px_rgba(0,0,0,0.15)] overflow-hidden border border-black/20">
+            {/* background image with filters (like Services) */}
+            <span
+              className="absolute inset-0 rounded-[14px] bg-center bg-cover blur-[0px] brightness-100 saturate-145"
+              style={{ backgroundImage: "url('/images/button_background.svg')" }}
+            />
+            {/* dark overlay */}
+            <span className="pointer-events-none absolute inset-0 rounded-[14px]" style={{
+              background:
+                'linear-gradient(180deg, rgba(27,44,39,0.82) 0%, rgba(27,44,39,0.74) 55%, rgba(27,44,39,0.8) 100%)',
+            }} />
+            {/* inner border with slight blur (bigger inset from edges) */}
+            <span className="absolute inset-[7px] rounded-full border border-white/30 backdrop-blur-[1px]" />
+            {/* glossy highlight */}
+            <span className="absolute inset-x-2 top-0 h-6 rounded-full opacity-35" style={{
+              background:
+                'radial-gradient(120% 100% at 50% 0%, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.25) 65%, rgba(255,255,255,0) 100%)'
+            }} />
+            <span className="relative drop-shadow-[0_2px_0_rgba(0,0,0,0.35)]">{t.cta}</span>
+          </button>
+
+          <div className="text-center text-[#0a0a0a]">
+            <a href="#" className="block underline underline-offset-2">{t.dl1}</a>
+            <a href="#" className="block underline underline-offset-2 mt-2">{t.dl2}</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function PhysicalLensCard({
   className,
   children,
@@ -349,7 +526,7 @@ function PhysicalLensCard({
   const IOR = 1.52            // показатель преломления стекла
   const R = 20               // радиус кривизны кромки (чуть мягче «выпуклость», меньше геометрического смещения)
   const THICK = 20            // толщина стекла — меньше, чтобы не «перегибало» центральные искажения
-  const EYE_H = 1240           // ближе «зрачок» — сильнее параллакс и боковые деформации
+  const EYE_H = 3240           // ближе «зрачок» — сильнее параллакс и боковые деформации
   const BG_DEPTH = 10         // фон чуть дальше — больше рефракция относительно фона
   const TINT = [0, 0, 0] // #74AA9C в линейном приближении
   const UNFLIP = 1.0          // 1.0 — разворачиваем изображение обратно; 0.0 — чистая физика (перевёрнутое)
@@ -825,7 +1002,7 @@ function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
       : `PRIX Club — агентство управления репутацией, которое сочетает классический PR с ИТ‑инструментами для достижения целей клиентов. Мы помогаем бизнесу и госорганизациям выстраивать диалог с аудиторией в цифровой среде.`
   const cards = [
     { key: 'pr', img: '/images/public_media_starateges_card.svg', title: locale === 'en' ? 'Public Relations\nstrategies' : 'Public Relations\nстратегии' },
-    { key: 'gov', img: '/images/our_clients_background.png', title: locale === 'en' ? 'Government\nRelations' : 'Government\nRelations' },
+    { key: 'gov', img: '/images/our_clients_background.svg', title: locale === 'en' ? 'Government\nRelations' : 'Government\nRelations' },
     { key: 'it', img: '/images/The_Cabinet_table.svg', title: locale === 'en' ? 'IT solutions for\ncommunications' : 'IT‑решения для\nкоммуникаций' },
     { key: 'digital', img: '/images/digital_compagns.svg', title: locale === 'en' ? 'Digital\ncampaigns' : 'Digital\nкампании' },
   ]
@@ -893,56 +1070,74 @@ function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
 //   )
 // }
 
-function Team({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
-  const people = locale === 'en'
-    ? [
-      { name: 'Maria', role: 'Strategist' },
-      { name: 'Alexey', role: 'Developer' },
-      { name: 'Elena', role: 'Designer' },
-      { name: 'Igor', role: 'Marketer' },
-    ]
-    : [
-      { name: 'Мария', role: 'Стратег' },
-      { name: 'Алексей', role: 'Разработчик' },
-      { name: 'Елена', role: 'Дизайнер' },
-      { name: 'Игорь', role: 'Маркетолог' },
-    ]
+// function Team({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
+//   const people = locale === 'en'
+//     ? [
+//       { name: 'Maria', role: 'Strategist' },
+//       { name: 'Alexey', role: 'Developer' },
+//       { name: 'Elena', role: 'Designer' },
+//       { name: 'Igor', role: 'Marketer' },
+//     ]
+//     : [
+//       { name: 'Мария', role: 'Стратег' },
+//       { name: 'Алексей', role: 'Разработчик' },
+//       { name: 'Елена', role: 'Дизайнер' },
+//       { name: 'Игорь', role: 'Маркетолог' },
+//     ]
+//   return (
+//     <section id="team" className="section bg-gradient-to-b from-[var(--bg-2)] to-bg">
+//       <Image src="/images/team_background.svg" alt="" fill className="-z-10 object-cover opacity-35" />
+//       <div className="container-max">
+//         <h2 className="section-title">{msg.sections.team}</h2>
+//         <div className="grid gap-5 md:grid-cols-4">
+//           {people.map((p) => (
+//             <div key={p.name} className="card text-center">
+//               <div className="mx-auto mb-3 h-24 w-24 rounded-full bg-gradient-to-br from-brand/60 to-brand-dark/60 shadow-inner" />
+//               <div className="font-extrabold">{p.name}</div>
+//               <div className="text-white/70">{p.role}<//   )
+// }
+
+function FooterColumn({ title, rows }: { title: string; rows: string[] }) {
   return (
-    <section id="team" className="section bg-gradient-to-b from-[var(--bg-2)] to-bg">
-      <Image src="/images/team_background.svg" alt="" fill className="-z-10 object-cover opacity-35" />
-      <div className="container-max">
-        <h2 className="section-title">{msg.sections.team}</h2>
-        <div className="grid gap-5 md:grid-cols-4">
-          {people.map((p) => (
-            <div key={p.name} className="card text-center">
-              <div className="mx-auto mb-3 h-24 w-24 rounded-full bg-gradient-to-br from-brand/60 to-brand-dark/60 shadow-inner" />
-              <div className="font-extrabold">{p.name}</div>
-              <div className="text-white/70">{p.role}</div>
-            </div>
-          ))}
-        </div>
+    <div>
+      <div className="mb-2 text-[16px] font-semibold text-white">{title}</div>
+      <div className="space-y-1 text-[13px] text-white/60">
+        {rows.map((r, i) => (
+          <div key={i}>{r}</div>
+        ))}
       </div>
-    </section>
+    </div>
   )
 }
 
 function Footer({ msg }: { msg: any }) {
   return (
-    <footer id="contacts" className="border-t border-white/10 bg-[#0a221e] py-7">
-      <div className="container-max grid items-start gap-6 md:grid-cols-[auto,1fr,1fr]">
-        <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto" />
-        <div>
-          <div className="mb-1 font-extrabold">{msg.footer.contacts}</div>
-          <a className="block text-white/80 hover:text-white" href="mailto:info@prixclub.ru">info@prixclub.ru</a>
-          <a className="block text-white/80 hover:text-white" href="tel:+79999999999">+7 999 999-99-99</a>
+    <footer id="contacts" className="bg-black py-8 md:py-10 text-white">
+      <div className="container-max">
+        <div className="grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
+          <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
+            <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
+          </div>
+          <FooterColumn title={msg.nav.main} rows={[msg.nav.main, msg.nav.main, msg.nav.main]} />
+          <FooterColumn title={msg.nav.about} rows={[msg.nav.about, msg.nav.about, msg.nav.about]} />
+          <FooterColumn title={msg.nav.team} rows={[msg.nav.team, msg.nav.team, msg.nav.team]} />
+          <FooterColumn title={msg.nav.works} rows={[msg.nav.works, msg.nav.works, msg.nav.works]} />
+          <FooterColumn title={msg.nav.services} rows={[msg.nav.services, msg.nav.services, msg.nav.services]} />
+          <FooterColumn title={msg.nav.contacts} rows={[msg.nav.contacts, msg.nav.contacts, msg.nav.contacts]} />
+          <div className="text-right">
+            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+              <span className="inline-flex items-center gap-2">
+                <span>+7 424 424 42 42</span>
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
+              </span>
+            </a>
+            <a className="mt-2 inline-flex items-center gap-2 font-semibold text-[16px]" href="mailto:prix@prixclub.ru">
+              <span>prix@prixclub.ru</span>
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">✉</span>
+            </a>
+          </div>
         </div>
-        <div>
-          <div className="mb-1 font-extrabold">{msg.footer.nav}</div>
-          <a className="block text-white/80 hover:text-white" href="#services">{msg.sections.services}</a>
-          <a className="block text-white/80 hover:text-white" href="#clients">{msg.sections.clients}</a>
-          <a className="block text-white/80 hover:text-white" href="#team">{msg.sections.team}</a>
-        </div>
-        <div className="col-span-full text-white/60">{msg.footer.copy}</div>
+        <div className="mt-8 h-px w-full bg-white/25" />
       </div>
     </footer>
   )
