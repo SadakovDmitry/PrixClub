@@ -456,7 +456,7 @@ function ContactSection({ locale }: { locale: 'ru' | 'en' }) {
       dl2: 'Запросить прайс‑лист',
     }
   return (
-    <section id="contact" className={`relative bg-white py-16 md:py-24 ${geometria.className}`}>
+    <section id="contact" className={`relative overflow-hidden py-16 md:py-24 bg-white ${geometria.className}`}>
       <div className="container-max">
         <h2 className="text-center text-[34px] md:text-[54px] leading-[1.1] font-semibold mb-14 md:mb-20 max-w-[780px] mx-auto">
           <span
@@ -877,8 +877,8 @@ function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
             <div className={`flex h-10 items-center justify-between gap-4 ${geometria.className}`}>
               {/* Left aligned links */}
               <nav className="flex items-center gap-6 text-white/80 text-[13px]">
-                <a href="#" className="font-semibold text-white hover:text-white">{msg.nav.main}</a>
-                <a href="#about" className="hover:text-white">{msg.nav.about}</a>
+                <a href={`/${locale}`} className="font-semibold text-white hover:text-white">{msg.nav.main}</a>
+                <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
                 <a href="#team" className="hover:text-white">{msg.nav.team}</a>
                 <a href="#works" className="hover:text-white">{msg.nav.works}</a>
                 <a href="#services" className="hover:text-white">{msg.nav.services}</a>
