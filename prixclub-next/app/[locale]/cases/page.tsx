@@ -89,16 +89,7 @@ function ProjectsSection({ locale }: { locale: "ru" | "en" }) {
 
     const caseProjects = [
         {
-            title: locale === 'ru' ? 'Ассоциация Экспортеров и Импортеров' : 'Import & Export Association',
-            description: locale === 'ru'
-                ? 'Комплексный дизайн и коммуникации для ведущей международной выставки о бизнесе и торговле.'
-                : 'Comprehensive Design and Communications for a Leading International Business and Trade Exhibition',
-            filters: ['Event', 'Rebranding', 'Identity', 'Marketing', 'PR'],
-            icon: '/images/cases/IEA_icon.svg',
-            bgImage: '/images/cases/card_background.png',
-            subBgImage: '/images/cases/sub_card_background.png'
-        },
-        {
+            id: 1,
             title: locale === 'ru' ? 'Фонд Содействия Развитию Космонавтики' : 'Fund for the Promotion of Cosmonautics',
             description: locale === 'ru'
                 ? 'Полный ребрендинг Фонда Содействия Развитию Космонавтики: от новой айдентики до современного сайта.'
@@ -106,7 +97,20 @@ function ProjectsSection({ locale }: { locale: "ru" | "en" }) {
             filters: ['Rebranding', 'Identity', 'Marketing', 'PR'],
             icon: '/images/cases/FRSK_icon.svg',
             bgImage: '/images/cases/card_background_2.png',
-            subBgImage: '/images/cases/sub_card_background_2.png'
+            subBgImage: '/images/cases/sub_card_background_2.png',
+            href: `/${locale}/progects/1`
+        },
+        {
+            id: 2,
+            title: locale === 'ru' ? 'Ассоциация Экспортеров и Импортеров' : 'Import & Export Association',
+            description: locale === 'ru'
+                ? 'Комплексный дизайн и коммуникации для ведущей международной выставки о бизнесе и торговле.'
+                : 'Comprehensive Design and Communications for a Leading International Business and Trade Exhibition',
+            filters: ['Event', 'Rebranding', 'Identity', 'Marketing', 'PR'],
+            icon: '/images/cases/IEA_icon.svg',
+            bgImage: '/images/cases/card_background.png',
+            subBgImage: '/images/cases/sub_card_background.png',
+            href: `/${locale}/progects/2`
         },
         {
             title: locale === 'ru' ? 'Проект Пхеньян Тревел' : 'Pyongyang Travel Project',
@@ -214,14 +218,25 @@ function ProjectsSection({ locale }: { locale: "ru" | "en" }) {
                             {/* Sub card with icon */}
                             <div className="case-sub-card" style={{ backgroundImage: `url(${project.subBgImage})` }}>
                                 <img src={project.icon} alt="" className="case-icon" />
-                                <button className="view-case-btn">
-                                    <span>{locale === 'ru' ? 'Смотреть кейс' : 'View Case'}</span>
-                                    <div className="arrow-circle">
-                                        <svg width="22" height="20" viewBox="0 0 22 20" fill="none">
-                                            <path d="M21 10L11 0M21 10L11 20M21 10H0" stroke="currentColor" strokeWidth="1.5" />
-                                        </svg>
-                                    </div>
-                                </button>
+                                {project.href ? (
+                                    <a href={project.href} className="view-case-btn">
+                                        <span>{locale === 'ru' ? 'Смотреть кейс' : 'View Case'}</span>
+                                        <div className="arrow-circle">
+                                            <svg width="22" height="20" viewBox="0 0 22 20" fill="none">
+                                                <path d="M21 10L11 0M21 10L11 20M21 10H0" stroke="currentColor" strokeWidth="1.5" />
+                                            </svg>
+                                        </div>
+                                    </a>
+                                ) : (
+                                    <button className="view-case-btn">
+                                        <span>{locale === 'ru' ? 'Смотреть кейс' : 'View Case'}</span>
+                                        <div className="arrow-circle">
+                                            <svg width="22" height="20" viewBox="0 0 22 20" fill="none">
+                                                <path d="M21 10L11 0M21 10L11 20M21 10H0" stroke="currentColor" strokeWidth="1.5" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                )}
                             </div>
 
                             {/* Case content */}
@@ -428,6 +443,10 @@ function ProjectsSection({ locale }: { locale: "ru" | "en" }) {
                     display: flex;
                     align-items: center;
                     justify-content: center;
+                    text-decoration: none;
+                }
+                a.view-case-btn {
+                    color: inherit;
                 }
 
                 .view-case-btn span {
