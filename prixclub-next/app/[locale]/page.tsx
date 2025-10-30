@@ -835,11 +835,33 @@ function PhysicalLensCard({
 }
 
 function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const link = (href: string, label: string) => (
+    <a href={href} className="block py-2 px-3 rounded-lg text-[14px] text-white/90 hover:text-white hover:bg-white/10 transition-colors text-center w-full" onClick={() => setIsMenuOpen(false)}>
+      {label}
+    </a>
+  )
   return (
-    <header className="sticky top-0 z-20 bg-black">
+    <header className="sticky top-0 z-20 bg-black/85 backdrop-blur supports-[backdrop-filter]:bg-black/70 relative">
       <div className="container-max py-3">
-        <div className="flex items-center gap-2">
-          {/* Logo to the left, same height as the nav bar */}
+        {/* Mobile bar */}
+        <div className="md:hidden flex items-center justify-between">
+          <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-9 w-auto" priority />
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((v) => !v)}
+            className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white"
+          >
+            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-1.5'}`} />
+            <span className={`absolute h-0.5 w-5 bg-white transition-opacity duration-200 ${isMenuOpen ? 'opacity-0' : 'opacity-90'}`} />
+            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1.5'}`} />
+          </button>
+        </div>
+
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-2">
           <Image
             src="/images/header_logo.svg"
             alt="PRIX Club"
@@ -848,24 +870,37 @@ function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
             className="h-10 w-auto"
             priority
           />
-          {/* Pill-shaped navigation bar */}
           <div className="flex-1 rounded-full border border-white/15 bg-black/40 px-4 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur">
             <div className={`flex h-10 items-center justify-between gap-4 ${geometria.className}`}>
-              {/* Left aligned links */}
               <nav className="flex items-center gap-6 text-white/80 text-[13px]">
                 <a href={`/${locale}`} className="font-semibold text-white hover:text-white">{msg.nav.main}</a>
                 <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
-                <a href="#team" className="hover:text-white">{msg.nav.team}</a>
-                <a href="#works" className="hover:text-white">{msg.nav.works}</a>
-                <a href="#services" className="hover:text-white">{msg.nav.services}</a>
-                <a href="#contacts" className="hover:text-white">{msg.nav.contacts}</a>
+                <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+                <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+                <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+                <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
               </nav>
-              {/* Right aligned: NEWS, REVIEWS, language switch */}
               <div className="flex items-center gap-6 text-[13px]" >
-                <a href="#news" className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>
-                <a href="#reviews" className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>
+                <a href={`/${locale}/news`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>
+                <a href={`/${locale}/reviews`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>
                 <LanguageSwitch />
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile dropdown */}
+        <div className={`${isMenuOpen ? 'md:hidden' : 'hidden'} mt-2`}>
+          <div className="rounded-xl border border-white/10 bg-white/8 p-1.5 backdrop-blur shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+            <div className="rounded-lg bg-gradient-to-b from-white/8 to-white/3 p-1.5">
+              <nav className={`flex flex-col items-center ${geometria.className}`}>
+                {link(`/${locale}`, msg.nav.main)}
+                {link(`/${locale}/about`, msg.nav.about)}
+                {link(`/${locale}/team`, msg.nav.team)}
+                {link(`/${locale}/cases`, msg.nav.works)}
+                {link(`/${locale}/services`, msg.nav.services)}
+                {link(`/${locale}/contacts`, msg.nav.contacts)}
+              </nav>
             </div>
           </div>
         </div>

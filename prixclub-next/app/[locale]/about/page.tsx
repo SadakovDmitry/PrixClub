@@ -57,8 +57,8 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
         {/* No overlay to keep original colors */}
 
         <div className="container-max relative z-10">
-          <div className="mx-auto max-w-[980px] text-center">
-            <h1 className="text-[42px] md:text-[64px] font-semibold leading-[1.1]">
+          <div className="mx-auto max-w-[980px] text-center px-4">
+            <h1 className="text-[clamp(28px,8vw,64px)] font-semibold leading-[1.1]">
               <span
                 className="inline-block bg-clip-text text-transparent"
                 style={{
@@ -71,17 +71,17 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
                 {t.title}
               </span>
             </h1>
-            <p className="mt-6 text-[20px] md:text-[28px] leading-[1.35] text-white/95">
+            <p className="mt-6 text-[clamp(16px,5vw,28px)] leading-[1.35] text-white/95">
               {t.subtitle}
             </p>
           </div>
 
           {/* Cards row */}
-          <div className="mx-auto mt-10 md:mt-14 grid max-w-[1120px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-10 md:mt-14 grid max-w-[1120px] grid-cols-1 gap-5 px-4 sm:grid-cols-2 lg:grid-cols-4">
             {t.cards.map((c) => (
-              <div key={c.key} className="relative overflow-hidden rounded-[20px] bg-black" style={{ aspectRatio: '282/153' }}>
+              <div key={c.key} className="relative overflow-hidden rounded-[20px] bg-black" style={{ aspectRatio: '282/153', width: 'clamp(200px, 80%, 282px)', margin: '0 auto' }}>
                 {/* same layers as Services cards */}
-                <Image src="/images/our_services_background.svg" alt="" fill className="object-cover [filter:contrast(1.05)_saturate(0.9)]" />
+                <Image src="/images/about_us/hero_card_background.png" alt="" fill className="object-cover [filter:contrast(1.05)_saturate(0.9)]" />
                 <div className="absolute inset-0" style={{ background: '#2E6456', mixBlendMode: 'multiply', opacity: 0.75 }} />
                 <div className="absolute inset-0 grid place-items-center p-4">
                   <div className="h-full w-full rounded-[14px] border border-white/20 relative overflow-hidden shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05),inset_0_0_0_2px_rgba(255,255,255,0.06)]" style={{ background: 'rgba(255,255,255,0.05)' }}>
@@ -98,7 +98,7 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
                 <div className="pointer-events-none absolute inset-0 grid place-items-center p-6">
                   <div className="flex flex-col items-center gap-3">
                     <Image src={c.icon} alt="" width={56} height={56} className="h-14 w-14 object-contain" />
-                    <div className="text-center text-[20px] font-semibold text-white whitespace-pre-line">{c.title}</div>
+                    <div className="text-center text-[clamp(18px,5vw,20px)] font-semibold text-white whitespace-pre-line">{c.title}</div>
                   </div>
                 </div>
               </div>
@@ -116,19 +116,19 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
 
         {/* Вертикальная левая линия — как на макете */}
         <div className="pointer-events-none absolute inset-y-0 left-0 z-10">
-          <div className="absolute inset-y-0 left-[124px] w-[5px] rounded-full bg-[#2E6456]" />
+          <div className="absolute inset-y-0 left-[clamp(24px,8vw,124px)] w-[5px] rounded-full bg-[#2E6456]" />
         </div>
 
         {/* Контент с правильными верх/низ отступами */}
         <div className="absolute inset-0">
           {/* py задаёт зазор сверху/снизу как на скрине; регулируется на md+ */}
           <div
-            className="relative mx-0 h-full max-w-[1100px] px-0 md:px-10 py-10 md:py-20 text-[#0a0a0a]"
+            className="relative mx-0 h-full max-w-[1100px] px-4 md:px-10 py-[clamp(40px,10vw,80px)] text-[#0a0a0a]"
             // линия стоит на 124px; гуттер между линией и текстом = 24px
-            style={{ paddingLeft: 'calc(124px + 24px)' }}
+            style={{ paddingLeft: 'max(calc(clamp(24px,8vw,124px) + clamp(12px,3vw,24px)), 16px)' }}
           >
             <div className="md:w-4/5 max-w-[860px]">
-              <h2 className="mb-[10%] pl-[15%] text-[32px] md:text-[44px] font-semibold leading-tight">
+              <h2 className="mb-[clamp(24px,6vw,80px)] pl-0 md:pl-[15%] text-[clamp(20px,6vw,44px)] font-semibold leading-tight">
                 <span
                   className="inline-block bg-clip-text text-transparent"
                   style={{
@@ -142,7 +142,7 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
                 </span>
               </h2>
 
-              <div className="mt-8 md:mt-10 space-y-7 md:space-y-8">
+              <div className="mt-[clamp(24px,6vw,40px)] space-y-[clamp(16px,4vw,32px)]">
                 <ParagraphBlock>
                   {locale === 'en'
                     ? 'The company stands at the intersection of PR and IT — we solve communication challenges not only with words but also with technology.'
@@ -168,33 +168,78 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
       <VideoSection />
       <PhotoSection />
       <WhyUsSection locale={locale} />
-      <Footer msg={msg} />
+      <Footer msg={msg} locale={locale} />
     </div>
   )
 }
 
 function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
-  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const link = (href: string, label: string) => (
+    <a href={href} className="block py-2 px-3 rounded-lg text-[14px] text-white/90 hover:text-white hover:bg-white/10 transition-colors text-center w-full" onClick={() => setIsMenuOpen(false)}>
+      {label}
+    </a>
+  )
   return (
-    <header className="sticky top-0 z-20 bg-black">
+    <header className="sticky top-0 z-20 bg-black/85 backdrop-blur supports-[backdrop-filter]:bg-black/70 relative">
       <div className="container-max py-3">
-        <div className="flex items-center gap-2">
-          <Image src="/images/header_logo.svg" alt="PRIX Club" width={120} height={40} className="h-10 w-auto" priority />
+        {/* Mobile bar */}
+        <div className="md:hidden flex items-center justify-between">
+          <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-9 w-auto" priority />
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((v) => !v)}
+            className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white"
+          >
+            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-1.5'}`} />
+            <span className={`absolute h-0.5 w-5 bg-white transition-opacity duration-200 ${isMenuOpen ? 'opacity-0' : 'opacity-90'}`} />
+            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1.5'}`} />
+          </button>
+        </div>
+
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-2">
+          <Image
+            src="/images/header_logo.svg"
+            alt="PRIX Club"
+            width={120}
+            height={40}
+            className="h-10 w-auto"
+            priority
+          />
           <div className="flex-1 rounded-full border border-white/15 bg-black/40 px-4 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur">
             <div className={`flex h-10 items-center justify-between gap-4 ${geometria.className}`}>
               <nav className="flex items-center gap-6 text-white/80 text-[13px]">
-                <a href={`/${locale}`} className="font-semibold text-white hover:text-white">{msg.nav.main}</a>
-                <a href={`/${locale}/about`} className={`hover:text-white ${pathname?.endsWith('/about') ? 'text-white' : ''}`}>{msg.nav.about}</a>
-                <a href={`/${locale}#team`} className="hover:text-white">{msg.nav.team}</a>
-                <a href={`/${locale}#works`} className="hover:text-white">{msg.nav.works}</a>
-                <a href={`/${locale}#services`} className="hover:text-white">{msg.nav.services}</a>
-                <a href={`/${locale}#contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+                <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+                <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+                <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+                <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+                <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+                <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
               </nav>
               <div className="flex items-center gap-6 text-[13px]" >
-                <a href={`/${locale}#news`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>
-                <a href={`/${locale}#reviews`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>
+                <a href={`/${locale}/news`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>
+                <a href={`/${locale}/reviews`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>
                 <LanguageSwitch />
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile dropdown */}
+        <div className={`${isMenuOpen ? 'md:hidden' : 'hidden'} mt-2`}>
+          <div className="rounded-xl border border-white/10 bg-white/8 p-1.5 backdrop-blur shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+            <div className="rounded-lg bg-gradient-to-b from-white/8 to-white/3 p-1.5">
+              <nav className={`flex flex-col items-center ${geometria.className}`}>
+                {link(`/${locale}`, msg.nav.main)}
+                {link(`/${locale}/about`, msg.nav.about)}
+                {link(`/${locale}/team`, msg.nav.team)}
+                {link(`/${locale}/cases`, msg.nav.works)}
+                {link(`/${locale}/services`, msg.nav.services)}
+                {link(`/${locale}/contacts`, msg.nav.contacts)}
+              </nav>
             </div>
           </div>
         </div>
@@ -259,18 +304,18 @@ function ParagraphBlock({
 }: React.PropsWithChildren<{ className?: string }>) {
   // у каждого абзаца одинаковый гуттер справа от линии = 24px (pl-6)
   return (
-    <div className={`relative pl-[15%] ${className}`}>
+    <div className={`relative pl-0 md:pl-[15%] ${className}`}>
       {/* Треугольник: развернут "влево" и вершиной лежит на линии */}
       <span
         className="
-          absolute top-[6px]
+          hidden md:block absolute top-[6px]
           left-[calc(-24px+2.5px+0px)]  /* -gutter + line/2 + triangleWidth */
           h-0 w-0
           border-y-[9px] border-y-transparent  /* было 7px → стало выше */
           border-l-[16px] border-l-[#2E6456]   /* было 12px → стало шире */
         "
       />
-      <p className="text-[clamp(18px,2.2vw,27px)] leading-[1.6]">
+      <p className="text-[clamp(10px,2.5vw,27px)] leading-[1.2]">
         {children}
       </p>
     </div>
@@ -295,8 +340,10 @@ function VideoSection() {
         <button
           type="button"
           aria-label="Play video"
-          className="group absolute left-1/2 top-1/2 grid h-[132px] w-[132px] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full ring-2 ring-white/85"
+          className="group absolute left-1/2 top-1/2 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full ring-2 ring-white/85"
           style={{
+            width: 'clamp(60px, 16vw, 132px)',
+            height: 'clamp(60px, 16vw, 132px)',
             background: "linear-gradient(180deg,#74AA9C 0%,#53897B 100%)",
             boxShadow: "0 12px 32px rgba(0,0,0,.45), inset 0 0 0 2px rgba(0,0,0,.15)",
           }}
@@ -306,11 +353,13 @@ function VideoSection() {
             className="
               block
               [width:0] [height:0]
-              [border-top:20px_solid_transparent]
-              [border-bottom:20px_solid_transparent]
-              [border-left:32px_solid_white]
               translate-x-[4px]
             "
+            style={{
+              borderTop: 'clamp(10px, 3vw, 20px) solid transparent',
+              borderBottom: 'clamp(10px, 3vw, 20px) solid transparent',
+              borderLeft: 'clamp(16px, 4.5vw, 32px) solid white',
+            }}
           />
         </button>
       </div>
@@ -338,7 +387,7 @@ function PhotoSection() {
 
       {/* сетка 3x3 */}
       <div className="mx-auto max-w-[1180px] px-6 md:px-10 py-14 md:py-20">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4 md:gap-x-8 md:gap-y-8">
           {pics.map((src, i) => (
             <div
               key={i}
@@ -444,8 +493,8 @@ function WhyUsSection({ locale }: { locale: 'ru' | 'en' }) {
             /* left: 222/1440, top: 128.33/810, width: 183/1440 */
             left: '15.417%',
             top: '15.866%',
-            width: '12.708%',
-            fontSize: 'min(3vw,44px)',
+            width: '25.708%',
+            fontSize: 'clamp(20px, 5vw, 44px)',
           }}
         >
           {txt.title}
@@ -472,24 +521,23 @@ function WhyUsSection({ locale }: { locale: 'ru' | 'en' }) {
           style={{
             left: '15.417%',     // 222px
             top: '64.198%',      // точка начала списка
-            width: '42.157%',    // 607.22px
-            fontSize: 'min(1.875vw,27px)',
-            lineHeight: '34px',
+            width: '79.157%',    // 607.22px
+            fontSize: 'clamp(10px, 2.5vw, 27px)',
+            lineHeight: 'clamp(10px, 3.5vw, 34px)',
           }}
         >
-          <ul className="space-y-[16px]">
+          <ul className="space-y-[clamp(8px, 2vw, 16px)]">
             {txt.bullets.map((line, i) => (
-              <li key={i} className="inline-flex items-start gap-3">
+              <li key={i} className="inline-flex items-start" style={{ gap: 'clamp(6px, 1.5vw, 12px)' }}>
                 {/* Треугольник-маркер: слева от текста, направлен ВПРАВО */}
                 <span
                   aria-hidden
-                  className="
-                    mt-[8px] inline-block
-                    [width:0] [height:0]
-                    [border-top:8.24px_solid_transparent]
-                    [border-bottom:8.24px_solid_transparent]
-                    [border-left:9.515px_solid_#000]
-                  "
+                  className="mt-[clamp(4px, 1vw, 8px)] inline-block [width:0] [height:0]"
+                  style={{
+                    borderTop: 'clamp(5px, 1.5vw, 8.24px) solid transparent',
+                    borderBottom: 'clamp(5px, 1.5vw, 8.24px) solid transparent',
+                    borderLeft: 'clamp(6px, 1.8vw, 9.515px) solid #000',
+                  }}
                 />
                 <span>{line}</span>
               </li>
@@ -505,11 +553,37 @@ function WhyUsSection({ locale }: { locale: 'ru' | 'en' }) {
 
 
 
-function Footer({ msg }: { msg: any }) {
+function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
   return (
     <footer id="contacts" className="bg-black py-8 md:py-10 text-white">
       <div className="container-max">
-        <div className="grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
+        {/* Mobile layout */}
+        <div className="md:hidden flex flex-col items-center text-center gap-4">
+          <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-16 w-auto opacity-80" />
+          <nav className={`flex flex-col items-center gap-2 text-white/80 ${geometria.className}`}>
+            <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+            <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+            <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+            <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+            <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+            <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+          </nav>
+          <div className="mt-2">
+            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+              <span className="inline-flex items-center gap-2">
+                <span>+7 424 424 42 42</span>
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
+              </span>
+            </a>
+            <a className="mt-2 inline-flex items-center gap-2 font-semibold text-[16px]" href="mailto:prix@prixclub.ru">
+              <span>prix@prixclub.ru</span>
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">✉</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Desktop layout */}
+        <div className="hidden md:grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
           <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
             <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
           </div>

@@ -10,69 +10,69 @@ import { geometria } from '../../../src/fonts/geometria'
    ────────────────────────────────────────────────────────────── */
 
 export default function TeamPage({ params: { locale } }: { params: { locale: "ru" | "en" } }) {
-    const t = (locale === "en")
-        ? {
-            title: "PRIX Club\nproudly presents its team",
-            text:
-                "A union of exceptional professionals where PR strategists, IT experts, analysts, and visionary creatives converge under one roof. Their energy and interdisciplinary mastery intertwine in a shared pursuit: to craft bold concepts, bring innovative solutions to life, and pave the way to truly remarkable achievements."
-        }
-        : {
-            title: "PRIX Club\nс гордостью представляет\nсвою команду",
-            text:
-                "Союз уникальных профессионалов, где под одной крышей собрались PR-стратеги, IT-специалисты, аналитики и творцы новых идей. Их энергия и междисциплинарное мастерство переплетаются в едином стремлении — создавать смелые концепции, воплощать нестандартные решения и прокладывать путь к выдающимся результатам."
-        }
+  const t = (locale === "en")
+    ? {
+      title: "PRIX Club\nproudly presents its team",
+      text:
+        "A union of exceptional professionals where PR strategists, IT experts, analysts, and visionary creatives converge under one roof. Their energy and interdisciplinary mastery intertwine in a shared pursuit: to craft bold concepts, bring innovative solutions to life, and pave the way to truly remarkable achievements."
+    }
+    : {
+      title: "PRIX Club\nс гордостью представляет\nсвою команду",
+      text:
+        "Союз уникальных профессионалов, где под одной крышей собрались PR-стратеги, IT-специалисты, аналитики и творцы новых идей. Их энергия и междисциплинарное мастерство переплетаются в едином стремлении — создавать смелые концепции, воплощать нестандартные решения и прокладывать путь к выдающимся результатам."
+    }
 
-    const msg = {
-        ru: {
-            nav: { main: 'Главная', about: 'О нас', team: 'Команда', works: 'Работы', services: 'Услуги', contacts: 'Контакты', news: 'НОВОСТИ', reviews: 'ОТЗЫВЫ' },
-            footer: { copy: '© PRIX Club, 2025' }
-        },
-        en: {
-            nav: { main: 'Main Page', about: 'About Us', team: 'Team', works: 'Works', services: 'Services', contacts: 'Contacts', news: 'NEWS', reviews: 'REVIEWS' },
-            footer: { copy: '© PRIX Club, 2025' }
-        }
-    }[locale]
+  const msg = {
+    ru: {
+      nav: { main: 'Главная', about: 'О нас', team: 'Команда', works: 'Работы', services: 'Услуги', contacts: 'Контакты', news: 'НОВОСТИ', reviews: 'ОТЗЫВЫ' },
+      footer: { copy: '© PRIX Club, 2025' }
+    },
+    en: {
+      nav: { main: 'Main Page', about: 'About Us', team: 'Team', works: 'Works', services: 'Services', contacts: 'Contacts', news: 'NEWS', reviews: 'REVIEWS' },
+      footer: { copy: '© PRIX Club, 2025' }
+    }
+  }[locale]
 
-    return (
-        <div className={`${geometria.className} team-font`}>
-            {/* Готовый хедер как на странице «О нас» */}
-            <Header msg={msg} locale={locale} />
+  return (
+    <div className={`${geometria.className} team-font`}>
+      {/* Готовый хедер как на странице «О нас» */}
+      <Header msg={msg} locale={locale} />
 
-            {/* ───────────────────────── HERO 1440×810 (pixel-perfect) ───────────────────────── */}
-            <section className="team-hero">
-                {/* Фоновая фотография строго по координатам макета */}
-                <div className="bg-photo" aria-hidden>
-                    <Image
-                        src="/images/team/Hero_background.svg"
-                        alt=""
-                        fill
-                        priority
-                        sizes="1440px"
-                        className="object-cover"
-                        style={{ opacity: 1 }}
-                    />
-                </div>
+      {/* ───────────────────────── HERO 1440×810 (pixel-perfect) ───────────────────────── */}
+      <section className="team-hero">
+        {/* Фоновая фотография строго по координатам макета */}
+        <div className="bg-photo" aria-hidden>
+          <Image
+            src="/images/team/Hero_background.svg"
+            alt=""
+            fill
+            priority
+            sizes="1440px"
+            className="object-cover"
+            style={{ opacity: 1 }}
+          />
+        </div>
 
-                {/* Hue-оверлей (#74AA9C, mix-blend: hue) как в фигме */}
-                {/* <div className="hue-layer" aria-hidden /> */}
+        {/* Hue-оверлей (#74AA9C, mix-blend: hue) как в фигме */}
+        {/* <div className="hue-layer" aria-hidden /> */}
 
-                {/* Градиентный заголовок в точных координатах */}
-                <h1
-                    className="hero-title"
-                    dangerouslySetInnerHTML={{ __html: t.title.replace(/\n/g, "<br/>") }}
-                />
+        {/* Градиентный заголовок в точных координатах */}
+        <h1
+          className="hero-title"
+          dangerouslySetInnerHTML={{ __html: t.title.replace(/\n/g, "<br/>") }}
+        />
 
-                {/* Описание в точных координатах */}
-                <p className="hero-sub">{t.text}</p>
-            </section>
+        {/* Описание в точных координатах */}
+        <p className="hero-sub">{t.text}</p>
+      </section>
 
-            {/* Готовый футер как на странице «О нас» */}
-            <PhotoSection />
-            <OurTeam />
-            <CultureSection />
-            <Footer msg={msg} />
+      {/* Готовый футер как на странице «О нас» */}
+      <PhotoSection />
+      <OurTeam />
+      <CultureSection />
+      <Footer msg={msg} locale={locale} />
 
-            <style jsx>{`
+      <style jsx>{`
         /* Канва 1440×810 по центру, чтобы соблюсти пиксели */
         .team-hero {
           position: relative;
@@ -154,7 +154,7 @@ export default function TeamPage({ params: { locale } }: { params: { locale: "ru
           }
         }
       `}</style>
-            <style jsx global>{`
+      <style jsx global>{`
           /* Принудительно применяем загруженный next/font Geometria ко ВСЕМ элементам страницы */
           .team-font, .team-font * {
             font-family: ${geometria.style.fontFamily}, sans-serif !important;
@@ -162,8 +162,8 @@ export default function TeamPage({ params: { locale } }: { params: { locale: "ru
             -moz-osx-font-smoothing: grayscale;
           }
         `}</style>
-        </div>
-    )
+    </div>
+  )
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -173,88 +173,133 @@ export default function TeamPage({ params: { locale } }: { params: { locale: "ru
    ────────────────────────────────────────────────────────────── */
 
 function Header({ msg, locale }: { msg: any; locale: "ru" | "en" }) {
-    const pathname = usePathname()
-    return (
-        <header className="sticky top-0 z-20 bg-black">
-            <div className="container-max py-3">
-                <div className="flex items-center gap-2">
-                    <Image src="/images/header_logo.svg" alt="PRIX Club" width={120} height={40} className="h-10 w-auto" priority />
-                    <div className="flex-1 rounded-full border border-white/15 bg-black/40 px-4 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur">
-                        <div className={`flex h-10 items-center justify-between gap-4 ${geometria.className}`}>
-                            <nav className="flex items-center gap-6 text-white/80 text-[13px]">
-                                <a href={`/${locale}`} className="font-semibold text-white hover:text-white">{msg.nav.main}</a>
-                                <a href={`/${locale}/about`} className={`hover:text-white ${pathname?.endsWith('/about') ? 'text-white' : ''}`}>{msg.nav.about}</a>
-                                <a href={`/${locale}/team`} className="text-white hover:text-white">{msg.nav.team}</a>
-                                <a href={`/${locale}#works`} className="hover:text-white">{msg.nav.works}</a>
-                                <a href={`/${locale}#services`} className="hover:text-white">{msg.nav.services}</a>
-                                <a href={`/${locale}#contacts`} className="hover:text-white">{msg.nav.contacts}</a>
-                            </nav>
-                            <div className="flex items-center gap-6 text-[13px]">
-                                <a href={`/${locale}#news`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>
-                                <a href={`/${locale}#reviews`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>
-                                <LanguageSwitch />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const link = (href: string, label: string) => (
+    <a href={href} className="block py-2 px-3 rounded-lg text-[14px] text-white/90 hover:text-white hover:bg-white/10 transition-colors text-center w-full" onClick={() => setIsMenuOpen(false)}>
+      {label}
+    </a>
+  )
+  return (
+    <header className="sticky top-0 z-20 bg-black/85 backdrop-blur supports-[backdrop-filter]:bg-black/70 relative">
+      <div className="container-max py-3">
+        {/* Mobile bar */}
+        <div className="md:hidden flex items-center justify-between">
+          <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-9 w-auto" priority />
+          <button
+            type="button"
+            aria-label="Open menu"
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((v) => !v)}
+            className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white"
+          >
+            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-1.5'}`} />
+            <span className={`absolute h-0.5 w-5 bg-white transition-opacity duration-200 ${isMenuOpen ? 'opacity-0' : 'opacity-90'}`} />
+            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1.5'}`} />
+          </button>
+        </div>
+
+        {/* Desktop nav */}
+        <div className="hidden md:flex items-center gap-2">
+          <Image
+            src="/images/header_logo.svg"
+            alt="PRIX Club"
+            width={120}
+            height={40}
+            className="h-10 w-auto"
+            priority
+          />
+          <div className="flex-1 rounded-full border border-white/15 bg-black/40 px-4 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur">
+            <div className={`flex h-10 items-center justify-between gap-4 ${geometria.className}`}>
+              <nav className="flex items-center gap-6 text-white/80 text-[13px]">
+                <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+                <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+                <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+                <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+                <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+                <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+              </nav>
+              <div className="flex items-center gap-6 text-[13px]" >
+                <a href={`/${locale}/news`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>
+                <a href={`/${locale}/reviews`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>
+                <LanguageSwitch />
+              </div>
             </div>
-        </header>
-    )
+          </div>
+        </div>
+
+        {/* Mobile dropdown */}
+        <div className={`${isMenuOpen ? 'md:hidden' : 'hidden'} mt-2`}>
+          <div className="rounded-xl border border-white/10 bg-white/8 p-1.5 backdrop-blur shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+            <div className="rounded-lg bg-gradient-to-b from-white/8 to-white/3 p-1.5">
+              <nav className={`flex flex-col items-center ${geometria.className}`}>
+                {link(`/${locale}`, msg.nav.main)}
+                {link(`/${locale}/about`, msg.nav.about)}
+                {link(`/${locale}/team`, msg.nav.team)}
+                {link(`/${locale}/cases`, msg.nav.works)}
+                {link(`/${locale}/services`, msg.nav.services)}
+                {link(`/${locale}/contacts`, msg.nav.contacts)}
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+  )
 }
 
 function LanguageSwitch() {
-    const router = useRouter()
-    const pathname = usePathname()
-    const current = pathname?.split('/')?.[1] === 'en' ? 'en' : 'ru'
-    const [isEN, setIsEN] = useState(current === 'en')
-    return (
-        <button
-            type="button"
-            aria-label="Language switch"
-            onClick={() => {
-                const nextLocale = isEN ? 'ru' : 'en'
-                setIsEN(!isEN)
-                let newPath = pathname || '/'
-                const segs = newPath.split('/').filter(Boolean)
-                if (segs.length && (segs[0] === 'ru' || segs[0] === 'en')) {
-                    segs[0] = nextLocale
-                    newPath = '/' + segs.join('/')
-                } else {
-                    newPath = '/' + nextLocale + (newPath.startsWith('/') ? newPath : '/' + newPath)
-                }
-                router.push(newPath)
-            }}
-            className={`relative inline-flex h-6 w-16 select-none items-center rounded-full border border-white/25 bg-black text-[11px] text-white/80 overflow-hidden ${geometria.className}`}
-        >
-            <span className={`pointer-events-none absolute inset-y-0 left-0 z-10 flex w-1/2 items-center justify-center ${isEN ? 'opacity-60' : 'text-white'}`}>RU</span>
-            <span className={`pointer-events-none absolute inset-y-0 right-0 z-10 flex w-1/2 items-center justify-center ${isEN ? 'text-white' : 'opacity-60'}`}>EN</span>
-            <span
-                className={`absolute inset-y-0 left-0 w-1/2 rounded-full border border-white/70 transition-transform duration-200 ease-out ${isEN ? 'translate-x-full' : 'translate-x-0'}`}
-                style={{
-                    background: 'linear-gradient(135deg, var(--brand, #5FE1C5), var(--brand-dark, #1AA58A))',
-                    boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 1px 2px rgba(0,0,0,0.4)'
-                }}
-            />
-        </button>
-    )
+  const router = useRouter()
+  const pathname = usePathname()
+  const current = pathname?.split('/')?.[1] === 'en' ? 'en' : 'ru'
+  const [isEN, setIsEN] = useState(current === 'en')
+  return (
+    <button
+      type="button"
+      aria-label="Language switch"
+      onClick={() => {
+        const nextLocale = isEN ? 'ru' : 'en'
+        setIsEN(!isEN)
+        let newPath = pathname || '/'
+        const segs = newPath.split('/').filter(Boolean)
+        if (segs.length && (segs[0] === 'ru' || segs[0] === 'en')) {
+          segs[0] = nextLocale
+          newPath = '/' + segs.join('/')
+        } else {
+          newPath = '/' + nextLocale + (newPath.startsWith('/') ? newPath : '/' + newPath)
+        }
+        router.push(newPath)
+      }}
+      className={`relative inline-flex h-6 w-16 select-none items-center rounded-full border border-white/25 bg-black text-[11px] text-white/80 overflow-hidden ${geometria.className}`}
+    >
+      <span className={`pointer-events-none absolute inset-y-0 left-0 z-10 flex w-1/2 items-center justify-center ${isEN ? 'opacity-60' : 'text-white'}`}>RU</span>
+      <span className={`pointer-events-none absolute inset-y-0 right-0 z-10 flex w-1/2 items-center justify-center ${isEN ? 'text-white' : 'opacity-60'}`}>EN</span>
+      <span
+        className={`absolute inset-y-0 left-0 w-1/2 rounded-full border border-white/70 transition-transform duration-200 ease-out ${isEN ? 'translate-x-full' : 'translate-x-0'}`}
+        style={{
+          background: 'linear-gradient(135deg, var(--brand, #5FE1C5), var(--brand-dark, #1AA58A))',
+          boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 1px 2px rgba(0,0,0,0.4)'
+        }}
+      />
+    </button>
+  )
 }
 
 function PhotoSection() {
-    return (
-        <section className="photo-section" aria-label="Team photo section">
-            {/* Отрисовываем SVG в точном масштабе макета — 1440×810, по центру */}
-            <div className="photo-wrap">
-                <Image
-                    src="/images/team/Photo_section.svg"
-                    alt=""
-                    width={1440}
-                    height={810}
-                    priority
-                    className="block w-[1440px] h-auto"
-                />
-            </div>
+  return (
+    <section className="photo-section" aria-label="Team photo section">
+      {/* Отрисовываем SVG в точном масштабе макета — 1440×810, по центру */}
+      <div className="photo-wrap">
+        <Image
+          src="/images/team/Photo_section.svg"
+          alt=""
+          width={1440}
+          height={810}
+          priority
+          className="block w-[1440px] h-auto"
+        />
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .photo-section {
           background: #000;              /* на случай прозрачностей в SVG */
         }
@@ -275,70 +320,70 @@ function PhotoSection() {
           }
         }
       `}</style>
-        </section>
-    )
+    </section>
+  )
 }
 
 function OurTeam() {
-    return (
-        <section className="ourteam">
-            <div className="ourteam-wrap">
-                {/* ВЕРТИКАЛЬНЫЕ ЛИНИИ (как в фигме: 50% - 1305 + 846/1305/1764) */}
-                <span className="vline v1" />
-                <span className="vline v2" />
-                <span className="vline v3" />
+  return (
+    <section className="ourteam">
+      <div className="ourteam-wrap">
+        {/* ВЕРТИКАЛЬНЫЕ ЛИНИИ (как в фигме: 50% - 1305 + 846/1305/1764) */}
+        <span className="vline v1" />
+        <span className="vline v2" />
+        <span className="vline v3" />
 
-                {/* ───────── ТОП, ЦЕНТР ───────── */}
-                <TeamCard className="card c-top" name="Name Surname" />
-                <div className="pos pos-top">Position</div>
-                <p className="txt txt-top">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat.
-                </p>
+        {/* ───────── ТОП, ЦЕНТР ───────── */}
+        <TeamCard className="card c-top" name="Name Surname" />
+        <div className="pos pos-top">Position</div>
+        <p className="txt txt-top">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+          do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          Ut enim ad minim veniam, quis nostrud exercitation ullamco
+          laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
 
-                {/* ───────── РЯД 2: ЛЕВО / ПРАВО ───────── */}
-                <TeamCard className="card c-leftTop" name="Name Surname" />
-                <div className="pos pos-leftTop">Position</div>
-                <p className="txt txt-leftTop">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+        {/* ───────── РЯД 2: ЛЕВО / ПРАВО ───────── */}
+        <TeamCard className="card c-leftTop" name="Name Surname" />
+        <div className="pos pos-leftTop">Position</div>
+        <p className="txt txt-leftTop">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+          do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
 
-                <TeamCard className="card c-rightTop" name="Name Surname" />
-                <div className="pos pos-rightTop">Position</div>
-                <p className="txt txt-rightTop">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+        <TeamCard className="card c-rightTop" name="Name Surname" />
+        <div className="pos pos-rightTop">Position</div>
+        <p className="txt txt-rightTop">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
 
-                {/* ───────── РЯД 3: СМЕЩЁННЫЙ ЦЕНТР-ЛЕВО ───────── */}
-                <TeamCard className="card c-mid" name="Name Surname" />
-                <div className="pos pos-mid">Position</div>
-                <p className="txt txt-mid">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+        {/* ───────── РЯД 3: СМЕЩЁННЫЙ ЦЕНТР-ЛЕВО ───────── */}
+        <TeamCard className="card c-mid" name="Name Surname" />
+        <div className="pos pos-mid">Position</div>
+        <p className="txt txt-mid">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+          do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
 
-                {/* ───────── РЯД 4: НИЗ ЛЕВО / ПРАВО ───────── */}
-                <TeamCard className="card c-leftBottom" name="Name Surname" />
-                <div className="pos pos-leftBottom">Position</div>
-                <p className="txt txt-leftBottom">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
+        {/* ───────── РЯД 4: НИЗ ЛЕВО / ПРАВО ───────── */}
+        <TeamCard className="card c-leftBottom" name="Name Surname" />
+        <div className="pos pos-leftBottom">Position</div>
+        <p className="txt txt-leftBottom">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+          do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
 
-                <TeamCard className="card c-rightBottom" name="Name Surname" />
-                <div className="pos pos-rightBottom">Position</div>
-                <p className="txt txt-rightBottom">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </p>
-            </div>
+        <TeamCard className="card c-rightBottom" name="Name Surname" />
+        <div className="pos pos-rightBottom">Position</div>
+        <p className="txt txt-rightBottom">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+      </div>
 
-            {/* ЛОКАЛЬНЫЕ стили (как были) */}
-            <style jsx>{`
+      {/* ЛОКАЛЬНЫЕ стили (как были) */}
+      <style jsx>{`
         .ourteam { background:#fff; }
         .ourteam-wrap { position:relative; width:1440px; height:2610px; margin:0 auto; }
 
@@ -372,8 +417,8 @@ function OurTeam() {
         }
       `}</style>
 
-            {/* ГЛОБАЛЬНЫЕ стили ДЛЯ КАРТОЧЕК (важно!) */}
-            <style jsx global>{`
+      {/* ГЛОБАЛЬНЫЕ стили ДЛЯ КАРТОЧЕК (важно!) */}
+      <style jsx global>{`
         .ourteam-wrap .card{ position:absolute; width:282px; height:458px; z-index:1;}
         .ourteam-wrap .c-top{ left:calc(50% - 141px); top:120px; }
         .ourteam-wrap .c-leftTop{ left:calc(50% - 141px - 459px); top:876px; }
@@ -388,28 +433,28 @@ function OurTeam() {
         // .c-mid{ padding: 0px; }
         // .c-rightTop{ padding: 0px; }
       `}</style>
-        </section>
-    )
+    </section>
+  )
 }
 
 function TeamCard({ className, name }: { className?: string; name: string }) {
-    return (
-        <div className={className} style={{ padding: 0 }} >
-            <div className="inner">
-                <img src="/images/team/man.png" alt="" className="photo" width={282} height={458} />
+  return (
+    <div className={className} style={{ padding: 0 }} >
+      <div className="inner">
+        <img src="/images/team/man.png" alt="" className="photo" width={282} height={458} />
 
-                <div className="fade" />
+        <div className="fade" />
 
-                <div className="name-wrap">
-                    <div className="name-base" />
-                    <div className="name-texture" />
-                    <div className="name-green" />
-                    <div className="name-glass" />
-                    <div className="name">{name}</div>
-                </div>
-            </div>
+        <div className="name-wrap">
+          <div className="name-base" />
+          <div className="name-texture" />
+          <div className="name-green" />
+          <div className="name-glass" />
+          <div className="name">{name}</div>
+        </div>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .inner{
           position:relative;
           width:100%; height:100%;
@@ -437,59 +482,59 @@ function TeamCard({ className, name }: { className?: string; name: string }) {
           font-family:'Geometria'; font-weight:700; font-size:27px; line-height:110%; color:#fff; text-align:center;
         }
       `}</style>
-        </ div>
-    )
+    </ div>
+  )
 }
 
 function CultureSection() {
-    return (
-        <section className="culture">
-            <div className="frame">
-                {/* 1) Фон — НЕ обрезаем: 100vw × auto */}
-                <img
-                    src="/images/team/culture_and_comand_background.svg"
-                    alt=""
-                    className="bg-img"
-                />
+  return (
+    <section className="culture">
+      <div className="frame">
+        {/* 1) Фон — НЕ обрезаем: 100vw × auto */}
+        <img
+          src="/images/team/culture_and_comand_background.svg"
+          alt=""
+          className="bg-img"
+        />
 
-                {/* 2) Оверлеи поверх фона, но ниже контента */}
-                {/* <div className="overlay-hue" /> */}
-                {/* <div className="overlay-multiply" /> */}
+        {/* 2) Оверлеи поверх фона, но ниже контента */}
+        {/* <div className="overlay-hue" /> */}
+        {/* <div className="overlay-multiply" /> */}
 
-                {/* 3) «Артборд» 1440×960, масштабируем к ширине экрана */}
-                <div className="board">
-                    {/* Подложка и фото слева */}
-                    <div className="photo-shadow" />
-                    <img
-                        src="/images/team/culture_and_command_photo.png"
-                        alt=""
-                        className="photo-el"
-                        width={486}
-                        height={374}
-                    />
+        {/* 3) «Артборд» 1440×960, масштабируем к ширине экрана */}
+        <div className="board">
+          {/* Подложка и фото слева */}
+          <div className="photo-shadow" />
+          <img
+            src="/images/team/culture_and_command_photo.png"
+            alt=""
+            className="photo-el"
+            width={486}
+            height={374}
+          />
 
-                    {/* Текст справа */}
-                    <h2 className="title">Культура и команда</h2>
-                    <p className="lead">
-                        В PRIX Club царит атмосфера сотрудничества и взаимного доверия.
-                        Каждый специалист не просто вносит свою экспертизу, но и ежедневно
-                        учится у коллег, обогащая общий опыт команды. Этот дух постоянного
-                        развития и открытого диалога помогает нам создавать решения,
-                        которые действительно работают на успех клиента.
-                    </p>
+          {/* Текст справа */}
+          <h2 className="title">Культура и команда</h2>
+          <p className="lead">
+            В PRIX Club царит атмосфера сотрудничества и взаимного доверия.
+            Каждый специалист не просто вносит свою экспертизу, но и ежедневно
+            учится у коллег, обогащая общий опыт команды. Этот дух постоянного
+            развития и открытого диалога помогает нам создавать решения,
+            которые действительно работают на успех клиента.
+          </p>
 
-                    {/* Цитата снизу */}
-                    <div className="quote-left">«</div>
-                    <p className="quote-text">
-                        Мы верим, что сила команды заключается в умении делиться знаниями и
-                        расти вместе. Именно это позволяет нам предлагать лучшие стратегии и
-                        реализовывать проекты, которые превосходят ожидания
-                    </p>
-                    <div className="quote-right">»</div>
-                </div>
-            </div>
+          {/* Цитата снизу */}
+          <div className="quote-left">«</div>
+          <p className="quote-text">
+            Мы верим, что сила команды заключается в умении делиться знаниями и
+            расти вместе. Именно это позволяет нам предлагать лучшие стратегии и
+            реализовывать проекты, которые превосходят ожидания
+          </p>
+          <div className="quote-right">»</div>
+        </div>
+      </div>
 
-            <style jsx>{`
+      <style jsx>{`
         .culture {
           background: #000;
         }
@@ -632,54 +677,81 @@ function CultureSection() {
           color: #fff;
         }
       `}</style>
-        </section>
-    )
+    </section>
+  )
 }
 
 
 
 
-function Footer({ msg }: { msg: any }) {
-    return (
-        <footer id="contacts" className="bg-black py-8 md:py-10 text-white">
-            <div className="container-max">
-                <div className="grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
-                    <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
-                        <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
-                    </div>
-                    <FooterColumn title="Навигация" rows={['Главная', 'О нас', 'Команда']} />
-                    <FooterColumn title="Разделы" rows={['Работы', 'Услуги', 'Контакты']} />
-                    <FooterColumn title="Инфо" rows={['Новости', 'Отзывы']} />
-                    <div className="md:col-span-3" />
-                    <div className="text-right">
-                        <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
-                            <span className="inline-flex items-center gap-2">
-                                <span>+7 424 424 42 42</span>
-                                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
-                            </span>
-                        </a>
-                        <a className="mt-2 inline-flex items-center gap-2 font-semibold text-[16px]" href="mailto:prix@prixclub.ru">
-                            <span>prix@prixclub.ru</span>
-                            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">✉</span>
-                        </a>
-                    </div>
-                </div>
-                <div className="mt-8 h-px w-full bg-white/25" />
-                <div className="pt-3 text-center text-white/60 text-[12px]">{msg.footer.copy}</div>
-            </div>
-        </footer>
-    )
+function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
+  return (
+    <footer id="contacts" className="bg-black py-8 md:py-10 text-white">
+      <div className="container-max">
+        {/* Mobile layout */}
+        <div className="md:hidden flex flex-col items-center text-center gap-4">
+          <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-16 w-auto opacity-80" />
+          <nav className={`flex flex-col items-center gap-2 text-white/80 ${geometria.className}`}>
+            <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+            <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+            <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+            <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+            <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+            <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+          </nav>
+          <div className="mt-2">
+            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+              <span className="inline-flex items-center gap-2">
+                <span>+7 424 424 42 42</span>
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
+              </span>
+            </a>
+            <a className="mt-2 inline-flex items-center gap-2 font-semibold text-[16px]" href="mailto:prix@prixclub.ru">
+              <span>prix@prixclub.ru</span>
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">✉</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Desktop layout */}
+        <div className="hidden md:grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
+          <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
+            <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
+          </div>
+          <FooterColumn title={msg.nav.main} rows={[msg.nav.main, msg.nav.main, msg.nav.main]} />
+          <FooterColumn title={msg.nav.about} rows={[msg.nav.about, msg.nav.about, msg.nav.about]} />
+          <FooterColumn title={msg.nav.team} rows={[msg.nav.team, msg.nav.team, msg.nav.team]} />
+          <FooterColumn title={msg.nav.works} rows={[msg.nav.works, msg.nav.works, msg.nav.works]} />
+          <FooterColumn title={msg.nav.services} rows={[msg.nav.services, msg.nav.services, msg.nav.services]} />
+          <FooterColumn title={msg.nav.contacts} rows={[msg.nav.contacts, msg.nav.contacts, msg.nav.contacts]} />
+          <div className="text-right">
+            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+              <span className="inline-flex items-center gap-2">
+                <span>+7 424 424 42 42</span>
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
+              </span>
+            </a>
+            <a className="mt-2 inline-flex items-center gap-2 font-semibold text-[16px]" href="mailto:prix@prixclub.ru">
+              <span>prix@prixclub.ru</span>
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">✉</span>
+            </a>
+          </div>
+        </div>
+        <div className="mt-8 h-px w-full bg-white/25" />
+      </div>
+    </footer>
+  )
 }
 
 function FooterColumn({ title, rows }: { title: string; rows: string[] }) {
-    return (
-        <div>
-            <div className="mb-2 text-[16px] font-semibold text-white">{title}</div>
-            <div className="space-y-1 text-[13px] text-white/60">
-                {rows.map((r, i) => (
-                    <div key={i}>{r}</div>
-                ))}
-            </div>
-        </div>
-    )
+  return (
+    <div>
+      <div className="mb-2 text-[16px] font-semibold text-white">{title}</div>
+      <div className="space-y-1 text-[13px] text-white/60">
+        {rows.map((r, i) => (
+          <div key={i}>{r}</div>
+        ))}
+      </div>
+    </div>
+  )
 }

@@ -67,7 +67,7 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
             <LastSection locale={locale} />
 
             {/* Footer */}
-            <Footer msg={msg} />
+            <Footer msg={msg} locale={locale} />
 
             <style jsx>{`
         /* Main container - height determined by background image */
@@ -609,27 +609,72 @@ function LastSection({ locale }: { locale: "ru" | "en" }) {
 
 /* Header component */
 function Header({ msg, locale }: { msg: any; locale: "ru" | "en" }) {
-    const pathname = usePathname()
+    const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const link = (href: string, label: string) => (
+        <a href={href} className="block py-2 px-3 rounded-lg text-[14px] text-white/90 hover:text-white hover:bg-white/10 transition-colors text-center w-full" onClick={() => setIsMenuOpen(false)}>
+            {label}
+        </a>
+    )
     return (
-        <header className="sticky top-0 z-20 bg-black">
+        <header className="sticky top-0 z-20 bg-black/85 backdrop-blur supports-[backdrop-filter]:bg-black/70 relative">
             <div className="container-max py-3">
-                <div className="flex items-center gap-2">
-                    <Image src="/images/header_logo.svg" alt="PRIX Club" width={120} height={40} className="h-10 w-auto" priority />
+                {/* Mobile bar */}
+                <div className="md:hidden flex items-center justify-between">
+                    <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-9 w-auto" priority />
+                    <button
+                        type="button"
+                        aria-label="Open menu"
+                        aria-expanded={isMenuOpen}
+                        onClick={() => setIsMenuOpen((v) => !v)}
+                        className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white"
+                    >
+                        <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-1.5'}`} />
+                        <span className={`absolute h-0.5 w-5 bg-white transition-opacity duration-200 ${isMenuOpen ? 'opacity-0' : 'opacity-90'}`} />
+                        <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1.5'}`} />
+                    </button>
+                </div>
+
+                {/* Desktop nav */}
+                <div className="hidden md:flex items-center gap-2">
+                    <Image
+                        src="/images/header_logo.svg"
+                        alt="PRIX Club"
+                        width={120}
+                        height={40}
+                        className="h-10 w-auto"
+                        priority
+                    />
                     <div className="flex-1 rounded-full border border-white/15 bg-black/40 px-4 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)] backdrop-blur">
                         <div className={`flex h-10 items-center justify-between gap-4 ${geometria.className}`}>
                             <nav className="flex items-center gap-6 text-white/80 text-[13px]">
                                 <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
-                                <a href={`/${locale}/about`} className={`hover:text-white ${pathname?.endsWith('/about') ? 'text-white' : ''}`}>{msg.nav.about}</a>
+                                <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
                                 <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
-                                <a href={`/${locale}#works`} className="hover:text-white">{msg.nav.works}</a>
-                                <a href={`/${locale}/services`} className="text-white hover:text-white">{msg.nav.services}</a>
-                                <a href={`/${locale}#contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+                                <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+                                <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+                                <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
                             </nav>
-                            <div className="flex items-center gap-6 text-[13px]">
-                                <a href={`/${locale}#news`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>
-                                <a href={`/${locale}#reviews`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>
+                            <div className="flex items-center gap-6 text-[13px]" >
+                                <a href={`/${locale}/news`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>
+                                <a href={`/${locale}/reviews`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>
                                 <LanguageSwitch />
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Mobile dropdown */}
+                <div className={`${isMenuOpen ? 'md:hidden' : 'hidden'} mt-2`}>
+                    <div className="rounded-xl border border-white/10 bg-white/8 p-1.5 backdrop-blur shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+                        <div className="rounded-lg bg-gradient-to-b from-white/8 to-white/3 p-1.5">
+                            <nav className={`flex flex-col items-center ${geometria.className}`}>
+                                {link(`/${locale}`, msg.nav.main)}
+                                {link(`/${locale}/about`, msg.nav.about)}
+                                {link(`/${locale}/team`, msg.nav.team)}
+                                {link(`/${locale}/cases`, msg.nav.works)}
+                                {link(`/${locale}/services`, msg.nav.services)}
+                                {link(`/${locale}/contacts`, msg.nav.contacts)}
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -675,18 +720,46 @@ function LanguageSwitch() {
     )
 }
 
-function Footer({ msg }: { msg: any }) {
+function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
     return (
         <footer id="contacts" className="bg-black py-8 md:py-10 text-white">
             <div className="container-max">
-                <div className="grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
+                {/* Mobile layout */}
+                <div className="md:hidden flex flex-col items-center text-center gap-4">
+                    <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-16 w-auto opacity-80" />
+                    <nav className={`flex flex-col items-center gap-2 text-white/80 ${geometria.className}`}>
+                        <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+                        <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+                        <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+                        <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+                        <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+                        <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+                    </nav>
+                    <div className="mt-2">
+                        <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+                            <span className="inline-flex items-center gap-2">
+                                <span>+7 424 424 42 42</span>
+                                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
+                            </span>
+                        </a>
+                        <a className="mt-2 inline-flex items-center gap-2 font-semibold text-[16px]" href="mailto:prix@prixclub.ru">
+                            <span>prix@prixclub.ru</span>
+                            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">✉</span>
+                        </a>
+                    </div>
+                </div>
+
+                {/* Desktop layout */}
+                <div className="hidden md:grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
                     <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
                         <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
                     </div>
-                    <FooterColumn title="Навигация" rows={['Главная', 'О нас', 'Команда']} />
-                    <FooterColumn title="Разделы" rows={['Работы', 'Услуги', 'Контакты']} />
-                    <FooterColumn title="Инфо" rows={['Новости', 'Отзывы']} />
-                    <div className="md:col-span-3" />
+                    <FooterColumn title={msg.nav.main} rows={[msg.nav.main, msg.nav.main, msg.nav.main]} />
+                    <FooterColumn title={msg.nav.about} rows={[msg.nav.about, msg.nav.about, msg.nav.about]} />
+                    <FooterColumn title={msg.nav.team} rows={[msg.nav.team, msg.nav.team, msg.nav.team]} />
+                    <FooterColumn title={msg.nav.works} rows={[msg.nav.works, msg.nav.works, msg.nav.works]} />
+                    <FooterColumn title={msg.nav.services} rows={[msg.nav.services, msg.nav.services, msg.nav.services]} />
+                    <FooterColumn title={msg.nav.contacts} rows={[msg.nav.contacts, msg.nav.contacts, msg.nav.contacts]} />
                     <div className="text-right">
                         <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
                             <span className="inline-flex items-center gap-2">
@@ -701,7 +774,6 @@ function Footer({ msg }: { msg: any }) {
                     </div>
                 </div>
                 <div className="mt-8 h-px w-full bg-white/25" />
-                <div className="pt-3 text-center text-white/60 text-[12px]">{msg.footer.copy}</div>
             </div>
         </footer>
     )
