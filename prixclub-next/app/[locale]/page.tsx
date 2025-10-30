@@ -47,7 +47,7 @@ export default function Page() {
         <ContactSection locale={locale} />
         {/* <Team msg={msg} locale={locale} /> */}
       </main>
-      <Footer msg={msg} />
+      <Footer msg={msg} locale={locale} />
     </>
   )
 }
@@ -60,7 +60,6 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
       years: 'Years of work',
       awards: 'Awards',
       clients: 'Major clients',
-      list: ['NCF', 'DEVELOPMENT', 'MEDIA', 'MARKETING', 'INTERNATIONAL', 'TRADE'],
     }
     : {
       industries: 'Отрасли,\nс которыми работаем',
@@ -68,132 +67,100 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
       years: 'Лет работы',
       awards: 'Награды',
       clients: 'Ключевые клиенты',
-      list: ['НКО', 'ДЕВЕЛОПМЕНТ', 'МЕДИА', 'МАРКЕТИНГ', 'МЕЖДУНАР.', 'ТОРГОВЛЯ'],
     }
 
-  // refs на фон (картинка) для корректной выборки текстуры
-  const sectionRef = useRef<HTMLDivElement | null>(null)
-  const bgImgWrapRef = useRef<HTMLDivElement | null>(null)
+  const list = locale === 'en'
+    ? ['NCF', 'DEVELOPMENT', 'MEDIA', 'MARKETING', 'INTERNATIONAL', 'TRADE']
+    : ['НКО', 'ДЕВЕЛОПМЕНТ', 'МЕДИА', 'МАРКЕТИНГ', 'МЕЖДУНАР.', 'ТОРГОВЛЯ']
 
   return (
-    <section id="stats" className="relative">
-      <div ref={sectionRef} className="relative">
-        {/* Фон (тот самый, из которого будем сэмплить в шейдере) */}
-        <div ref={bgImgWrapRef} className="relative">
-          <Image
-            src="/images/up_background_green.svg"
-            alt=""
-            width={1920}
-            height={1080}
-            className="w-full h-auto select-none pointer-events-none"
-            priority
-          />
+    <section id="stats" className={`${geometria.className}`}>
+      <div className="stats-root">
+        {/* BG group */}
+        <div className="bg-circle" />
+        <div className="bg-hue" />
+
+        {/* Cards (absolute layout) */}
+        <div className="card tl" />
+        <div className="card left-tall">
+          <ul className="ind-list">
+            {list.map((x) => (
+              <li key={x}>{x}</li>
+            ))}
+          </ul>
         </div>
 
-        {/* Контент поверх фона */}
-        <div className="absolute inset-0">
-          <div className={`container-max h-full py-8 md:py-14 ${geometria.className}`}>
-            <div className="grid grid-cols-1 gap-5 md:grid-cols-12 md:auto-rows-[120px]">
+        <div className="realised-box">
+          <div className="num">52</div>
+          <div className="label" dangerouslySetInnerHTML={{ __html: t.realised.replace('\n', '<br/>') }} />
+        </div>
 
-              <PhysicalLensCard
-                sectionRef={sectionRef}
-                bgImgWrapRef={bgImgWrapRef}
-                edgePx={50}
-                eyeOffsetX={-10}
-                eyeOffsetY={-10}
-                className="md:col-start-1 md:col-span-2 md:row-start-1 md:row-span-1 rounded-[14px] border border-white/20 bg-white/5 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05)]"
-              />
+        <div className="card small-years">
+          <div className="num dim">8</div>
+          <div className="sub dim">{t.years}</div>
+        </div>
 
-              <PhysicalLensCard
-                sectionRef={sectionRef}
-                bgImgWrapRef={bgImgWrapRef}
-                edgePx={50}
-                eyeOffsetX={0}
-                eyeOffsetY={0}
-                className="md:col-start-3 md:col-span-4 md:row-start-1 md:row-span-3 rounded-[18px] border border-white/20 bg-white/5 p-8 flex flex-col"
-              >
-                <div className="text-white/95 text-[72px] md:text-[88px] leading-none font-light">52</div>
-                <div className="mt-auto text-white whitespace-pre-line text-[24px] md:text-[28px] font-light">{t.realised}</div>
-              </PhysicalLensCard>
-
-              <PhysicalLensCard
-                sectionRef={sectionRef}
-                bgImgWrapRef={bgImgWrapRef}
-                edgePx={50}
-                eyeOffsetX={12}
-                eyeOffsetY={-8}
-                className="md:col-start-7 md:col-span-4 md:row-start-1 md:row-span-2 rounded-[14px] border border-white/20 bg-white/5 p-6 flex flex-col"
-              >
-                <div className="text-white/90 text-[72px] md:text-[88px] leading-none font-light">8</div>
-                <div className="mt-auto text-white/80 text-[24px] md:text-[28px] font-light">{t.years}</div>
-              </PhysicalLensCard>
-
-              <PhysicalLensCard
-                sectionRef={sectionRef}
-                bgImgWrapRef={bgImgWrapRef}
-                edgePx={50}
-                eyeOffsetX={18}
-                eyeOffsetY={12}
-                className="md:col-start-11 md:col-span-2 md:row-start-1 md:row-span-2 rounded-[14px] border border-white/20 bg-white/5"
-              />
-
-              <PhysicalLensCard
-                sectionRef={sectionRef}
-                bgImgWrapRef={bgImgWrapRef}
-                edgePx={50}
-                eyeOffsetX={-14}
-                eyeOffsetY={10}
-                className="md:col-start-1 md:col-span-2 md:row-start-2 md:row-span-4 rounded-[18px] border border-white/20 bg-white/5 p-6 flex flex-col"
-              >
-                <ul className="text-white/80 space-y-2 uppercase tracking-wide text-[15px] md:text-[16px] font-medium">
-                  {t.list.map((x) => (
-                    <li key={x} className="tracking-wide">{x}</li>
-                  ))}
-                </ul>
-                <div className="mt-auto text-white/70 whitespace-pre-line text-[24px] md:text-[28px] font-light normal-case">
-                  {t.industries}
-                </div>
-              </PhysicalLensCard>
-
-              <PhysicalLensCard
-                sectionRef={sectionRef}
-                bgImgWrapRef={bgImgWrapRef}
-                edgePx={50}
-                eyeOffsetX={6}
-                eyeOffsetY={0}
-                className="md:col-start-7 md:col-span-6 md:row-start-3 md:row-span-1 rounded-[14px] border border-white/20 bg-white/5 p-6 flex items-center justify-between"
-              >
-                <div className="text-white/85 text-[24px] md:text-[28px] font-light">{t.awards}</div>
-                <div className="flex items-center gap-8 opacity-90">
-                  {Array.from({ length: 3 }).map((_, i) => (
-                    <Image key={i} src="/images/awards_logo.svg" alt="award" width={72} height={44} className="opacity-85" />
-                  ))}
-                </div>
-              </PhysicalLensCard>
-
-              <PhysicalLensCard
-                sectionRef={sectionRef}
-                bgImgWrapRef={bgImgWrapRef}
-                edgePx={50}
-                eyeOffsetX={12}
-                eyeOffsetY={8}
-                className="relative md:col-start-3 md:col-span-10 md:row-start-4 md:row-span-2 rounded-[14px] border border-white/20 bg-white/5 p-6 overflow-hidden"
-              >
-                <Image src="/images/Heart_icon.svg" alt="heart" width={120} height={120} className="absolute left-6 top-5 opacity-90" />
-                <div className="h-full flex items-center justify-end gap-10 pr-2 opacity-90">
-                  {['/images/tryangle_logo.svg', '/images/ФРСК_logo.svg', '/images/tryangle_logo.svg', '/images/ФРСК_logo.svg', '/images/tryangle_logo.svg'].map((p, i) => (
-                    <Image key={i} src={p} alt="client" width={72} height={40} className="opacity-85" />
-                  ))}
-                </div>
-                <div className="absolute left-5 bottom-4 text-white/80 text-[24px] md:text-[28px] font-light">
-                  {t.clients}
-                </div>
-              </PhysicalLensCard>
-
-            </div>
+        <div className="card small-awards">
+          <div className="sub dim">{t.awards}</div>
+          <div className="awards-logos">
+            <Image src="/images/awards_logo.svg" alt="award" width={63} height={55} className="op" />
+            <Image src="/images/awards_logo.svg" alt="award" width={63} height={55} className="op" />
+            <Image src="/images/awards_logo.svg" alt="award" width={63} height={55} className="op" />
           </div>
         </div>
+
+        <div className="card right-tall" />
+
+        <div className="card bottom-wide">
+          <Image src="/images/Heart_icon.svg" alt="heart" width={60} height={60} style={{ width: '4vw', height: '4vw', position: 'absolute', left: '4%', top: '18%', opacity: 0.99, zIndex: 2 }} />
+          <div className="clients dim">{t.clients}</div>
+          <div className="logos">
+            {['/images/tryangle_logo.svg', '/images/ФРСК_logo.svg', '/images/tryangle_logo.svg', '/images/ФРСК_logo.svg', '/images/tryangle_logo.svg'].map((src, i) => (
+              <Image key={i} src={src} alt="client" width={62} height={40} className="op" />
+            ))}
+          </div>
+        </div>
+
+        <div className="industries dim" dangerouslySetInnerHTML={{ __html: t.industries.replace('\n', '<br/>') }} />
       </div>
+
+      <style jsx>{`
+        .stats-root{position:relative;width:100vw;height:calc(100vw * 0.5625);margin:0 auto;background:transparent;overflow:hidden}
+
+        .bg-circle{position:absolute;inset:0;background:url('/images/up_background_green.svg') center/cover no-repeat;opacity:1;z-index:0;pointer-events:none}
+        .bg-hue{position:absolute;inset:0;background:#74AA9C;mix-blend-mode:color;opacity:.45;z-index:1;pointer-events:none}
+
+        /* Cards positions as % of 1440x810 */
+        .card{position:absolute;background:rgba(255,255,255,.04);border-radius:20px;overflow:hidden;z-index:2}
+        .tl{left:8.333%;top:14.815%;width:19.583%;height:14.815%;background-image:url('/images/main/card_top_left_background.png');background-size:cover;background-position:center}
+        .left-tall{left:8.333%;top:32.099%;width:19.583%;height:53.086%;background-image:url('/images/main/card_industries_we_serve_background.png');background-size:cover;background-position:center}
+        .ind-list{position:absolute;left:8.854%;top:12.174%;width:77.305%;height:44.186%;margin:0;padding:0;list-style:none;color:#fff;opacity:.3;font-weight:700;font-size:1.49vw;line-height:130%;text-transform:uppercase}
+        .ind-list li{margin:0.6vw 0}
+        .right-tall{left:79.167%;top:14.815%;width:12.5%;height:28.889%;background-image:url('/images/main/card_right_up_background.png');background-size:cover;background-position:center}
+        .small-years{left:57.917%;top:14.815%;width:19.583%;height:28.889%;background-image:url('/images/main/card_years_of_work_background.png');background-size:cover;background-position:center}
+        .small-awards{left:57.917%;top:46.173%;width:33.75%;height:16.049%;background-image:url('/images/main/card_awards_background.png');background-size:cover;background-position:center}
+        .bottom-wide{left:29.583%;top:64.691%;width:62.083%;height:20.494%;background-image:url('/images/main/card_major_clients_background.png');background-size:cover;background-position:center}
+
+        .realised-box{position:absolute;left:29.583%;top:14.815%;width:26.667%;height:47.407%;background:linear-gradient(45deg,#53897B 0%,#2E6456 100%);box-shadow:0 0 40px rgba(134,188,174,.3);border-radius:20px;z-index:2}
+        .num{position:absolute;color:#fff;font-weight:300;font-size:5.73vw;line-height:1}
+        .realised-box .num{left:8.854%;top:4.167%}
+        .label{position:absolute;color:#fff;font-weight:400;font-size:1.944vw;line-height:0.9}
+        .realised-box .label{left:8.854%;top:80.469%}
+
+        .dim{opacity:.3;color:#fff}
+        .small-years .num{left:10.638%;top:6.838%}
+        .small-years .sub{position:absolute;left:12.056%;top:78.205%;font-size:1.944vw;line-height:0.9}
+        .small-awards .sub{position:absolute;left:6.997%;top:58.462%;font-size:1.944vw;line-height:0.9}
+        .awards-logos{position:absolute;right:17.997%;top:29.231%;display:flex;gap:14%}
+        .awards-logos :global(img){width:4.2vw;height:auto}
+
+        .industries{position:absolute;left:10.694%;top:76.296%;font-size:1.944vw;line-height:0.9;display:flex;align-items:flex-end;z-index:2}
+        .clients{position:absolute;left:3.802%;top:71.686%;font-size:1.944vw;line-height:0.9;z-index:2}
+        .logos{position:absolute;left:37.595%;top:33.133%;display:flex;gap:16.8%;z-index:2}
+        .logos :global(img){width:4.2vw;height:auto;flex:0 0 auto}
+        .heart{position:absolute;left:4.924%;top:15.663%;opacity:.99;z-index:2;width:6.71%;height:auto}
+        .op{opacity:.3}
+      `}</style>
     </section>
   )
 }
@@ -228,7 +195,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
         <div className="absolute inset-0">
           <div className={`container-max h-full ${geometria.className}`}>
             <div className="flex h-full flex-col">
-              <h2 className="pt-14 md:pt-20 text-center text-white text-4xl md:text-5xl font-medium">{title}</h2>
+              <h2 className="pt-14 md:pt-20 text-center text-white text-4xl md:text-5xl font-medium clients-title">{title}</h2>
 
               <div className="flex-1 flex flex-col items-center justify-center">
                 <div className="relative w-full flex items-center justify-center">
@@ -256,7 +223,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                     </svg>
                   </button>
                   <div ref={logoBoxRef} className="px-8 md:px-24">
-                    <Image src={logos[idx]} alt="client" width={820} height={280} className="w-[420px] md:w-[820px] h-auto mx-auto" onLoadingComplete={() => {
+                    <Image src={logos[idx]} alt="client" width={820} height={280} className="h-auto mx-auto clients-logo" onLoadingComplete={() => {
                       const el = logoBoxRef.current?.querySelector('img')
                       if (el) setLogoH(el.getBoundingClientRect().height)
                     }} />
@@ -306,7 +273,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                 <div className="relative max-w-4xl w-full mx-auto">
                   <div className="h-px w-3/4 md:w-2/3 mx-auto bg-gradient-to-r from-transparent via-white to-transparent" />
                   <p
-                    className="mt-6 text-center font-light text-[20px] leading-[28px] mx-auto w-[960px] max-w-full"
+                    className="mt-6 text-center font-light text-[20px] leading-[28px] mx-auto w-[960px] max-w-full clients-desc"
                     style={{
                       background: 'linear-gradient(90deg, rgba(255, 255, 255, 0.25) 0%, #FFFFFF 50%, rgba(255, 255, 255, 0.25) 100%)',
                       WebkitBackgroundClip: 'text',
@@ -324,6 +291,12 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        /* Our Clients — fluid scaling using vw */
+        .clients-title{ font-size: clamp(22px, 6.5vw, 48px); }
+        .clients-logo{ width: 20vw; max-width: 820px; min-width: 120px; }
+        .clients-desc{ font-size: clamp(14px, 4.2vw, 20px); line-height: clamp(20px, 6vw, 28px); }
+      `}</style>
     </section>
   )
 }
@@ -350,27 +323,20 @@ function ServicesNew({ locale }: { locale: 'ru' | 'en' }) {
   const title = locale === 'en' ? 'Our Services' : 'Наши Услуги'
   return (
     <section id="services-next" className={`relative ${geometria.className}`}>
-      <div className="relative">
-        <Image
-          src="/images/our_services_background.svg"
-          alt=""
-          width={1920}
-          height={1080}
-          className="w-full h-auto select-none pointer-events-none"
-          priority
-        />
-        <div className="absolute inset-0 bg-white/30" />
-        <div className="absolute inset-0">
-          <div className="container-max h-full">
-            <div className="h-full flex flex-col items-center justify-center">
-              <h2 className="text-center text-[#0a0a0a] text-4xl md:text-6xl font-medium mb-8 md:mb-12">{title}</h2>
+      <div className="relative os-section">
+        <div className="os-bg" />
+        <div className="os-shade" />
+        <div className="relative">
+          <div className="container-max">
+            <div className="py-16 md:py-24 flex flex-col items-center justify-center">
+              <h2 className="text-center text-[#0a0a0a] os-title font-medium mb-8 md:mb-12">{title}</h2>
               <div className="mx-auto max-w-[1120px] grid grid-cols-1 md:grid-cols-3 gap-x-14 gap-y-12 text-[#0a0a0a] mt-10 md:mt-16">
                 {items.map((it, i) => (
                   <div key={i} className="flex items-start gap-4">
-                    <span className="mt-1.5 inline-block h-3 w-3 rotate-45 bg-[#0a0a0a]" />
+                    <span className="mt-1.5 inline-block h-3 w-3 rotate-45 bg-[#0a0a0a] os-bullet" />
                     <div>
-                      <div className="text-[24px] md:text-[26px] leading-[1.25] font-semibold">{it.t}</div>
-                      <div className="mt-2 text-[20px] md:text-[21px] leading-[1.6] text-[#0a0a0a]/70 max-w-[340px]">{it.d}</div>
+                      <div className="leading-[1.25] font-semibold os-item-title md:text-[26px] md:leading-[1.25]">{it.t}</div>
+                      <div className="mt-2 leading-[1.6] text-[#0a0a0a]/70 max-w-[340px] os-item-desc md:text-[21px]">{it.d}</div>
                     </div>
                   </div>
                 ))}
@@ -379,6 +345,17 @@ function ServicesNew({ locale }: { locale: 'ru' | 'en' }) {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        /* Make the section taller on mobile so cards stay inside; background may crop */
+        .os-section{min-height: clamp(800px, 40vw, 1600px)}
+        .os-bg{position:absolute;inset:0;background:url('/images/our_services_background.svg') center/cover no-repeat}
+        .os-shade{position:absolute;inset:0;background:rgba(255,255,255,0.3)}
+        /* Fluid text sizing on mobile */
+        .os-title{font-size: clamp(22px, 6vw, 48px)}
+        .os-bullet{width: clamp(8px, 2.5vw, 12px); height: clamp(8px, 2.5vw, 12px)}
+        .os-item-title{font-size: clamp(16px, 4.5vw, 24px)}
+        .os-item-desc{font-size: clamp(14px, 3.8vw, 20px)}
+      `}</style>
     </section>
   )
 }
@@ -398,37 +375,27 @@ function TestimonialsNew({ locale }: { locale: 'ru' | 'en' }) {
       ]
   return (
     <section id="testimonials" className={`relative ${geometria.className}`}>
-      <div className="relative">
-        <Image
-          src="/images/team_background.svg"
-          alt=""
-          width={1920}
-          height={1080}
-          className="w-full h-auto select-none pointer-events-none"
-          priority
-        />
-        <div className="absolute inset-0 bg-white/30" />
-        <div className="absolute inset-0">
-          <div className="container-max h-full">
-            <div className="h-full grid items-center">
+      <div className="relative t-section">
+        <div className="t-bg" />
+        <div className="t-shade" />
+        <div className="relative t-inner">
+          <div className="container-max">
+            <div className="grid items-center">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-10 max-w-[1220px] mx-auto">
                 {items.map((it, i) => (
                   <div key={i} className="relative rounded-[18px] border border-black/5 bg-white/35 backdrop-blur-[2px] shadow-[0_6px_24px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(255,255,255,0.35)]">
-                    {/* inner subtle light gradient */}
                     <div className="absolute inset-0 rounded-[18px] pointer-events-none" style={{ background: 'radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.08) 100%)' }} />
-                    {/* top-left chevrons */}
                     <svg className="absolute -top-7 left-4 text-black/70" width="72" height="56" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M16 2 L8 12 L16 22" stroke="currentColor" strokeWidth="1" fill="none" />
                       <path d="M28 2 L20 12 L28 22" stroke="currentColor" strokeWidth="1" fill="none" />
                     </svg>
-                    {/* bottom-right chevrons */}
                     <svg className="absolute -bottom-7 right-4 rotate-180 text-black/70" width="72" height="56" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M16 2 L8 12 L16 22" stroke="currentColor" strokeWidth="1" fill="none" />
                       <path d="M28 2 L20 12 L28 22" stroke="currentColor" strokeWidth="1" fill="none" />
                     </svg>
                     <div className="relative p-7 md:p-8 text-[#0a0a0a]">
-                      <div className="text-[22px] md:text-[24px] font-semibold mb-4">{it.name}</div>
-                      <div className="text-[16px] md:text-[17px] leading-[1.6] text-[#0a0a0a]/75">{it.text}</div>
+                      <div className="font-semibold mb-4 tm-name">{it.name}</div>
+                      <div className="tm-text text-[#0a0a0a]/75">{it.text}</div>
                     </div>
                   </div>
                 ))}
@@ -437,6 +404,15 @@ function TestimonialsNew({ locale }: { locale: 'ru' | 'en' }) {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        /* Testimonials — mobile like ServicesNew */
+        .t-section{min-height: clamp(800px, 40vw, 1400px); position: relative}
+        .t-inner{min-height: inherit; display: grid; align-items: center}
+        .t-bg{position:absolute;inset:0;background:url('/images/team_background.svg') center/cover no-repeat}
+        .t-shade{position:absolute;inset:0;background:rgba(255,255,255,0.30)}
+        .tm-name{font-size: clamp(18px, 5vw, 24px)}
+        .tm-text{font-size: clamp(14px, 4.2vw, 17px); line-height: clamp(20px, 6vw, 28px)}
+      `}</style>
     </section>
   )
 }
@@ -954,21 +930,15 @@ function Hero({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
   }
   return (
     <section className="relative overflow-hidden bg-black">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className={`container-max grid min-h-[680px] grid-cols-1 items-center gap-12 py-20 md:grid-cols-2 ${geometria.className}`}
-      >
+      <div className={`container-max grid min-h-[680px] grid-cols-1 items-center gap-12 py-20 md:grid-cols-2 ${geometria.className}`}>
         <div>
-          <h1 className="mb-16 text-7xl font-bold leading-tight md:text-8xl">
+          <h1 className="mb-16 font-bold leading-tight text-center md:text-left hero-title">
             PRIX Club
           </h1>
-          <div className="space-y-1 text-3xl font-semibold md:text-4xl">
-            <div className="text-white/90">{lines[locale][0]}</div>
+          <div className="space-y-1 font-semibold text-center md:text-left">
+            <div className="text-white/90 hero-line">{lines[locale][0]}</div>
             <div
-              className="inline-block bg-clip-text text-transparent text-[54px] md:text-[48px] leading-[1.15] pb-[2px] md:pb-[3px]"
+              className="inline-block bg-clip-text text-transparent leading-[1.15] pb-[2px] md:pb-[3px] hero-accent"
               style={{
                 background: 'linear-gradient(89.26deg, #53897B 0.3%, #86BCAE 27.76%, #53897B 56.54%, #86BCAE 77.7%, #2E6456 99.68%)',
                 WebkitBackgroundClip: 'text',
@@ -977,7 +947,7 @@ function Hero({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
             >
               {lines[locale][1]}
             </div>
-            <div className="text-white/90">{lines[locale][2]}</div>
+            <div className="text-white/90 hero-line">{lines[locale][2]}</div>
           </div>
         </div>
         <div className="flex items-center justify-center">
@@ -990,7 +960,12 @@ function Hero({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
             priority
           />
         </div>
-      </motion.div>
+      </div>
+      <style jsx>{`
+        .hero-title{font-size:clamp(52px,10vw,96px)}
+        .hero-line{font-size:clamp(28px,4.2vw,36px)}
+        .hero-accent{font-size:clamp(34px,6vw,54px)}
+      `}</style>
     </section>
   )
 }
@@ -1010,7 +985,7 @@ function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
     <section id="services" className="relative py-20 bg-white text-[#0a0a0a]">
       <div className="container-max">
         {/* Intro paragraph */}
-        <p className="mx-auto mb-10 max-w-[820px] text-center text-[27px] leading-[34px] font-medium">
+        <p className="mx-auto mb-10 max-w-[820px] text-center text-[20px] leading-[28px] md:text-[27px] md:leading-[34px] font-medium">
           <span
             className="inline-block bg-clip-text text-transparent"
             style={{
@@ -1027,7 +1002,7 @@ function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
         {/* Cards */}
         <div className="mx-auto grid max-w-[1120px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((c) => (
-            <div key={c.key} className="relative overflow-hidden rounded-[20px] bg-black" style={{ aspectRatio: '282/153' }}>
+            <div key={c.key} className="relative overflow-hidden rounded-[20px] bg-black srv-card mx-auto">
               <Image src={c.img} alt="" fill className="object-cover [filter:contrast(1.05)_saturate(0.9)]" />
               <div className="absolute inset-0" style={{ background: '#2E6456', mixBlendMode: 'multiply', opacity: 0.75 }} />
               <div className="absolute inset-0 grid place-items-center p-4">
@@ -1042,13 +1017,23 @@ function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
                 </div>
               </div>
               <div className="pointer-events-none absolute inset-0 grid place-items-center p-6">
-                <div className={`text-center text-[27px] leading-[1.1] font-semibold text-white whitespace-pre-line ${geometria.className}`}>
+                <div className={`text-center srv-title leading-[1.1] font-semibold text-white whitespace-pre-line ${geometria.className}`}>
                   {c.title}
                 </div>
               </div>
             </div>
           ))}
         </div>
+        <style jsx>{`
+          .srv-card{aspect-ratio:282/153;width:100%}
+          @media (max-width:640px){
+            .srv-card{width:80%;aspect-ratio:210/120;border-radius:12px}
+            .srv-title{font-size:18px}
+          }
+          @media (min-width:641px){
+            .srv-title{font-size:27px}
+          }
+        `}</style>
       </div>
     </section>
   )
@@ -1110,11 +1095,37 @@ function FooterColumn({ title, rows }: { title: string; rows: string[] }) {
   )
 }
 
-function Footer({ msg }: { msg: any }) {
+function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
   return (
     <footer id="contacts" className="bg-black py-8 md:py-10 text-white">
       <div className="container-max">
-        <div className="grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
+        {/* Mobile layout */}
+        <div className="md:hidden flex flex-col items-center text-center gap-4">
+          <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-16 w-auto opacity-80" />
+          <nav className={`flex flex-col items-center gap-2 text-white/80 ${geometria.className}`}>
+            <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+            <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+            <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+            <a href={`/${locale}/works`} className="hover:text-white">{msg.nav.works}</a>
+            <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+            <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+          </nav>
+          <div className="mt-2">
+            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+              <span className="inline-flex items-center gap-2">
+                <span>+7 424 424 42 42</span>
+                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
+              </span>
+            </a>
+            <a className="mt-2 inline-flex items-center gap-2 font-semibold text-[16px]" href="mailto:prix@prixclub.ru">
+              <span>prix@prixclub.ru</span>
+              <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">✉</span>
+            </a>
+          </div>
+        </div>
+
+        {/* Desktop layout */}
+        <div className="hidden md:grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
           <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
             <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
           </div>
