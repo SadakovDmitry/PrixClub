@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import '../globals.css'
+import { geometria } from '../../src/fonts/geometria'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://prixclub.example'),
@@ -18,7 +19,7 @@ export default function LocaleLayout({
   params: { locale: string }
 }) {
   return (
-    <html lang={locale} className="bg-bg text-white">
+    <html lang={locale} className={`bg-bg text-white ${geometria.className}`}>
       <body className="min-h-screen bg-bg selection:bg-brand/30 selection:text-white">
         {children}
       </body>

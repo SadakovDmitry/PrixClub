@@ -98,7 +98,7 @@ function ProjectsSection({ locale }: { locale: "ru" | "en" }) {
             icon: '/images/cases/FRSK_icon.svg',
             bgImage: '/images/cases/card_background_2.png',
             subBgImage: '/images/cases/sub_card_background_2.png',
-            href: `/${locale}/progects/1`
+            href: `/${locale}/projects/1`
         },
         {
             id: 2,
@@ -110,7 +110,7 @@ function ProjectsSection({ locale }: { locale: "ru" | "en" }) {
             icon: '/images/cases/IEA_icon.svg',
             bgImage: '/images/cases/card_background.png',
             subBgImage: '/images/cases/sub_card_background.png',
-            href: `/${locale}/progects/2`
+            href: `/${locale}/projects/2`
         },
         {
             title: locale === 'ru' ? 'Проект Пхеньян Тревел' : 'Pyongyang Travel Project',

@@ -6,7 +6,8 @@
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy:reg": "pm2 start npm --name prixclub -- start"
   },
   "dependencies": {
     "class-variance-authority": "0.7.0",
