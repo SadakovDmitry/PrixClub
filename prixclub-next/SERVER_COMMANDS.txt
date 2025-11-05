@@ -1,0 +1,14 @@
+# Команды для выполнения на сервере
+
+cd /var/www/sites/PrixClub/prixclub-next
+git pull
+npm install
+npm run build
+sudo npm install -g pm2
+pm2 start npm --name prixclub -- start
+pm2 save
+pm2 startup
+
+# Команда от PM2 (скопируйте её вывод):
+
+
