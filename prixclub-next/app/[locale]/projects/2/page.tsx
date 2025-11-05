@@ -336,7 +336,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
         </div>
       </section>
 
-      <Footer msg={msg} />
+      <Footer msg={msg} locale={locale} />
 
       <style jsx>{`
         .hero-section {

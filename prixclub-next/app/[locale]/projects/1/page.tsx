@@ -278,7 +278,7 @@ export default function ProjectsPage({ params: { locale } }: { params: { locale:
         </div>
       </section>
 
-      <Footer msg={msg} />
+      <Footer msg={msg} locale={locale} />
 
       {/* Styles (hero full-bleed; убраны фиксированные размеры у секций) */}
       <style jsx>{`
