@@ -12,56 +12,76 @@ type CaseItem = {
 
 function CaseCard({ icon, bg, href = "#" }: CaseItem) {
   return (
-    <article
-      className="
-        relative
-        w-full
-        overflow-hidden
-        rounded-[26px]
-        ring-1 ring-white/10
-        shadow-[0_14px_40px_rgba(0,0,0,0.3)]
-        aspect-[4/3]
-      "
-    >
-      {/* ФОН - ПРОСТО PNG, ВНИЗУ */}
-      <Image
-        src={bg}
-        alt=""
-        fill
-        sizes="(max-width: 768px) 100vw, 33vw"
-        className="object-cover"
-        priority={false}
-      />
+    <article className="relative rounded-[26px] overflow-hidden aspect-[1/0.9] bg-[#061018]">
+      {/* фон */}
+      <div className="absolute inset-0">
+        <Image
+          src={bg}
+          alt=""
+          fill
+          className="object-contain object-center"
+          sizes="(max-width: 768px) 100vw, 33vw"
+          priority={false}
+        />
+      </div>
 
-      {/* СЛОЙ ДЛЯ КОНТЕНТА */}
-      <div
-        className="
-          absolute inset-0
-          flex flex-col items-center justify-center
-          gap-6
-          px-4
-        "
-      >
-        {/* иконка СТРОГО по центру картинки */}
-        <div className="w-[35%] aspect-square text-[#E5E7EB] flex items-center justify-center relative">
+      {/* лёгкое затемнение, чтобы кнопка читалась */}
+      <div className="absolute inset-0 bg-black/10" />
+
+      {/* контент по центру */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-6 px-4">
+        {/* иконка */}
+        <div className="w-44 h-24 text-[#E5E7EB] flex items-center justify-center relative">
           {icon}
         </div>
 
-        {/* кнопка под иконкой */}
-        <a
-          href={href}
-          className="
-            inline-flex items-center justify-center gap-[8%]
-            rounded-full
-            w-[40%] py-[3%]
-            bg-gradient-to-r from-[#1D5DFF] to-[#56A7FF]
-            text-white text-base font-medium
-          "
-        >
-          <span className="text-[clamp(16px,2.5vw,20px)]">Смотреть кейс</span>
-          <span className="inline-flex w-[10%] aspect-square items-center justify-center rounded-full bg-white text-[#0b1623] text-[clamp(16px,2.5vw,20px)]">
-            →
-          </span>
+        {/* кнопка */}
+        <a href={href} className="block">
+          <button
+            className="relative inline-flex items-center justify-center"
+            style={{
+              height: 'clamp(84px, 4vw, 64px)',
+              width: 'clamp(240px, 15vw, 240px)'
+            }}
+          >
+            {/* фон-кнопка */}
+            <Image
+              src="/images/projects/Rectangle 3270.svg"
+              alt=""
+              width={380}
+              height={120}
+              className="pointer-events-none select-none w-full h-full"
+              style={{ objectFit: 'fill' }}
+            />
+
+            {/* текст по центру */}
+            <span
+              className="absolute inset-y-0 flex items-center text-white whitespace-nowrap"
+              style={{
+                left: 'clamp(40px, 2vw, 32px)',
+                fontSize: 'clamp(14px, 1.5vw, 18px)'
+              }}
+            >
+              Смотреть кейс
+            </span>
+
+            {/* стрелочка справа */}
+            <span
+              className="absolute inset-y-0 flex items-center"
+              style={{ left: 'clamp(180px, 1.5vw, 24px)' }}
+            >
+              <Image
+                src="/images/projects/Exclude.svg"
+                alt=""
+                width={24}
+                height={24}
+                style={{
+                  width: 'clamp(18px, 1.5vw, 24px)',
+                  height: 'clamp(18px, 1.5vw, 24px)'
+                }}
+              />
+            </span>
+          </button>
         </a>
       </div>
     </article>
@@ -90,8 +110,7 @@ export default function ProjectsPage({ params: { locale } }: { params: { locale:
   const cases: CaseItem[] = [
     {
       icon: <Icon1 />,
-      bg: "/images/projects/case_1.png",
-      href: `/${locale}/projects/2`
+      bg: "/images/projects/case_1.png"
     },
     {
       icon: <Icon2 />,
@@ -124,14 +143,14 @@ export default function ProjectsPage({ params: { locale } }: { params: { locale:
           {/* Дополнительное затемнение без изменения прозрачности (умножение) */}
           <div className="darken-filter z-25" style={{ ['--dark-a' as any]: heroDarkenAlpha }} />
           <div className="absolute inset-0 grid place-items-center px-4 z-30">
-            <h1 className="hero-title" dangerouslySetInnerHTML={{ __html: (locale === 'en' ? 'Cosmonautics<br/>Development Foundation' : 'Фонд Содействия<br/>Развитию Космонавтики') }} />
+            <h1 className="hero-title-responsive" dangerouslySetInnerHTML={{ __html: (locale === 'en' ? 'Cosmonautics<br/>Development Foundation' : 'Фонд Содействия<br/>Развитию Космонавтики') }} />
           </div>
         </div>
       </section>
 
       {/* Frame 174 — белый блок (full-width) */}
       <section className="bg-white text-[#0a0a0a] w-full px-4 lg:px-8 py-12">
-        <p className="mx-auto max-w-[1200px] text-[20px] leading-[25px] font-bold">
+        <p className="mx-auto max-w-[1200px] font-bold" style={{ fontSize: 'clamp(14px, 2.5vw, 20px)', lineHeight: '1.25' }}>
           <span className="blue-text">Lorem ipsum</span>
           — dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
         </p>
@@ -155,7 +174,7 @@ export default function ProjectsPage({ params: { locale } }: { params: { locale:
 
       {/* Frame 176 — заключительный блок (full-width) */}
       <section className="w-full px-4 lg:px-8 py-12 bg-black text-white text-center">
-        <p className="mx-auto max-w-[980px] font-semibold text-[20px] leading-[28px]">
+        <p className="mx-auto max-w-[980px] font-semibold" style={{ fontSize: 'clamp(14px, 2.5vw, 20px)', lineHeight: '1.4' }}>
           <span className="blue-text">Lorem ipsum</span>
           — dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
         </p>
@@ -235,21 +254,35 @@ export default function ProjectsPage({ params: { locale } }: { params: { locale:
       </section>
 
       {/* Секция "Еще кейсы" */}
-      <section id="more-cases" className="w-full px-4 lg:px-8 py-12 bg-black">
-        <h2 className="text-center text-2xl md:text-3xl font-semibold text-white mb-8">Еще кейсы</h2>
+      <section
+        id="more-cases"
+        className="w-full px-4 md:px-8 lg:px-12 py-16 bg-black"
+      >
+        <h2 className="text-center text-2xl md:text-3xl font-semibold text-white mb-10">
+          Еще кейсы
+        </h2>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div
+          className="
+            mx-auto
+            grid
+            gap-8
+            sm:grid-cols-2
+            lg:grid-cols-3
+            max-w-6xl
+          "
+        >
           {cases.map((c, i) => (
             <CaseCard key={i} {...c} />
           ))}
         </div>
       </section>
 
-      <Footer msg={msg} locale={locale} />
+      <Footer msg={msg} />
 
       {/* Styles (hero full-bleed; убраны фиксированные размеры у секций) */}
       <style jsx>{`
-        .hero-title{ margin:0; text-align:center; font-weight:700; font-size:76px; line-height:1.1;
+        .hero-title-responsive{ margin:0; text-align:center; font-weight:700; font-size:clamp(32px, 8vw, 76px); line-height:1.1;
           background: linear-gradient(90deg,#1e40af 0%, #2563eb 45%, #1d4ed8 100%);
           -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; letter-spacing:.2px; }
 
@@ -409,6 +442,7 @@ function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
     </header>
   )
 }
+
 
 function LanguageSwitch() {
   const router = useRouter()

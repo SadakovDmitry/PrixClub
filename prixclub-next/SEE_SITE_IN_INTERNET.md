@@ -16,7 +16,7 @@
 
 ```bash
 ssh deploy@92.242.60.85
-cd /var/www/sites/PrixClub/prixclub-next
+cd var/www/sites/PrixClub/prixclub-next
 
 # Удалите конфликтующий файл
 rm -f app/page.tsx

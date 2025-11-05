@@ -12,56 +12,76 @@ type CaseItem = {
 
 function CaseCard({ icon, bg, href = "#" }: CaseItem) {
   return (
-    <article
-      className="
-        relative
-        w-full
-        overflow-hidden
-        rounded-[26px]
-        ring-1 ring-white/10
-        shadow-[0_14px_40px_rgba(0,0,0,0.3)]
-        aspect-[4/3]
-      "
-    >
-      {/* ФОН - ПРОСТО PNG, ВНИЗУ */}
-      <Image
-        src={bg}
-        alt=""
-        fill
-        sizes="(max-width: 768px) 100vw, 33vw"
-        className="object-cover"
-        priority={false}
-      />
+    <article className="relative rounded-[26px] overflow-hidden aspect-[1/0.9] bg-[#061018]">
+      {/* фон */}
+      <div className="absolute inset-0">
+        <Image
+          src={bg}
+          alt=""
+          fill
+          className="object-contain object-center"
+          sizes="(max-width: 768px) 100vw, 33vw"
+          priority={false}
+        />
+      </div>
 
-      {/* СЛОЙ ДЛЯ КОНТЕНТА */}
-      <div
-        className="
-          absolute inset-0
-          flex flex-col items-center justify-center
-          gap-6
-          px-4
-        "
-      >
-        {/* иконка СТРОГО по центру картинки */}
-        <div className="w-[35%] aspect-square text-[#E5E7EB] flex items-center justify-center relative">
+      {/* лёгкое затемнение, чтобы кнопка читалась */}
+      <div className="absolute inset-0 bg-black/10" />
+
+      {/* контент по центру */}
+      <div className="relative z-10 flex h-full flex-col items-center justify-center gap-6 px-4">
+        {/* иконка */}
+        <div className="w-44 h-24 text-[#E5E7EB] flex items-center justify-center relative">
           {icon}
         </div>
 
-        {/* кнопка под иконкой */}
-        <a
-          href={href}
-          className="
-            inline-flex items-center justify-center gap-[8%]
-            rounded-full
-            w-[40%] py-[3%]
-            bg-gradient-to-r from-[#1D5DFF] to-[#56A7FF]
-            text-white text-base font-medium
-          "
-        >
-          <span className="text-[clamp(16px,2.5vw,20px)]">Смотреть кейс</span>
-          <span className="inline-flex w-[10%] aspect-square items-center justify-center rounded-full bg-white text-[#0b1623] text-[clamp(16px,2.5vw,20px)]">
-            →
-          </span>
+        {/* кнопка */}
+        <a href={href} className="block">
+          <button
+            className="relative inline-flex items-center justify-center"
+            style={{
+              height: 'clamp(84px, 4vw, 64px)',
+              width: 'clamp(240px, 15vw, 240px)'
+            }}
+          >
+            {/* фон-кнопка */}
+            <Image
+              src="/images/projects/Rectangle 3270.svg"
+              alt=""
+              width={380}
+              height={120}
+              className="pointer-events-none select-none w-full h-full"
+              style={{ objectFit: 'fill' }}
+            />
+
+            {/* текст по центру */}
+            <span
+              className="absolute inset-y-0 flex items-center text-white whitespace-nowrap"
+              style={{
+                left: 'clamp(40px, 2vw, 32px)',
+                fontSize: 'clamp(14px, 1.5vw, 18px)'
+              }}
+            >
+              Смотреть кейс
+            </span>
+
+            {/* стрелочка справа */}
+            <span
+              className="absolute inset-y-0 flex items-center"
+              style={{ left: 'clamp(180px, 1.5vw, 24px)' }}
+            >
+              <Image
+                src="/images/projects/Exclude.svg"
+                alt=""
+                width={24}
+                height={24}
+                style={{
+                  width: 'clamp(18px, 1.5vw, 24px)',
+                  height: 'clamp(18px, 1.5vw, 24px)'
+                }}
+              />
+            </span>
+          </button>
         </a>
       </div>
     </article>
@@ -73,8 +93,8 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
     ru: { nav: { main: 'Главная', about: 'О нас', team: 'Команда', works: 'Работы', services: 'Услуги', contacts: 'Контакты', news: 'НОВОСТИ', reviews: 'ОТЗЫВЫ' }, footer: { copy: '© PRIX Club, 2025' } },
     en: { nav: { main: 'Main Page', about: 'About Us', team: 'Team', works: 'Works', services: 'Services', contacts: 'Contacts', news: 'NEWS', reviews: 'REVIEWS' }, footer: { copy: '© PRIX Club, 2025' } },
   }[locale]
-  // Прозрачность темного фильтра на первой фотографии (0..1), 0.4 = 40% прозрачности
-  const heroDarkenAlpha = 0.8
+  // Прозрачность темного фильтра на первой фотографии (0..1), меньше значение = больше прозрачности
+  const heroDarkenAlpha = 0.7
 
   // Компоненты иконок для карточек
   const Icon1 = () => <Image src="/images/projects/Vector.svg" alt="" fill className="object-contain" style={{ filter: 'brightness(1.1) contrast(0.85) grayscale(0.3)' }} />
@@ -84,8 +104,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
   const cases: CaseItem[] = [
     {
       icon: <Icon1 />,
-      bg: "/images/projects/case_1.png",
-      href: `/${locale}/projects/1`
+      bg: "/images/projects/case_1.png"
     },
     {
       icon: <Icon2 />,
@@ -105,7 +124,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
       <section className="hero-section relative isolate w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] bg-black">
         <div className="relative w-full" style={{ height: '810px' }}>
           {/* Черный оверлей с прозрачностью */}
-          <div className="hero-overlay absolute inset-0 bg-black opacity-25" />
+          <div className="hero-overlay absolute inset-0 bg-black opacity-15" />
 
           {/* Фоновое изображение */}
           <div className="hero-bg-image absolute inset-0 z-10">
@@ -120,7 +139,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
           </div>
 
           {/* Первый градиентный прямоугольник (mix-blend-mode: normal) */}
-          <div className="hero-gradient-1 absolute inset-0 z-10" style={{ opacity: 0.6 }}>
+          <div className="hero-gradient-1 absolute inset-0 z-10" style={{ opacity: 0.3 }}>
             <Image
               src="/images/projects/Rectangle 3257.svg"
               alt=""
@@ -132,7 +151,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
           </div>
 
           {/* Второй градиентный прямоугольник (mix-blend-mode: multiply) */}
-          <div className="hero-gradient-2 absolute inset-0 z-10" style={{ opacity: 0.7 }}>
+          <div className="hero-gradient-2 absolute inset-0 z-10" style={{ opacity: 0.4 }}>
             <Image
               src="/images/projects/Rectangle 3256.svg"
               alt=""
@@ -164,7 +183,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
 
       {/* Frame 2087328045 — Черная секция с SVG и повернутыми картинками */}
       <section className="relative isolate w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] bg-black overflow-hidden">
-        <div className="relative w-full" style={{ minHeight: '909px' }}>
+        <div className="relative w-full">
           <div className="rotated-images-container">
             <Image
               src="/images/projects/Frame 2087328045.svg"
@@ -189,7 +208,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
 
       {/* Frame 2087328057 — Верхняя секция с двумя изображениями */}
       <section className="relative isolate w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] bg-black">
-        <div className="relative w-full grid grid-cols-2" style={{ height: '720px' }}>
+        <div className="relative w-full grid grid-cols-2" style={{ aspectRatio: '1440/720' }}>
           {/* Левое изображение */}
           <div className="relative w-full h-full">
             <Image
@@ -197,7 +216,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
               alt=""
               fill
               sizes="50vw"
-              className="object-cover"
+              className="object-contain"
               priority={false}
             />
           </div>
@@ -208,7 +227,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
               alt=""
               fill
               sizes="50vw"
-              className="object-cover"
+              className="object-contain"
               priority={false}
             />
           </div>
@@ -217,7 +236,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
 
       {/* Frame 2087328056 — Секция с изображением корабля и синим фильтром */}
       <section className="relative isolate w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] bg-black">
-        <div className="relative w-full" style={{ height: '809px' }}>
+        <div className="relative w-full" style={{ aspectRatio: '1440/809' }}>
           {/* Фоновое изображение корабля */}
           <div className="absolute inset-0">
             <Image
@@ -225,7 +244,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
               alt=""
               fill
               sizes="100vw"
-              className="object-cover"
+              className="object-contain"
               priority={false}
             />
           </div>
@@ -236,7 +255,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
               alt=""
               fill
               sizes="100vw"
-              className="object-cover"
+              className="object-contain"
               style={{ mixBlendMode: 'soft-light' }}
             />
           </div>
@@ -245,7 +264,7 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
 
       {/* Frame 2087328055 — Секция с двумя изображениями снизу */}
       <section className="relative isolate w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] bg-black">
-        <div className="relative w-full grid grid-cols-2" style={{ height: '509px' }}>
+        <div className="relative w-full grid grid-cols-2" style={{ aspectRatio: '1440/509' }}>
           {/* Левое изображение */}
           <div className="relative w-full h-full">
             <Image
@@ -273,13 +292,13 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
 
       {/* Frame 2087328054 — Нижняя секция с одним изображением */}
       <section className="relative isolate w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] bg-black">
-        <div className="relative w-full" style={{ height: '626px' }}>
+        <div className="relative w-full" style={{ aspectRatio: '1440/626' }}>
           <Image
             src="/images/projects/1.png"
             alt=""
             fill
             sizes="100vw"
-            className="object-cover"
+            className="object-contain"
             priority={false}
           />
         </div>
@@ -293,17 +312,31 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
       </section>
 
       {/* Секция "Еще кейсы" */}
-      <section id="more-cases" className="w-full px-4 lg:px-8 py-12 bg-black">
-        <h2 className="text-center text-2xl md:text-3xl font-semibold text-white mb-8">Еще кейсы</h2>
+      <section
+        id="more-cases"
+        className="w-full px-4 md:px-8 lg:px-12 py-16 bg-black"
+      >
+        <h2 className="text-center text-2xl md:text-3xl font-semibold text-white mb-10">
+          Еще кейсы
+        </h2>
 
-        <div className="grid gap-6 md:grid-cols-3">
+        <div
+          className="
+            mx-auto
+            grid
+            gap-20
+            sm:grid-cols-2
+            lg:grid-cols-3
+            max-w-6xl
+          "
+        >
           {cases.map((c, i) => (
             <CaseCard key={i} {...c} />
           ))}
         </div>
       </section>
 
-      <Footer msg={msg} locale={locale} />
+      <Footer msg={msg} />
 
       <style jsx>{`
         .hero-section {
@@ -340,7 +373,8 @@ export default function Projects2Page({ params: { locale } }: { params: { locale
         .rotated-images-container {
           position: relative;
           width: 100%;
-          height: 909px;
+          aspect-ratio: 1440/909;
+          min-height: 0;
         }
         @media (max-width: 768px) {
           .hero-title {
@@ -427,6 +461,7 @@ function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
     </header>
   )
 }
+
 
 function LanguageSwitch() {
   const router = useRouter()
@@ -535,4 +570,3 @@ function FooterColumn({ title, rows }: { title: string; rows: string[] }) {
     </div>
   )
 }
-

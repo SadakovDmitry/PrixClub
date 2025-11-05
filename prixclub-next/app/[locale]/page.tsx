@@ -132,6 +132,9 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
 
         /* Cards positions as % of 1440x810 */
         .card{position:absolute;background:rgba(255,255,255,.04);border-radius:20px;overflow:hidden;z-index:2}
+        @media (max-width:640px){
+          .card{border-radius:12px}
+        }
         .tl{left:8.333%;top:14.815%;width:19.583%;height:14.815%;background-image:url('/images/main/card_top_left_background.png');background-size:cover;background-position:center}
         .left-tall{left:8.333%;top:32.099%;width:19.583%;height:53.086%;background-image:url('/images/main/card_industries_we_serve_background.png');background-size:cover;background-position:center}
         .ind-list{position:absolute;left:8.854%;top:12.174%;width:77.305%;height:44.186%;margin:0;padding:0;list-style:none;color:#fff;opacity:.3;font-weight:700;font-size:1.49vw;line-height:130%;text-transform:uppercase}
@@ -142,6 +145,9 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
         .bottom-wide{left:29.583%;top:64.691%;width:62.083%;height:20.494%;background-image:url('/images/main/card_major_clients_background.png');background-size:cover;background-position:center}
 
         .realised-box{position:absolute;left:29.583%;top:14.815%;width:26.667%;height:47.407%;background:linear-gradient(45deg,#53897B 0%,#2E6456 100%);box-shadow:0 0 40px rgba(134,188,174,.3);border-radius:20px;z-index:2}
+        @media (max-width:640px){
+          .realised-box{border-radius:12px}
+        }
         .num{position:absolute;color:#fff;font-weight:300;font-size:5.73vw;line-height:1}
         .realised-box .num{left:8.854%;top:4.167%}
         .label{position:absolute;color:#fff;font-weight:400;font-size:1.944vw;line-height:0.9}
@@ -168,10 +174,17 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
 function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
   const logos = ['/images/Frsk_logo.svg', '/images/Frsk_logo.svg', '/images/Frsk_logo.svg', '/images/Frsk_logo.svg', '/images/Frsk_logo.svg']
   const [idx, setIdx] = useState(0)
-  const logoBoxRef = useRef<HTMLDivElement | null>(null)
-  const [logoH, setLogoH] = useState<number>(0)
   const sectionRef = useRef<HTMLDivElement | null>(null)
   const bgImgWrapRef = useRef<HTMLDivElement | null>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)')
+    const update = () => setIsMobile(mq.matches)
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
 
   const title = locale === 'en' ? 'Our Clients' : 'Наши Клиенты'
   const desc = locale === 'en'
@@ -192,24 +205,23 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
           />
         </div>
 
-        <div className="absolute inset-0">
-          <div className={`container-max h-full ${geometria.className}`}>
+        <div className="absolute inset-0 px-10">
+          <div className={`h-full ${geometria.className}`}>
             <div className="flex h-full flex-col">
-              <h2 className="pt-14 md:pt-20 text-center text-white text-4xl md:text-5xl font-medium clients-title">{title}</h2>
+              <h2 className="pt-2 md:pt-20 text-center text-white text-4xl md:text-5xl font-medium clients-title">{title}</h2>
 
               <div className="flex-1 flex flex-col items-center justify-center">
-                <div className="relative w-full flex items-center justify-center">
+                <div className="clients-row">
                   <button
                     type="button"
                     aria-label="Prev"
                     onClick={() => setIdx((p) => (p - 1 + logos.length) % logos.length)}
-                    className="group absolute left-10 md:left-2 top-1/2 -translate-y-1/2 p-1"
+                    className="group arrow arrow-left"
                   >
                     <svg
-                      viewBox="0 0 100 200"
+                      viewBox="0 0 150 200"
                       preserveAspectRatio="xMidYMid meet"
-                      style={{ height: logoH ? `${Math.round(logoH * 2.0)}px` : '640px', width: logoH ? `${Math.round(logoH * 1.0)}px` : '320px' }}
-                      className="opacity-80 group-hover:opacity-100 transition-opacity"
+                      className="opacity-80 group-hover:opacity-100 transition-opacity arrow-svg"
                     >
                       <defs>
                         {/* Опака в вершине (x=30), прозрачные концы (x=70) */}
@@ -222,23 +234,19 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                       <path d="M70 60 L30 100 L70 140" stroke="url(#gradLeft)" strokeWidth="1" fill="none" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </button>
-                  <div ref={logoBoxRef} className="px-8 md:px-24">
-                    <Image src={logos[idx]} alt="client" width={820} height={280} className="h-auto mx-auto clients-logo" onLoadingComplete={() => {
-                      const el = logoBoxRef.current?.querySelector('img')
-                      if (el) setLogoH(el.getBoundingClientRect().height)
-                    }} />
+                  <div className="logo-box">
+                    <Image src={logos[idx]} alt="client" width={1020} height={280} className="h-auto mx-auto clients-logo" />
                   </div>
                   <button
                     type="button"
                     aria-label="Next"
                     onClick={() => setIdx((p) => (p + 1) % logos.length)}
-                    className="group absolute right-10 md:right-2 top-1/2 -translate-y-1/2 p-1"
+                    className="group arrow arrow-right"
                   >
                     <svg
-                      viewBox="0 0 100 200"
+                      viewBox="0 0 150 200"
                       preserveAspectRatio="xMidYMid meet"
-                      style={{ height: logoH ? `${Math.round(logoH * 2.0)}px` : '640px', width: logoH ? `${Math.round(logoH * 1.0)}px` : '320px' }}
-                      className="opacity-80 group-hover:opacity-100 transition-opacity"
+                      className="opacity-80 group-hover:opacity-100 transition-opacity arrow-svg"
                     >
                       <defs>
                         {/* Опака в вершине (x=70), прозрачные концы (x=30) */}
@@ -262,7 +270,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                         aria-label={`Go to slide ${i + 1}`}
                         onClick={() => setIdx(i)}
                         style={{ opacity: op }}
-                        className={`h-2.5 w-2.5 rounded-full bg-white`}
+                        className={`clients-dot rounded-full bg-white`}
                       />
                     )
                   })}
@@ -270,10 +278,10 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
               </div>
 
               <div className="flex-1 flex items-center">
-                <div className="relative max-w-4xl w-full mx-auto">
+                <div className="relative max-w-10xl w-full mx-auto">
                   <div className="h-px w-3/4 md:w-2/3 mx-auto bg-gradient-to-r from-transparent via-white to-transparent" />
                   <p
-                    className="mt-6 text-center font-light text-[20px] leading-[28px] mx-auto w-[960px] max-w-full clients-desc"
+                    className="mt-3 md:mt-6 text-center font-light text-[20px] leading-[28px] mx-auto w-[1260px] max-w-full clients-desc"
                     style={{
                       background: 'linear-gradient(90deg, rgba(255, 255, 255, 0.25) 0%, #FFFFFF 50%, rgba(255, 255, 255, 0.25) 100%)',
                       WebkitBackgroundClip: 'text',
@@ -284,7 +292,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                   >
                     {desc}
                   </p>
-                  <div className="mt-6 h-px w-3/4 md:w-2/3 mx-auto bg-gradient-to-r from-transparent via-white/90 to-transparent" />
+                  <div className="mt-3 md:mt-6 h-px w-3/4 md:w-2/3 mx-auto bg-gradient-to-r from-transparent via-white/90 to-transparent" />
                 </div>
               </div>
             </div>
@@ -294,8 +302,25 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
       <style jsx>{`
         /* Our Clients — fluid scaling using vw */
         .clients-title{ font-size: clamp(22px, 6.5vw, 48px); }
-        .clients-logo{ width: 20vw; max-width: 820px; min-width: 120px; }
-        .clients-desc{ font-size: clamp(14px, 4.2vw, 20px); line-height: clamp(20px, 6vw, 28px); }
+        /* Мобильные: логотип меньше, на десктопе растёт пропорционально */
+        .clients-logo{ width: clamp(140px, 24vw, 1800px); }
+        @media (min-width: 1440px){ .clients-logo{ width: min(28vw, 1600px); } }
+        /* Меньший шрифт и line-height на мобильных */
+        .clients-desc{ font-size: clamp(9px, 2.4vw, 38px); line-height: clamp(8px, 2.2vw, 46px); }
+        @media (min-width: 900px){ .clients-desc{ font-size: clamp(18px, 2.2vw, 38px); line-height: clamp(16px, 2.2vw, 46px); } }
+        /* Обычный CSS для блока стрелок и контейнера */
+        .clients-row, .clients-carousel{ width: 80%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 10px;}
+        @media (max-width: 700px){ .clients-row, .clients-carousel{ width: 100%; gap: 10px; } }
+        .arrow{ position: static; transform: none; padding: 0; }
+        .arrow-left{ left: auto; }
+        .arrow-right{ right: auto; }
+        .logo-box{ padding: 0; }
+        /* Больше стрелки без изменения занимаемого места: масштаб через transform */
+        .arrow-svg{ width: clamp(28px, 6vw, 72px); height: auto; transform-origin: center; transform: translateX(10px) scale(1.95); }
+        @media (min-width: 768px){ .arrow-svg{ transform: translateX(25px) scale(2.6); } }
+        @media (min-width: 1440px){ .arrow-svg{ transform: translateX(40px) scale(3.8); } }
+        /* Индикаторные точки: меньше на мобилке */
+        .clients-dot{ width: clamp(6px, 1.6vw, 10px); height: clamp(6px, 1.6vw, 10px); }
       `}</style>
     </section>
   )
