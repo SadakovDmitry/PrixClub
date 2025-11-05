@@ -253,6 +253,63 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
             height: calc(957px * (100vw / 1440));
           }
         }
+
+        /* Mobile layout */
+        @media (max-width: 768px) {
+          .services-hero {
+            transform: none;
+            width: 100%;
+            height: auto;
+            min-height: 520px;
+            padding: 64px 20px 40px;
+          }
+          .services-hero::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.35) 100%);
+            pointer-events: none;
+          }
+          .bg-photo {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: auto;
+            object-fit: cover;
+            opacity: .9;
+          }
+          .hero-title,
+          .hero-text1,
+          .hero-text2,
+          .hero-text3 {
+            position: relative;
+            left: auto;
+            top: auto;
+            width: auto;
+            height: auto;
+            z-index: 1;
+          }
+          .hero-title {
+            font-size: 40px;
+            line-height: 1.1;
+            margin: 0 0 16px 0;
+          }
+          .hero-text1 {
+            font-size: 18px;
+            line-height: 1.35;
+            margin: 0 0 10px 0;
+            max-width: none;
+          }
+          .hero-text2,
+          .hero-text3 {
+            font-size: 15px;
+            line-height: 1.5;
+            margin: 0 0 8px 0;
+            max-width: none;
+          }
+        }
       `}</style>
             <style jsx global>{`
           /* Apply Geometria font to all elements */
@@ -456,6 +513,12 @@ function ServicesSection({ locale }: { locale: "ru" | "en" }) {
             transform-origin: top center;
           }
         }
+        @media (max-width: 768px){
+          .srv-acc{
+            width: 100%;
+            transform: none;
+          }
+        }
       `}</style>
         </section>
     )
@@ -544,6 +607,29 @@ function AccordionItem({ it }: {
         .card-photo{ position:absolute; inset:0; background-position:center; background-size:cover; background-repeat:no-repeat; opacity:.48; }
         .card-border{ position:absolute; inset:10px; border-radius:14px; border:2px solid rgba(255,255,255,.12); pointer-events:none; }
         .card-text{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:0 16px; text-align:center; font-weight:800; font-size:28px; line-height:1.15; color:#fff; letter-spacing:.2px; z-index:1; text-shadow:0 1px 0 rgba(0,0,0,.45); }
+
+        /* Mobile overrides */
+        @media (max-width: 768px){
+          :root { --padX: 16px; }
+          .head{ height: 88px; }
+          .head-bg{ opacity: .9; }
+          .head-title{ left: 20px; font-size: 24px; line-height: 30px; max-width: 75%; }
+          .arrow{ right: 20px; width: 28px; height: 16px; }
+
+          .panel{ max-height: 0; }
+          .panel.open{ max-height: 9999px; }
+
+          .panel-inner{ padding: 24px 16px 32px; }
+          .panel-inner{ padding: 24px 16px 32px; text-align: center; }
+          .lead{ grid-template-columns: 1fr; gap: 16px; align-items: center; justify-items: center; margin-bottom: 24px; padding-top: 8px; }
+          .lead-ico{ width: 56px; justify-self: center; }
+          .lead-text{ max-width: none; font-size: 18px; line-height: 24px; text-align: center; }
+
+          .cards{ grid-template-columns: 1fr; gap: 12px; width: 100%; padding-bottom: 40px; justify-items: center; }
+          .card{ width: 100%; height: 112px; border-radius: 16px; margin: 0 auto; }
+          .card-border{ inset: 8px; border-radius: 12px; }
+          .card-text{ font-size: 18px; padding: 0 12px; }
+        }
       `}</style>
         </div>
     )
@@ -596,6 +682,21 @@ function LastSection({ locale }: { locale: "ru" | "en" }) {
             transform: scale(calc(100vw / 1440));
             transform-origin: top center;
             height: calc(760px * (100vw / 1440));
+          }
+        }
+        @media (max-width: 768px){
+          .last-wrap{
+            transform: none;
+            width: 100%;
+            height: auto;
+            min-height: 500px;
+            background-position: center;
+          }
+          .last-text{
+            width: calc(100% - 40px);
+            font-size: 20px;
+            line-height: 1.35;
+            padding: 0 20px;
           }
         }
       `}</style>
