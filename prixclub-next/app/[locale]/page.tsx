@@ -172,7 +172,30 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
 }
 
 function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
-  const logos = ['/images/Frsk_logo.svg', '/images/Frsk_logo.svg', '/images/Frsk_logo.svg', '/images/Frsk_logo.svg', '/images/Frsk_logo.svg']
+  const logos = [
+                '/images/IPWK.svg', 
+                '/images/Main Division.svg', 
+                '/images/SharesPro.svg', 
+                '/images/SKY consulting.svg', 
+                '/images/Tamashi.svg',
+                '/images/АЭИ.svg', 
+                '/images/Башкортостан.svg', 
+                '/images/Дом Лазовского.svg', 
+                '/images/МДТ.svg', 
+                '/images/МРК.svg',
+                '/images/НБС.svg', 
+                '/images/Отель Жемчужина.svg', 
+                '/images/Российский Промышленник.svg', 
+                '/images/Сбермаркетинг.svg', 
+                '/images/ТОП50 HR.svg',
+                '/images/ТЭК-Торг.svg', 
+                '/images/Фонд Наследие.svg', 
+                '/images/ФСРК.svg', 
+                '/images/Хабаровский край.svg', 
+                '/images/Астафьев.svg', 
+                '/images/Горелкина.svg', 
+                '/images/Карпунин.svg'
+  ]
   const [idx, setIdx] = useState(0)
   const sectionRef = useRef<HTMLDivElement | null>(null)
   const bgImgWrapRef = useRef<HTMLDivElement | null>(null)
