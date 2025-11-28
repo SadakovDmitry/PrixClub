@@ -750,14 +750,14 @@ function Header({ msg, locale }: { msg: any; locale: "ru" | "en" }) {
                             <nav className="flex items-center gap-6 text-white/80 text-[13px]">
                                 <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
                                 <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
-                                <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+                                {/*<a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>*/}
                                 <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
                                 <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
                                 <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
                             </nav>
                             <div className="flex items-center gap-6 text-[13px]" >
-                                <a href={`/${locale}/news`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>
-                                <a href={`/${locale}/reviews`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>
+                                {/*<a href={`/${locale}/news`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.news}</a>*/}
+                                {/*<a href={`/${locale}/reviews`} className="tracking-wide text-white/80 hover:text-white">{msg.nav.reviews}</a>*/}
                                 <LanguageSwitch />
                             </div>
                         </div>
@@ -831,7 +831,7 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
                     <nav className={`flex flex-col items-center gap-2 text-white/80 ${geometria.className}`}>
                         <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
                         <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
-                        <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+                        {/*<a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>*/}
                         <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
                         <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
                         <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
@@ -857,7 +857,7 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
                     </div>
                     <FooterColumn title={msg.nav.main} rows={[msg.nav.main, msg.nav.main, msg.nav.main]} />
                     <FooterColumn title={msg.nav.about} rows={[msg.nav.about, msg.nav.about, msg.nav.about]} />
-                    <FooterColumn title={msg.nav.team} rows={[msg.nav.team, msg.nav.team, msg.nav.team]} />
+                    {/*<FooterColumn title={msg.nav.team} rows={[msg.nav.team, msg.nav.team, msg.nav.team]} />*/}
                     <FooterColumn title={msg.nav.works} rows={[msg.nav.works, msg.nav.works, msg.nav.works]} />
                     <FooterColumn title={msg.nav.services} rows={[msg.nav.services, msg.nav.services, msg.nav.services]} />
                     <FooterColumn title={msg.nav.contacts} rows={[msg.nav.contacts, msg.nav.contacts, msg.nav.contacts]} />
