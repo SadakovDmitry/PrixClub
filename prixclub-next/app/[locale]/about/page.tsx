@@ -77,9 +77,17 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
           </div>
 
           {/* Cards row */}
-          <div className="mx-auto mt-10 md:mt-14 grid max-w-[1120px] grid-cols-1 gap-5 px-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-10 md:mt-14 grid max-w-[1280px] grid-cols-1 gap-7 md:gap-8 px-4 sm:grid-cols-2 lg:grid-cols-4">
             {t.cards.map((c) => (
-              <div key={c.key} className="relative overflow-hidden rounded-[20px] bg-black" style={{ aspectRatio: '282/153', width: 'clamp(200px, 80%, 282px)', margin: '0 auto' }}>
+              <div
+                key={c.key}
+                className="relative w-full overflow-hidden rounded-[20px] bg-black"
+                style={{
+                  aspectRatio: '282 / 153',
+                  margin: '0 auto',
+                  minWidth: '260px',
+                }}
+              >
                 {/* same layers as Services cards */}
                 <Image src="/images/about_us/hero_card_background.png" alt="" fill className="object-cover [filter:contrast(1.05)_saturate(0.9)]" />
                 <div className="absolute inset-0" style={{ background: '#2E6456', mixBlendMode: 'multiply', opacity: 0.75 }} />
@@ -97,13 +105,30 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
                 {/* Icon and title */}
                 <div className="pointer-events-none absolute inset-0 grid place-items-center p-6">
                   <div className="flex flex-col items-center gap-3">
-                    <Image src={c.icon} alt="" width={56} height={56} className="h-14 w-14 object-contain" />
-                    <div className="text-center text-[clamp(18px,5vw,20px)] font-semibold text-white whitespace-pre-line">{c.title}</div>
+                    <Image src={c.icon} alt="" width={56} height={56} className="mission-icon h-14 w-14 object-contain" />
+                    <div className="mission-title text-center text-[clamp(17px,4vw,20px)] font-semibold text-white">{c.title}</div>
                   </div>
                 </div>
               </div>
             ))}
           </div>
+          <style jsx>{`
+            .mission-icon{
+              display:block;
+              margin:0 auto;
+              object-fit:contain;
+              width: clamp(64px, 12vw, 86px);
+              height: clamp(64px, 12vw, 86px);
+            }
+            .mission-title{
+              text-align:center;
+              white-space: normal;
+              word-break: keep-all;
+              text-wrap: balance;
+              line-height:1.2;
+              max-width:95%;
+            }
+          `}</style>
         </div>
       </section>
       <section className={`relative overflow-hidden ${geometria.className}`}>
@@ -165,8 +190,8 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
           </div>
         </div>
       </section>
-      <VideoSection />
-      <PhotoSection />
+      {/* <VideoSection /> */}
+      {/* <PhotoSection /> */}
       <WhyUsSection locale={locale} />
       <Footer msg={msg} locale={locale} />
     </div>
@@ -315,7 +340,7 @@ function ParagraphBlock({
           border-l-[16px] border-l-[#2E6456]   /* было 12px → стало шире */
         "
       />
-      <p className="text-[clamp(10px,2.5vw,27px)] leading-[1.2]">
+      <p className="text-[clamp(8px,2.5vw,27px)] leading-[1.2]">
         {children}
       </p>
     </div>
@@ -492,9 +517,11 @@ function WhyUsSection({ locale }: { locale: 'ru' | 'en' }) {
           style={{
             /* left: 222/1440, top: 128.33/810, width: 183/1440 */
             left: '15.417%',
-            top: '15.866%',
-            width: '25.708%',
-            fontSize: 'clamp(20px, 5vw, 44px)',
+            top: '13%',
+            width: 'auto',
+            maxWidth: 'unset',
+            whiteSpace: 'nowrap',
+            fontSize: 'clamp(20px, 4.4vw, 42px)',
           }}
         >
           {txt.title}
@@ -528,18 +555,17 @@ function WhyUsSection({ locale }: { locale: 'ru' | 'en' }) {
         >
           <ul className="space-y-[clamp(8px, 2vw, 16px)]">
             {txt.bullets.map((line, i) => (
-              <li key={i} className="inline-flex items-start" style={{ gap: 'clamp(6px, 1.5vw, 12px)' }}>
-                {/* Треугольник-маркер: слева от текста, направлен ВПРАВО */}
+              <li key={i} className="flex items-start" style={{ gap: 'clamp(6px, 1.5vw, 12px)' }}>
                 <span
                   aria-hidden
-                  className="mt-[clamp(4px, 1vw, 8px)] inline-block [width:0] [height:0]"
+                  className="mt-[clamp(4px, 1vw, 8px)] inline-block [width:0] [height:0] -rotate-45"
                   style={{
                     borderTop: 'clamp(5px, 1.5vw, 8.24px) solid transparent',
                     borderBottom: 'clamp(5px, 1.5vw, 8.24px) solid transparent',
                     borderLeft: 'clamp(6px, 1.8vw, 9.515px) solid #000',
                   }}
                 />
-                <span>{line}</span>
+                <span className="leading-[1.25]">{line}</span>
               </li>
             ))}
           </ul>

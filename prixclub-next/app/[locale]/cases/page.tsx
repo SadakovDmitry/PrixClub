@@ -218,25 +218,26 @@ function ProjectsSection({ locale }: { locale: "ru" | "en" }) {
                             {/* Sub card with icon */}
                             <div className="case-sub-card" style={{ backgroundImage: `url(${project.subBgImage})` }}>
                                 <img src={project.icon} alt="" className="case-icon" />
-                                {project.href ? (
-                                    <a href={project.href} className="view-case-btn">
-                                        <span>{locale === 'ru' ? 'Смотреть кейс' : 'View Case'}</span>
-                                        <div className="arrow-circle">
-                                            <svg width="22" height="20" viewBox="0 0 22 20" fill="none">
-                                                <path d="M21 10L11 0M21 10L11 20M21 10H0" stroke="currentColor" strokeWidth="1.5" />
-                                            </svg>
-                                        </div>
-                                    </a>
+                                {/* CTA отключена — делаем некликабельной */}
+                                {/* {project.href ? (
+                                  <a href={project.href} className="view-case-btn">
+                                    <span>{locale === 'ru' ? 'Смотреть кейс' : 'View Case'}</span>
+                                    <div className="arrow-circle">
+                                      <svg width="22" height="20" viewBox="0 0 22 20" fill="none">
+                                        <path d="M21 10L11 0M21 10L11 20M21 10H0" stroke="currentColor" strokeWidth="1.5" />
+                                      </svg>
+                                    </div>
+                                  </a>
                                 ) : (
-                                    <button className="view-case-btn">
-                                        <span>{locale === 'ru' ? 'Смотреть кейс' : 'View Case'}</span>
-                                        <div className="arrow-circle">
-                                            <svg width="22" height="20" viewBox="0 0 22 20" fill="none">
-                                                <path d="M21 10L11 0M21 10L11 20M21 10H0" stroke="currentColor" strokeWidth="1.5" />
-                                            </svg>
-                                        </div>
-                                    </button>
-                                )}
+                                  <button className="view-case-btn">
+                                    <span>{locale === 'ru' ? 'Смотреть кейс' : 'View Case'}</span>
+                                    <div className="arrow-circle">
+                                      <svg width="22" height="20" viewBox="0 0 22 20" fill="none">
+                                        <path d="M21 10L11 0M21 10L11 20M21 10H0" stroke="currentColor" strokeWidth="1.5" />
+                                      </svg>
+                                    </div>
+                                  </button>
+                                )} */}
                             </div>
 
                             {/* Case content */}

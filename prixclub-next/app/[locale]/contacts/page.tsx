@@ -148,7 +148,7 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
             {/* Адрес */}
             <div className="absolute contacts-info-address">
               <p className="contacts-text-address">
-                {locale === 'en' 
+                {locale === 'en'
                   ? 'Moscow, Novaya Square, building 8, building 1, 4th floor, office 414'
                   : 'Москва, Новая площадь, дом 8 стр 1, 4 этаж, офис 414'}
               </p>
@@ -218,7 +218,7 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
         <div className="relative z-10 contacts-form-content">
           {/* Заголовок */}
           <h2 className="contacts-form-title">
-            {locale === 'en' 
+            {locale === 'en'
               ? 'Do you have a task for PR or digital? Tell us — we are ready to consult'
               : 'Есть задача по PR или digital? Расскажите нам – мы готовы проконсультировать'}
           </h2>
@@ -294,7 +294,7 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
 
           {/* Title */}
           <h2 className="contacts-email-title mx-auto text-center leading-tight max-w-[1100px]">
-            {locale === 'en' 
+            {locale === 'en'
               ? 'Leave your e-mail — we will send you a presentation and a basic price list of our services'
               : 'Оставьте свой e-mail – мы пришлём презентацию и базовый прайс-лист наших услуг'}
           </h2>
@@ -351,53 +351,53 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
         </div>
 
         {/* Reviews */}
-        <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 md:px-10 text-center space-y-4 md:space-y-6 pt-16 md:pt-24">
+        {/* <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 md:px-10 text-center space-y-4 md:space-y-6 pt-16 md:pt-24"> */}
           {/* Title */}
-          <h2 className="contacts-reviews-title">
+          {/* <h2 className="contacts-reviews-title">
             {locale === 'en' ? 'Reviews' : 'Отзывы'}
-          </h2>
+          </h2> */}
           {/* Review 1 */}
-          <article className="mx-auto w-full max-w-[720px] px-4 py-6 md:py-8 text-center space-y-3 md:space-y-4">
+          {/* <article className="mx-auto w-full max-w-[720px] px-4 py-6 md:py-8 text-center space-y-3 md:space-y-4">
             <h3 className="contacts-review-org">
               {locale === 'en' ? 'Space Development Support Foundation' : 'Фонд Содействия Развитию Космонавтики'}
             </h3>
             <div className="contacts-review-line-gradient"></div>
             <p className="contacts-review-text">
-              {locale === 'en' 
+              {locale === 'en'
                 ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
                 : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
             </p>
             <div className="contacts-review-line-gradient"></div>
-          </article>
+          </article> */}
 
           {/* Review 2 */}
-          <article className="mx-auto w-full max-w-[720px] px-4 py-6 md:py-8 text-center space-y-3 md:space-y-4">
+          {/* <article className="mx-auto w-full max-w-[720px] px-4 py-6 md:py-8 text-center space-y-3 md:space-y-4">
             <h3 className="contacts-review-org">
               {locale === 'en' ? 'Exporters and Importers Association' : 'Ассоциация Экспортеров и Импортеров'}
             </h3>
             <div className="contacts-review-line-gradient"></div>
             <p className="contacts-review-text">
-              {locale === 'en' 
+              {locale === 'en'
                 ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
                 : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
             </p>
             <div className="contacts-review-line-gradient"></div>
-          </article>
+          </article> */}
 
           {/* Review 3 */}
-          <article className="mx-auto w-full max-w-[720px] px-4 py-6 md:py-8 text-center space-y-3 md:space-y-4">
+          {/* <article className="mx-auto w-full max-w-[720px] px-4 py-6 md:py-8 text-center space-y-3 md:space-y-4">
             <h3 className="contacts-review-org">
               {locale === 'en' ? 'Russian Industrialist' : 'Российкий Промышленник'}
             </h3>
             <div className="contacts-review-line-gradient"></div>
             <p className="contacts-review-text">
-              {locale === 'en' 
+              {locale === 'en'
                 ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
                 : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
             </p>
             <div className="contacts-review-line-gradient"></div>
-          </article>
-        </div>
+          </article> */}
+        {/* </div> */}
       </section>
 
       {/* FAQ Section */}
@@ -414,7 +414,7 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
         {/* Expanded answer card for question #1 */}
         <div className="contacts-faq-card">
           <p className="contacts-faq-text">
-            {locale === 'en' 
+            {locale === 'en'
               ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
               : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
           </p>
@@ -494,12 +494,12 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
           {locale === 'en' ? 'News #1' : 'Новость №1'}
         </h3>
         <h4 className="absolute contacts-news-subtitle">
-          {locale === 'en' 
+          {locale === 'en'
             ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
             : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
         </h4>
         <p className="absolute contacts-news-text">
-          {locale === 'en' 
+          {locale === 'en'
             ? 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
             : 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
         </p>

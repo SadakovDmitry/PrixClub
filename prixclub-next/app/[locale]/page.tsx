@@ -160,8 +160,23 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
         .awards-logos{position:absolute;right:17.997%;top:29.231%;display:flex;gap:14%}
         .awards-logos :global(img){width:4.2vw;height:auto}
 
-        .industries{position:absolute;left:10.694%;top:76.296%;font-size:1.944vw;line-height:0.9;display:flex;align-items:flex-end;z-index:2}
-        .clients{position:absolute;left:3.802%;top:71.686%;font-size:1.944vw;line-height:0.9;z-index:2}
+        .industries{
+          position:absolute;left:10.694%;top:73.5%;
+          font-size:1.944vw;line-height:1.05;display:flex;align-items:flex-start;z-index:2;
+          max-width:16%;
+          white-space: normal;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
+        .clients{
+          position:absolute;left:3.802%;top:60%;
+          font-size:1.944vw;line-height:1.1;z-index:2;
+          max-width:20%;
+          transform: translateY(-8%);
+          white-space: normal;
+          word-break: break-word;
+          overflow-wrap: anywhere;
+        }
         .logos{position:absolute;left:37.595%;top:33.133%;display:flex;gap:16.8%;z-index:2}
         .logos :global(img){width:4.2vw;height:auto;flex:0 0 auto}
         .heart{position:absolute;left:4.924%;top:15.663%;opacity:.99;z-index:2;width:6.71%;height:auto}
@@ -258,7 +273,14 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                     </svg>
                   </button>
                   <div className="logo-box">
-                    <Image src={logos[idx]} alt="client" width={1020} height={280} className="h-auto mx-auto clients-logo" />
+                    <Image
+                      src={logos[idx]}
+                      alt="client"
+                      fill
+                      sizes="(min-width: 1280px) 540px, (min-width: 768px) 420px, 80vw"
+                      className="clients-logo"
+                      style={{ objectFit: 'contain', objectPosition: 'center' }}
+                    />
                   </div>
                   <button
                     type="button"
@@ -325,9 +347,19 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
       <style jsx>{`
         /* Our Clients — fluid scaling using vw */
         .clients-title{ font-size: clamp(22px, 6.5vw, 48px); }
-        /* Мобильные: логотип меньше, на десктопе растёт пропорционально */
-        .clients-logo{ width: clamp(140px, 24vw, 1800px); }
-        @media (min-width: 1440px){ .clients-logo{ width: min(28vw, 1600px); } }
+        /* Единый бокс под логотипы: фиксируем высоту, добавляем внутренний отступ и обрезаем выход за края */
+        .logo-box{
+          position: relative;
+          padding: clamp(6px, 1.6vw, 14px);
+          display:flex; align-items:center; justify-content:center;
+          width: clamp(190px, 34vw, 540px); height: clamp(80px, 12vw, 160px);
+        }
+        @media (min-width: 1440px){ .logo-box{ width: min(30vw, 560px); height: 170px; } }
+        /* Логотипы всегда вписываются в бокс без обрезки */
+        .clients-logo{
+          position: absolute; inset: 0;
+          width: 100%; height: 100%;
+        }
         /* Меньший шрифт и line-height на мобильных */
         .clients-desc{ font-size: clamp(9px, 2.4vw, 38px); line-height: clamp(8px, 2.2vw, 46px); }
         @media (min-width: 900px){ .clients-desc{ font-size: clamp(18px, 2.2vw, 38px); line-height: clamp(16px, 2.2vw, 46px); } }
@@ -337,7 +369,6 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
         .arrow{ position: static; transform: none; padding: 0; }
         .arrow-left{ left: auto; }
         .arrow-right{ right: auto; }
-        .logo-box{ padding: 0; }
         /* Больше стрелки без изменения занимаемого места: масштаб через transform */
         .arrow-svg{ width: clamp(28px, 6vw, 72px); height: auto; transform-origin: center; transform: translateX(10px) scale(1.95); }
         @media (min-width: 768px){ .arrow-svg{ transform: translateX(25px) scale(2.6); } }
@@ -412,14 +443,14 @@ function TestimonialsNew({ locale }: { locale: 'ru' | 'en' }) {
   const items =
     locale === 'en'
       ? [
-        { name: 'John Doe', text: 'Professional, creative, and always one step ahead — they truly understand how to build a strong brand image.' },
-        { name: 'John Doe', text: 'Professional, creative, and always one step ahead — they truly understand how to build a strong brand image.' },
-        { name: 'John Doe', text: 'Professional, creative, and always one step ahead — they truly understand how to build a strong brand image.' },
+        { name: 'Sbermarketing', text: 'Thank you for a reliable partnership: you truly understand our task, suggest the best solutions, and help us grow.' },
+        { name: 'AEI', text: 'Thank you for your speed, quality materials, and strategic approach. The PR results are tangible already.' },
+        { name: 'Russian Industrialist', text: 'Special thanks for the creative ideas and the ability to adapt quickly to any task — working with you is easy and effective.' },
       ]
       : [
-        { name: 'Иван Иванов', text: 'Профессионально, креативно и всегда на шаг впереди — они действительно понимают, как построить сильный имидж бренда.' },
-        { name: 'Иван Иванов', text: 'Профессионально, креативно и всегда на шаг впереди — они действительно понимают, как построить сильный имидж бренда.' },
-        { name: 'Иван Иванов', text: 'Профессионально, креативно и всегда на шаг впереди — они действительно понимают, как построить сильный имидж бренда.' },
+        { name: 'Сбермаркетинг', text: 'Спасибо за надёжное партнёрство: вы действительно понимаете нашу задачу, предлагаете лучшие решения и помогаете нам расти.' },
+        { name: 'АЭИ', text: 'Благодарим за оперативность, качественные материалы и стратегический подход. Результаты PR-работы ощутимы уже сейчас.' },
+        { name: 'Российский Промышленник', text: 'Отдельная благодарность за креативные идеи и способность быстро адаптироваться к любой задаче — работать с вами легко и результативно.' },
       ]
   return (
     <section id="testimonials" className={`relative ${geometria.className}`}>
