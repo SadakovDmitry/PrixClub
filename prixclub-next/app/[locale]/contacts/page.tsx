@@ -316,9 +316,9 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
       </section>
 
       {/* Reviews Section */}
-      <section className="contacts-reviews-section">
+      {/* <section className="contacts-reviews-section"> */}
         {/* Background image */}
-        <div className="absolute contacts-reviews-bg-image">
+        {/* <div className="absolute contacts-reviews-bg-image">
           <Image
             src="/images/contacts/4d8b9dcac971793fd83201905f7049305447bbf1.jpg"
             alt=""
@@ -326,10 +326,10 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
             className="object-cover"
             sizes="100vw"
           />
-        </div>
+        </div> */}
 
         {/* Filter 1 - green with color blend */}
-        <div className="absolute contacts-reviews-filter-green">
+        {/* <div className="absolute contacts-reviews-filter-green">
           <Image
             src="/images/contacts/Rectangle 3265(1).svg"
             alt=""
@@ -337,10 +337,10 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
             className="object-cover"
             sizes="100vw"
           />
-        </div>
+        </div> */}
 
         {/* Filter 2 - gradient with multiply blend */}
-        <div className="absolute contacts-reviews-filter-gradient">
+        {/* <div className="absolute contacts-reviews-filter-gradient">
           <Image
             src="/images/contacts/Rectangle 3266 (копия).svg"
             alt=""
@@ -348,7 +348,7 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
             className="object-cover"
             sizes="100vw"
           />
-        </div>
+        </div> */}
 
         {/* Reviews */}
         {/* <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 md:px-10 text-center space-y-4 md:space-y-6 pt-16 md:pt-24"> */}
@@ -398,7 +398,7 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
             <div className="contacts-review-line-gradient"></div>
           </article> */}
         {/* </div> */}
-      </section>
+      {/* </section> */}
 
       {/* FAQ Section */}
       <section className="contacts-faq-section">
