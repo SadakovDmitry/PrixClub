@@ -22,7 +22,7 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
     ? {
       title: 'Our mission',
       subtitle:
-        'Build strong relationships between people and brands through a combination of proven PR methods and the latest technologies',
+        'To build sustainable brand reputations through systematic work with the media and modern communication technologies.',
       cards: [
         { key: 'trust', title: 'Trust', icon: '/images/about_us/isolated_hand_shaking_3d_chrome_icon_against_black_background_tpub2s82m1c2ctmpfkxl_3%202.svg' },
         { key: 'innov', title: 'Innovation', icon: '/images/about_us/isolated_light_bulb_3d_chrome_icon_against_black_background_ky74b0it1ybt946e6770_4%202.svg' },
@@ -33,7 +33,7 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
     : {
       title: 'Наша миссия',
       subtitle:
-        'Строить прочные связи между людьми и брендами через сочетание проверенных PR‑методов и новейших технологий',
+        'Формировать устойчивую репутацию брендов через системную работу с медиа и современными коммуникационными технологиями.',
       cards: [
         { key: 'trust', title: 'Доверие', icon: '/images/about_us/isolated_hand_shaking_3d_chrome_icon_against_black_background_tpub2s82m1c2ctmpfkxl_3%202.svg' },
         { key: 'innov', title: 'Инновационность', icon: '/images/about_us/isolated_light_bulb_3d_chrome_icon_against_black_background_ky74b0it1ybt946e6770_4%202.svg' },
@@ -106,7 +106,7 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
                 <div className="pointer-events-none absolute inset-0 grid place-items-center p-6">
                   <div className="flex flex-col items-center gap-3">
                     <Image src={c.icon} alt="" width={56} height={56} className="mission-icon h-14 w-14 object-contain" />
-                    <div className="mission-title text-center text-[clamp(17px,4vw,20px)] font-semibold text-white">{c.title}</div>
+                    <div className="mission-title text-center text-[clamp(12px,2.2vw,16px)] font-semibold text-white">{c.title}</div>
                   </div>
                 </div>
               </div>
@@ -122,21 +122,23 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
             }
             .mission-title{
               text-align:center;
-              white-space: normal;
-              word-break: keep-all;
-              text-wrap: balance;
+              white-space: nowrap;
+              overflow: visible;
               line-height:1.2;
-              max-width:95%;
+              max-width:100%;
+            }
+            @media (max-width: 640px){
+              .mission-title{font-size:16px}
             }
           `}</style>
         </div>
       </section>
-      <section className={`relative overflow-hidden ${geometria.className}`}>
+      <section className={`relative overflow-hidden ${geometria.className} diff-section`}>
         {/* Фоновая картинка секции */}
         <img
           src="/images/about_us/background_second.svg"
           alt=""
-          className="block w-full h-auto"
+          className="block w-full h-auto diff-bg"
         />
 
         {/* Вертикальная левая линия — как на макете */}
@@ -145,10 +147,10 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
         </div>
 
         {/* Контент с правильными верх/низ отступами */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 diff-overlay">
           {/* py задаёт зазор сверху/снизу как на скрине; регулируется на md+ */}
           <div
-            className="relative mx-0 h-full max-w-[1100px] px-4 md:px-10 py-[clamp(40px,10vw,80px)] text-[#0a0a0a]"
+            className="relative mx-0 h-full max-w-[1100px] px-4 md:px-10 py-[clamp(40px,10vw,80px)] text-[#0a0a0a] section-tight diff-content"
             // линия стоит на 124px; гуттер между линией и текстом = 24px
             style={{ paddingLeft: 'max(calc(clamp(24px,8vw,124px) + clamp(12px,3vw,24px)), 16px)' }}
           >
@@ -170,25 +172,36 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
               <div className="mt-[clamp(24px,6vw,40px)] space-y-[clamp(16px,4vw,32px)]">
                 <ParagraphBlock>
                   {locale === 'en'
-                    ? 'The company stands at the intersection of PR and IT — we solve communication challenges not only with words but also with technology.'
-                    : 'Компания стоит на стыке PR и IT – умеет решать коммуникационные задачи не только словами, но и технологиями'}
+                    ? 'PRIX Club operates at the intersection of PR and technology, addressing reputation and communication challenges not only through messaging, but also through digital tools.'
+                    : 'PRIX Club работает на стыке PR и технологий, решая репутационные и коммуникационные задачи не только за счёт смыслов, но и с помощью цифровых инструментов.'}
                 </ParagraphBlock>
 
                 <ParagraphBlock>
                   {locale === 'en'
-                    ? 'We use data and analytics to make decisions (data-driven PR) and apply an individual approach to each project.'
-                    : 'Используются данные и аналитика для принятия решений (data-driven PR), а также индивидуальный подход к каждому проекту.'}
+                    ? 'Our work is grounded in analytics and verified data. We make decisions based on facts and develop tailored strategies aligned with the objectives of each project.'
+                    : 'В основе нашей работы — аналитика и проверенные данные. Мы принимаем решения на основе фактов и выстраиваем индивидуальные стратегии под задачи каждого проекта.'}
                 </ParagraphBlock>
 
                 <ParagraphBlock className="pb-2">
                   {locale === 'en'
-                    ? 'Teams of different profiles are integrated (PR specialists work hand in hand with IT developers) — this synergy increases the effectiveness of solutions.'
-                    : 'Команды разных профилей интегрируются (PR-специалисты работают рука об руку с IT-разработчиками) – такая синергия повышает эффективность решений'}
+                    ? 'We bring together multidisciplinary teams: PR specialists, GR consultants, and IT developers work as one integrated system to maximize the effectiveness of communication solutions.'
+                    : 'Мы объединяем команды разных профилей: PR-специалисты, GR-консультанты и IT-разработчики работают как единая система, повышая эффективность коммуникационных решений.'}
                 </ParagraphBlock>
               </div>
             </div>
           </div>
         </div>
+        <style jsx>{`
+          @media (max-width: 400px){
+            .section-tight{padding-top:20px}
+          }
+          @media (min-width: 750px) and (max-width: 1300px){
+            .diff-section{overflow:visible}
+            .diff-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+            .diff-overlay{position:relative; inset:auto; z-index:1}
+            .diff-content{padding-bottom:90px}
+          }
+        `}</style>
       </section>
       {/* <VideoSection /> */}
       {/* <PhotoSection /> */}
@@ -483,94 +496,135 @@ function WhyUsSection({ locale }: { locale: 'ru' | 'en' }) {
   const txt =
     locale === 'en'
       ? {
-        title: 'Why us?',
+        title: 'Why PRIX Club?',
         bullets: [
-          '10 years on the market',
-          'Expertise in PR and software development',
-          'Working with both government and commercial clients',
-          'Creative turnkey solutions',
+          'Over 10 years of experience in reputation management across media and the public sphere',
+          'Expertise in PR, GR, and digital communications, strengthened by proprietary IT solutions',
+          'Proven track record working with businesses, public institutions, and non-profit organizations',
+          'Comprehensive image and reputation solutions delivered end-to-end',
         ],
       }
       : {
-        title: 'Почему мы?',
+        title: 'Почему PRIX Club?',
         bullets: [
-          '10 лет на рынке',
-          'Экспертиза в PR и разработке ПО',
-          'Работаем и с гос., и с коммерческими клиентами',
-          'Креативные решения «под ключ»',
+          'Более 10 лет работы с репутацией в медиа и публичном пространстве',
+          'Экспертиза в PR, GR и цифровых коммуникациях, усиленная собственными IT-решениями',
+          'Опыт работы с бизнесом, государственными структурами и общественными институтами',
+          'Комплексные имиджевые и репутационные решения «под ключ»',
         ],
       };
 
   return (
     <section className="relative w-full">
       {/* Холст 1440×810, чтобы всё масштабировалось как в макете */}
-      <div className="relative w-full" style={{ aspectRatio: '1440 / 810' }}>
+      <div className="relative w-full whyus-canvas whyus-stack">
         {/* Фон из макета */}
-        <Image src="/images/about_us/why_us_background.svg" alt="" fill className="object-cover" priority />
+        <div className="whyus-layers" aria-hidden>
+          <div className="whyus-bg" />
+          <div className="whyus-overlay" style={{ background: '#74AA9C', mixBlendMode: 'color' }} />
+        </div>
 
-        {/* Цветовой слой как в фигме (mix-blend: color) */}
-        <div className="absolute inset-0" style={{ background: '#74AA9C', mixBlendMode: 'color' }} />
+        <div className="whyus-content">
+          {/* Заголовок */}
+          <h2 className="font-extrabold text-black leading-[1.25] whyus-title">
+            {txt.title}
+          </h2>
 
-        {/* Заголовок */}
-        <h2
-          className="absolute font-extrabold text-black leading-[1.25]"
-          style={{
-            /* left: 222/1440, top: 128.33/810, width: 183/1440 */
-            left: '15.417%',
-            top: '13%',
-            width: 'auto',
-            maxWidth: 'unset',
-            whiteSpace: 'nowrap',
-            fontSize: 'clamp(20px, 4.4vw, 42px)',
-          }}
-        >
-          {txt.title}
-        </h2>
+          {/* Единорог */}
+          <div className="whyus-unicorn-wrap">
+            <Image
+              src="/images/about_us/unicorn.png"
+              alt=""
+              fill
+              className="whyus-unicorn object-contain"
+              style={{ pointerEvents: 'none' }}
+              unoptimized
+            />
+          </div>
 
-        {/* Единорог */}
-        <Image
-          src="/images/about_us/unicorn.svg"
-          alt=""
-          width={192}
-          height={240}
-          className="absolute"
-          style={{
-            left: '14.402%', // 207.7 / 1440
-            top: '27.962%',  // 226.47 / 810
-            width: '13.32%', // 191.84 / 1440
-            height: 'auto',
-          }}
-        />
-
-        {/* Список — позиция блока как в макете */}
-        <div
-          className="absolute text-black"
-          style={{
-            left: '15.417%',     // 222px
-            top: '64.198%',      // точка начала списка
-            width: '79.157%',    // 607.22px
-            fontSize: 'clamp(10px, 2.5vw, 27px)',
-            lineHeight: 'clamp(10px, 3.5vw, 34px)',
-          }}
-        >
-          <ul className="space-y-[clamp(8px, 2vw, 16px)]">
-            {txt.bullets.map((line, i) => (
-              <li key={i} className="flex items-start" style={{ gap: 'clamp(6px, 1.5vw, 12px)' }}>
-                <span
-                  aria-hidden
-                  className="mt-[clamp(4px, 1vw, 8px)] inline-block [width:0] [height:0] -rotate-45"
-                  style={{
-                    borderTop: 'clamp(5px, 1.5vw, 8.24px) solid transparent',
-                    borderBottom: 'clamp(5px, 1.5vw, 8.24px) solid transparent',
-                    borderLeft: 'clamp(6px, 1.8vw, 9.515px) solid #000',
-                  }}
-                />
-                <span className="leading-[1.25]">{line}</span>
-              </li>
-            ))}
-          </ul>
+          {/* Список — позиция блока как в макете */}
+          <div className="text-black whyus-list">
+            <ul className="space-y-[clamp(8px, 2vw, 16px)]">
+              {txt.bullets.map((line, i) => (
+                <li key={i} className="flex items-start" style={{ gap: 'clamp(6px, 1.5vw, 12px)' }}>
+                  <span
+                    aria-hidden
+                    className="mt-[clamp(4px, 1vw, 8px)] inline-block [width:0] [height:0] -rotate-45"
+                    style={{
+                      borderTop: 'clamp(5px, 1.5vw, 8.24px) solid transparent',
+                      borderBottom: 'clamp(5px, 1.5vw, 8.24px) solid transparent',
+                      borderLeft: 'clamp(6px, 1.8vw, 9.515px) solid #000',
+                    }}
+                  />
+                  <span className="leading-[1.25]">{line}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .whyus-canvas{aspect-ratio:auto;isolation:isolate}
+        .whyus-stack{position:relative;z-index:0}
+        .whyus-layers{position:absolute;inset:0;z-index:0;pointer-events:none}
+        .whyus-bg{
+          position:absolute;
+          inset:0;
+          background:url('/images/about_us/why_us_background.svg') center/cover no-repeat;
+        }
+        .whyus-overlay{position:absolute;inset:0}
+        .whyus-content{
+          position:relative;
+          z-index:1;
+          width:100%;
+          height:100%;
+          display:flex;
+          flex-direction:column;
+          align-items:flex-start;
+          gap:32px;
+          padding:clamp(24px, 6vw, 120px) clamp(16px, 8vw, 220px) clamp(16px, 6vw, 220px);
+        }
+        .whyus-title{
+          position:static;
+          width:100%;
+          white-space:normal;
+          font-size:clamp(20px, 4.4vw, 42px);
+        }
+        .whyus-unicorn-wrap{
+          position:relative;
+          width:200px;
+          aspect-ratio:4/5;
+          max-width:100%;
+        }
+        .whyus-unicorn{
+          position:absolute;
+          inset:0;
+        }
+        .whyus-list{
+          position:static;
+          width:100%;
+          font-size:clamp(10px, 2.5vw, 27px);
+          line-height:clamp(10px, 3.5vw, 34px);
+        }
+        @media (max-width: 1300px){
+          .whyus-canvas{min-height:0}
+        }
+        @media (max-width: 640px){
+          .whyus-stack{aspect-ratio:auto;min-height:0;height:auto}
+          .whyus-content{
+            // padding:20px 16px 20px;
+            gap:10px;
+          }
+          .whyus-unicorn-wrap{width:64px}
+          .whyus-unicorn{
+            opacity:1;
+            mix-blend-mode:normal;
+            filter:brightness(0) saturate(100%) drop-shadow(0 2px 6px rgba(0,0,0,0.25));
+          }
+          .whyus-list ul{gap:8px}
+        }
+      `}</style>
     </section>
   );
 }

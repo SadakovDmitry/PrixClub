@@ -56,22 +56,28 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
   const t = locale === 'en'
     ? {
       industries: 'Industries\nwe serve',
+      topLeft: '300+\nFederal media outlets',
+      topRightNum: '25+',
+      topRightLabel: 'Experts on the team',
       realised: 'Realised\nprojects',
       years: 'Years of work',
-      awards: 'Awards',
+      awards: 'Long-term\npartnerships',
       clients: 'Major clients',
     }
     : {
       industries: 'Отрасли,\nс которыми работаем',
+      topLeft: '300+\nФедеральных СМИ',
+      topRightNum: '25+',
+      topRightLabel: 'Экспертов в команде',
       realised: 'Реализованные\nпроекты',
       years: 'Лет работы',
-      awards: 'Награды',
+      awards: 'Долгосрочные\nпартнёрства',
       clients: 'Ключевые клиенты',
     }
 
   const list = locale === 'en'
-    ? ['NCF', 'DEVELOPMENT', 'MEDIA', 'MARKETING', 'INTERNATIONAL', 'TRADE']
-    : ['НКО', 'ДЕВЕЛОПМЕНТ', 'МЕДИА', 'МАРКЕТИНГ', 'МЕЖДУНАР.', 'ТОРГОВЛЯ']
+    ? ['IT', 'FINANCE', 'CONSULTING', 'CONSTRUCTION', 'EVENTS']
+    : ['IT', 'ФИНАНСЫ', 'КОНСАЛТИНГ', 'СТРОИТЕЛЬСТВО', 'МЕРОПРИЯТИЯ']
 
   return (
     <section id="stats" className={`${geometria.className}`}>
@@ -81,8 +87,11 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
         <div className="bg-hue" />
 
         {/* Cards (absolute layout) */}
-        <div className="card tl" />
+        <div className="card tl">
+          <div className="tl-text dim" dangerouslySetInnerHTML={{ __html: t.topLeft.replace('\n', '<br/>') }} />
+        </div>
         <div className="card left-tall">
+          <div className="industries-label dim" dangerouslySetInnerHTML={{ __html: t.industries.replace('\n', '<br/>') }} />
           <ul className="ind-list">
             {list.map((x) => (
               <li key={x}>{x}</li>
@@ -101,27 +110,23 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
         </div>
 
         <div className="card small-awards">
-          <div className="sub dim">{t.awards}</div>
-          <div className="awards-logos">
-            <Image src="/images/awards_logo.svg" alt="award" width={63} height={55} className="op" />
-            <Image src="/images/awards_logo.svg" alt="award" width={63} height={55} className="op" />
-            <Image src="/images/awards_logo.svg" alt="award" width={63} height={55} className="op" />
-          </div>
+          <div className="sub dim" dangerouslySetInnerHTML={{ __html: t.awards.replace('\n', '<br/>') }} />
         </div>
 
-        <div className="card right-tall" />
+        <div className="card right-tall">
+          <div className="num dim rt-num">{t.topRightNum}</div>
+          <div className="sub dim rt-sub">{t.topRightLabel}</div>
+        </div>
 
         <div className="card bottom-wide">
           <Image src="/images/Heart_icon.svg" alt="heart" width={60} height={60} style={{ width: '4vw', height: '4vw', position: 'absolute', left: '4%', top: '18%', opacity: 0.99, zIndex: 2 }} />
           <div className="clients dim">{t.clients}</div>
           <div className="logos">
-            {['/images/tryangle_logo.svg', '/images/ФРСК_logo.svg', '/images/tryangle_logo.svg', '/images/ФРСК_logo.svg', '/images/tryangle_logo.svg'].map((src, i) => (
+            {['/images/Сбермаркетинг.svg', '/images/Main Division.svg', '/images/АЭИ.svg', '/images/Хабаровский край.svg'].map((src, i) => (
               <Image key={i} src={src} alt="client" width={62} height={40} className="op" />
             ))}
           </div>
         </div>
-
-        <div className="industries dim" dangerouslySetInnerHTML={{ __html: t.industries.replace('\n', '<br/>') }} />
       </div>
 
       <style jsx>{`
@@ -137,7 +142,8 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
         }
         .tl{left:8.333%;top:14.815%;width:19.583%;height:14.815%;background-image:url('/images/main/card_top_left_background.png');background-size:cover;background-position:center}
         .left-tall{left:8.333%;top:32.099%;width:19.583%;height:53.086%;background-image:url('/images/main/card_industries_we_serve_background.png');background-size:cover;background-position:center}
-        .ind-list{position:absolute;left:8.854%;top:12.174%;width:77.305%;height:44.186%;margin:0;padding:0;list-style:none;color:#fff;opacity:.3;font-weight:700;font-size:1.49vw;line-height:130%;text-transform:uppercase}
+        .industries-label{position:absolute;left:8.854%;top:10.5%;width:80%;font-size:1.944vw;line-height:1.05}
+        .ind-list{position:absolute;left:8.854%;top:34.2%;width:77.305%;height:44.186%;margin:0;padding:0;list-style:none;color:#fff;opacity:.3;font-weight:700;font-size:1.49vw;line-height:130%;text-transform:uppercase}
         .ind-list li{margin:0.6vw 0}
         .right-tall{left:79.167%;top:14.815%;width:12.5%;height:28.889%;background-image:url('/images/main/card_right_up_background.png');background-size:cover;background-position:center}
         .small-years{left:57.917%;top:14.815%;width:19.583%;height:28.889%;background-image:url('/images/main/card_years_of_work_background.png');background-size:cover;background-position:center}
@@ -156,18 +162,10 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
         .dim{opacity:.3;color:#fff}
         .small-years .num{left:10.638%;top:6.838%}
         .small-years .sub{position:absolute;left:12.056%;top:78.205%;font-size:1.944vw;line-height:0.9}
-        .small-awards .sub{position:absolute;left:6.997%;top:58.462%;font-size:1.944vw;line-height:0.9}
-        .awards-logos{position:absolute;right:17.997%;top:29.231%;display:flex;gap:14%}
-        .awards-logos :global(img){width:4.2vw;height:auto}
-
-        .industries{
-          position:absolute;left:10.694%;top:73.5%;
-          font-size:1.944vw;line-height:1.05;display:flex;align-items:flex-start;z-index:2;
-          max-width:16%;
-          white-space: normal;
-          word-break: break-word;
-          overflow-wrap: anywhere;
-        }
+        .small-awards .sub{position:absolute;left:6.997%;top:40%;font-size:1.944vw;line-height:0.9}
+        .tl-text{position:absolute;left:10.5%;top:18%;font-size:1.944vw;line-height:1.05}
+        .rt-num{left:12%;top:18%;font-size:3.6vw}
+        .rt-sub{position:absolute;left:12%;top:72%;font-size:1.6vw;line-height:0.9}
         .clients{
           position:absolute;left:3.802%;top:60%;
           font-size:1.944vw;line-height:1.1;z-index:2;
@@ -187,29 +185,161 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
 }
 
 function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
-  const logos = [
-                '/images/IPWK.svg', 
-                '/images/Main Division.svg', 
-                '/images/SharesPro.svg', 
-                '/images/SKY consulting.svg', 
-                '/images/Tamashi.svg',
-                '/images/АЭИ.svg', 
-                '/images/Башкортостан.svg', 
-                '/images/Дом Лазовского.svg', 
-                '/images/МДТ.svg', 
-                '/images/МРК.svg',
-                '/images/НБС.svg', 
-                '/images/Отель Жемучина.svg', 
-                '/images/Российский Промышленник.svg', 
-                '/images/Сбермаркетинг.svg', 
-                '/images/ТОП50 HR.svg',
-                '/images/ТЭК-Торг.svg', 
-                '/images/Фонд Наследие.svg', 
-                '/images/ФСРК.svg', 
-                '/images/Хабаровский край.svg', 
-                '/images/Астафьев.svg', 
-                '/images/Горелкина.svg', 
-                '/images/Карпунин.svg'
+  const clients = [
+    {
+      src: '/images/IPWK.svg',
+      desc: {
+        ru: 'Академия ИТ-менеджмента и профессиональный клуб IT-руководителей.',
+        en: 'An IT management academy and professional community for technology leaders.',
+      },
+    },
+    {
+      src: '/images/Main Division.png',
+      desc: {
+        ru: 'Компания, специализирующаяся на комплексной застройке бизнес-мероприятий по всему миру, с полным техническим обеспечением, арендой оборудования и решениями для event-индустрии.',
+        en: 'A company specializing in the full-scale production of business events worldwide, providing technical support, equipment rental, and integrated solutions for the event industry.',
+      },
+    },
+    {
+      src: '/images/SharesPro.svg',
+      desc: {
+        ru: 'Российский инвестор, предприниматель и основатель инвестиционной компании SharesPro.',
+        en: 'A Russian investor, entrepreneur, and founder of the investment company SharesPro.',
+      },
+    },
+    {
+      src: '/images/SKY consulting.png',
+      desc: {
+        ru: 'Консалтинговая компания в ОАЭ, эксперты в сфере управления, HR и развития команд, сопровождающая трансформацию бизнеса и лидеров.',
+        en: 'A UAE-based consulting firm specializing in management, HR, and team development, supporting business and leadership transformation.',
+      },
+    },
+    {
+      src: '/images/Tamashi.png',
+      desc: {
+        ru: 'Бренд моторных масел и автохимии, ориентированный на технологии, автоспорт и практические решения для современных двигателей.',
+        en: 'A motor oil and automotive chemicals brand focused on technology, motorsports, and practical solutions for modern engines.',
+      },
+    },
+    {
+      src: '/images/АЭИ.png',
+      desc: {
+        ru: 'Международное сообщество участников внешнеэкономической деятельности, объединяющее бизнес и госструктуры для развития ВЭД и сотрудничества.',
+        en: 'An international community of foreign trade participants bringing together businesses and public institutions to support the development of international trade and cooperation.',
+      },
+    },
+    {
+      src: '/images/Башкортостан.png',
+      desc: {
+        ru: 'Крупный промышленный и экономический регион России с развитой энергетикой, нефтехимией и предпринимательской средой.',
+        en: 'A major industrial and economic region of Russia with strong energy, petrochemical, and entrepreneurial sectors.',
+      },
+    },
+    {
+      src: '/images/Дом Лазовского.png',
+      desc: {
+        ru: 'Девелоперский проект в сфере загородной недвижимости с акцентом на архитектуру, комфорт и продуманные планировочные решения.',
+        en: 'A residential development project in the suburban real estate segment, focused on architecture, comfort, and well-designed layouts.',
+      },
+    },
+    {
+      src: '/images/МДТ.png',
+      desc: {
+        ru: 'Флагманское мероприятие Ассоциации экспортеров и импортеров, объединяющее бизнес и политических лидеров для развития международной торговли и ВЭД.',
+        en: 'A flagship event of the Association of Exporters and Importers, bringing together business and political leaders to promote international trade.',
+      },
+    },
+    {
+      src: '/images/МКР.png',
+      desc: {
+        ru: 'Консалтинговая компания, предоставляющая комплексные решения в области управления, финансов, стратегии и бизнес-аналитики.',
+        en: 'A consulting company delivering comprehensive solutions in management, finance, strategy, and business analytics.',
+      },
+    },
+    {
+      src: '/images/НБС.png',
+      desc: {
+        ru: 'Российский коммерческий банк, предоставляющий финансовые и расчетные услуги для частных и корпоративных клиентов, с акцентом на надежность и устойчивость.',
+        en: 'A Russian commercial bank providing financial and settlement services to private and corporate clients, with a focus on reliability and stability.',
+      },
+    },
+    {
+      src: '/images/Отель Жемучина.svg',
+      desc: {
+        ru: 'Курортный отель, ориентированный на комфортный отдых, туристические программы и развитие внутреннего туризма.',
+        en: 'A resort hotel focused on comfortable leisure, tourism programs, and the development of domestic tourism.',
+      },
+    },
+    {
+      src: '/images/Российский Промышленник.svg',
+      desc: {
+        ru: 'Отраслевой форум и медиаплощадка, объединяющая представителей промышленности, власти и бизнеса для обсуждения развития экономики.',
+        en: 'An industry forum and media platform bringing together representatives of industry, government, and business to discuss economic development.',
+      },
+    },
+    {
+      src: '/images/Сбермаркетинг.svg',
+      desc: {
+        ru: '',
+        en: '',
+      },
+    },
+    {
+      src: '/images/ТОП50 HR.svg',
+      desc: {
+        ru: 'Профессиональная премия, отмечающая лучших HR-руководителей и проекты в сфере управления персоналом и корпоративной культуры.',
+        en: 'A professional award recognizing leading HR executives and outstanding projects in talent management and corporate culture.',
+      },
+    },
+    {
+      src: '/images/ТЭК-Торг.png',
+      desc: {
+        ru: 'Электронная торговая площадка, специализирующаяся на закупках для топливно-энергетического комплекса и крупного бизнеса.',
+        en: 'An electronic trading platform specializing in procurement for the energy sector and large enterprises.',
+      },
+    },
+    {
+      src: '/images/Фонд Наследие.svg',
+      desc: {
+        ru: 'Фонд, занимающийся защитой, популяризацией и развитием исторических и культурных объектов и общественных инициатив.',
+        en: 'A foundation dedicated to the protection, promotion, and development of historical and cultural sites and public initiatives.',
+      },
+    },
+    {
+      src: '/images/ФСРК.png',
+      desc: {
+        ru: 'Некоммерческая организация, поддерживающая научные, образовательные и просветительские проекты в сфере космоса.',
+        en: 'A non-profit organization supporting scientific, educational, and outreach initiatives in the field of space exploration.',
+      },
+    },
+    {
+      src: '/images/Хабаровский край.png',
+      desc: {
+        ru: 'Один из ключевых регионов Дальнего Востока с высоким промышленным, логистическим и инвестиционным потенциалом.',
+        en: 'A key region of the Russian Far East with strong industrial, logistics, and investment potential.',
+      },
+    },
+    {
+      src: '/images/Астафьев.png',
+      desc: {
+        ru: 'Российский инвестор, предприниматель и основатель инвестиционной компании SharesPro.',
+        en: 'A Russian investor, entrepreneur, and founder of the investment company SharesPro.',
+      },
+    },
+    {
+      src: '/images/Горелкина.png',
+      desc: {
+        ru: 'Российский топ-менеджер, заместитель председателя совета директоров холдинга «Сибирский деловой союз» (СДС) и вице-президент АКАР.',
+        en: 'A Russian top executive, Deputy Chair of the Board at Siberian Business Union (SBU) and Vice President of the Russian Association of Communication Agencies (ACAR).',
+      },
+    },
+    {
+      src: '/images/Карпунин.png',
+      desc: {
+        ru: '',
+        en: '',
+      },
+    },
   ]
   const [idx, setIdx] = useState(0)
   const sectionRef = useRef<HTMLDivElement | null>(null)
@@ -225,9 +355,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
   }, [])
 
   const title = locale === 'en' ? 'Our Clients' : 'Наши Клиенты'
-  const desc = locale === 'en'
-    ? 'The Foundation for the Advancement of Cosmonautics is a nonprofit organization that supports projects in space technology, science, and education.'
-    : 'Фонд содействия развитию космонавтики — некоммерческая организация, поддерживающая проекты в области космических технологий, науки и образования.'
+  const desc = clients[idx].desc[locale]
 
   return (
     <section id="clients" className={`relative ${geometria.className}`}>
@@ -253,7 +381,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                   <button
                     type="button"
                     aria-label="Prev"
-                    onClick={() => setIdx((p) => (p - 1 + logos.length) % logos.length)}
+                    onClick={() => setIdx((p) => (p - 1 + clients.length) % clients.length)}
                     className="group arrow arrow-left"
                   >
                     <svg
@@ -274,7 +402,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                   </button>
                   <div className="logo-box">
                     <Image
-                      src={logos[idx]}
+                      src={clients[idx].src}
                       alt="client"
                       fill
                       sizes="(min-width: 1280px) 540px, (min-width: 768px) 420px, 80vw"
@@ -285,7 +413,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                   <button
                     type="button"
                     aria-label="Next"
-                    onClick={() => setIdx((p) => (p + 1) % logos.length)}
+                    onClick={() => setIdx((p) => (p + 1) % clients.length)}
                     className="group arrow arrow-right"
                   >
                     <svg
@@ -306,7 +434,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                   </button>
                 </div>
                 <div className="mt-2 md:mt-3 flex items-center justify-center gap-3">
-                  {logos.map((_, i) => {
+                  {clients.map((_, i) => {
                     const dist = Math.abs(i - idx)
                     const op = dist === 0 ? 1 : dist === 1 ? 0.6 : dist === 2 ? 0.35 : 0.2
                     return (
@@ -1087,14 +1215,21 @@ function Hero({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
 function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
   const intro =
     locale === 'en'
-      ? `PRIX Club is a reputation management agency that combines classic PR with IT tools to achieve our clients’ goals. We help businesses and government institutions build dialogue with their audiences in today’s digital world.`
-      : `PRIX Club — агентство управления репутацией, которое сочетает классический PR с ИТ‑инструментами для достижения целей клиентов. Мы помогаем бизнесу и госорганизациям выстраивать диалог с аудиторией в цифровой среде.`
-  const cards = [
-    { key: 'pr', img: '/images/public_media_starateges_card.svg', title: locale === 'en' ? 'Public Relations\nstrategies' : 'Public Relations\nстратегии' },
-    { key: 'gov', img: '/images/our_clients_background.svg', title: locale === 'en' ? 'Government\nRelations' : 'Government\nRelations' },
-    { key: 'it', img: '/images/The_Cabinet_table.svg', title: locale === 'en' ? 'IT solutions for\ncommunications' : 'IT‑решения для\nкоммуникаций' },
-    { key: 'digital', img: '/images/digital_compagns.svg', title: locale === 'en' ? 'Digital\ncampaigns' : 'Digital\nкампании' },
-  ]
+      ? `PRIX Club is a full-cycle reputation and image agency that combines media PR, GR communications, and SMM with IT tools to address complex reputation challenges. We help businesses and public institutions build a sustainable dialogue with their audiences and key target groups across the media landscape.`
+      : `PRIX Club — имиджевое агентство полного цикла, объединяющее PR в СМИ, GR-коммуникации и SMM с ИТ-инструментами для решения репутационных задач. Мы помогаем бизнесу и государственным организациям выстраивать устойчивый диалог с аудиторией и ключевыми целевыми группами в медиапространстве.`
+  const cards = locale === 'en'
+    ? [
+      { key: 'pr', img: '/images/public_media_starateges_card.svg', title: 'Media Relations' },
+      { key: 'gov', img: '/images/our_clients_background.svg', title: 'Government Relations' },
+      { key: 'it', img: '/images/The_Cabinet_table.svg', title: 'Business Technologies' },
+      { key: 'digital', img: '/images/digital_compagns.svg', title: 'Social Media Management' },
+    ]
+    : [
+      { key: 'pr', img: '/images/public_media_starateges_card.svg', title: 'PR в СМИ' },
+      { key: 'gov', img: '/images/our_clients_background.svg', title: 'GR-коммуникации' },
+      { key: 'it', img: '/images/The_Cabinet_table.svg', title: 'IT-решения для бизнеса' },
+      { key: 'digital', img: '/images/digital_compagns.svg', title: 'SMM и цифровые медиа' },
+    ]
   return (
     <section id="services" className="relative py-20 bg-white text-[#0a0a0a]">
       <div className="container-max">

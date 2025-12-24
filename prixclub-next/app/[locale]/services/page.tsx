@@ -8,15 +8,15 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
     const t = (locale === "en")
         ? {
             title: "PRIX Club",
-            text1: "Offers a comprehensive approach to communications, combining expertise in PR, digital, and technological solutions.",
-            text2: "We believe that today's challenges demand the synergy of creativity, technology, and strategic thinking.",
-            text3: "The project team operates at the intersection of multiple disciplines to achieve the client's goals with maximum precision and impact."
+            text1: "Provides a comprehensive approach to communication management, combining expertise in PR, GR, digital, and technology-driven solutions.",
+            text2: "We believe that today’s reputation and communication challenges require the synergy of strategy, media expertise, and technology.",
+            text3: "The PRIX Club team operates at the intersection of multiple disciplines to deliver client objectives with precision and long-term impact."
         }
         : {
             title: "PRIX Club",
-            text1: "Предлагает комплексный подход к коммуникациям, объединяя экспертизу в PR, digital и технологических решениях.",
-            text2: "Мы уверены, что современные вызовы требуют синергии креатива, технологий и стратегического мышления.",
-            text3: "Команда проекта работает на стыке нескольких дисциплин, чтобы реализовать цель клиента с максимальной точностью и эффектом."
+            text1: "Предлагает комплексный подход к управлению коммуникациями, объединяя экспертизу в PR, GR, digital и технологических решениях.",
+            text2: "Мы убеждены, что современные репутационные и коммуникационные задачи требуют синергии стратегии, медиаэкспертизы и технологий.",
+            text3: "Команда PRIX Club работает на стыке нескольких дисциплин, обеспечивая реализацию целей клиента с максимальной точностью и устойчивым результатом."
         }
 
     const msg = {
