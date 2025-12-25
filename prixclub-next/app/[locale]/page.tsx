@@ -122,7 +122,7 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
           <Image src="/images/Heart_icon.svg" alt="heart" width={60} height={60} style={{ width: '4vw', height: '4vw', position: 'absolute', left: '4%', top: '18%', opacity: 0.99, zIndex: 2 }} />
           <div className="clients dim">{t.clients}</div>
           <div className="logos">
-            {['/images/Сбермаркетинг.svg', '/images/Main Division.svg', '/images/АЭИ.svg', '/images/Хабаровский край.svg'].map((src, i) => (
+            {['/images/Сбер.png', '/images/Main Division.png', '/images/АЭИ.png', '/images/Хабаровский край.png'].map((src, i) => (
               <Image key={i} src={src} alt="client" width={62} height={40} className="op" />
             ))}
           </div>
@@ -175,8 +175,14 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
           word-break: break-word;
           overflow-wrap: anywhere;
         }
-        .logos{position:absolute;left:37.595%;top:33.133%;display:flex;gap:16.8%;z-index:2}
-        .logos :global(img){width:4.2vw;height:auto;flex:0 0 auto}
+        .logos{position:absolute;left:24.595%;top:42%;display:flex;gap:12%;z-index:2;align-items:center}
+        .logos :global(img){
+          width:auto;
+          height:clamp(6px, 1.6vw, 72px);
+          max-width:100%;
+          object-fit:contain;
+          flex:0 0 auto;
+        }
         .heart{position:absolute;left:4.924%;top:15.663%;opacity:.99;z-index:2;width:6.71%;height:auto}
         .op{opacity:.3}
       `}</style>
