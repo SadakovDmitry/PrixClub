@@ -168,12 +168,12 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
         <div className="absolute inset-0 diff-overlay">
           {/* py задаёт зазор сверху/снизу как на скрине; регулируется на md+ */}
           <div
-            className="relative mx-0 h-full max-w-[1100px] px-4 md:px-10 py-[clamp(40px,10vw,80px)] text-[#0a0a0a] section-tight diff-content"
+            className="relative mx-0 h-full max-w-[1100px] px-10 py-[clamp(40px,10vw,80px)] text-[#0a0a0a] section-tight diff-content"
             // линия стоит на 124px; гуттер между линией и текстом = 24px
             style={{ paddingLeft: 'max(calc(clamp(24px,8vw,124px) + clamp(12px,3vw,24px)), 16px)' }}
           >
             <div className="md:w-4/5 max-w-[860px]">
-              <h2 className="mb-[clamp(24px,6vw,80px)] pl-0 md:pl-[15%] text-[clamp(20px,6vw,44px)] font-semibold leading-tight">
+              <h2 className="mb-[clamp(24px,6vw,80px)] pl-[15%] text-[clamp(20px,6vw,44px)] font-semibold leading-tight">
                 <span
                   className="inline-block bg-clip-text text-transparent"
                   style={{
@@ -212,6 +212,12 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
         <style jsx>{`
           @media (max-width: 400px){
             .section-tight{padding-top:20px}
+          }
+          @media (max-width: 749px){
+            .diff-section{overflow:hidden}
+            .diff-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+            .diff-overlay{position:relative; inset:auto; z-index:1}
+            .diff-content{height:auto}
           }
           @media (min-width: 750px) and (max-width: 1300px){
             .diff-section{overflow:visible}
@@ -410,12 +416,12 @@ function ParagraphBlock({
 }: React.PropsWithChildren<{ className?: string }>) {
   // у каждого абзаца одинаковый гуттер справа от линии = 24px (pl-6)
   return (
-    <div className={`relative pl-0 md:pl-[15%] ${className}`}>
+    <div className={`relative pl-[15%] ${className}`}>
       {/* Треугольник: развернут "влево" и вершиной лежит на линии */}
       <span
         className="
-          hidden md:block absolute top-[6px]
-          left-[calc(-24px+2.5px+0px)]  /* -gutter + line/2 + triangleWidth */
+          absolute top-[6px]
+          left-[calc(-24px+2.5px+21px-3%)]  /* -gutter + line/2 + lineWidth */
           h-0 w-0
           border-y-[9px] border-y-transparent  /* было 7px → стало выше */
           border-l-[16px] border-l-[#2E6456]   /* было 12px → стало шире */
@@ -682,9 +688,9 @@ function WhyUsSection({ locale }: { locale: 'ru' | 'en' }) {
           .whyus-stack{aspect-ratio:auto;min-height:0;height:auto}
           .whyus-content{
             // padding:20px 16px 20px;
-            gap:10px;
+            gap:20px;
           }
-          .whyus-unicorn-wrap{width:64px}
+          .whyus-unicorn-wrap{width:110px}
           .whyus-unicorn{
             opacity:1;
             mix-blend-mode:normal;
