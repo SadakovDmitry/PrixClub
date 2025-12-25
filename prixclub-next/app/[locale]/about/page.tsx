@@ -44,7 +44,7 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
 
   return (
     <div className={geometria.className}>
-      <Header msg={msg} locale={locale} />
+      <Header msg={msg} locale={locale} title={msg.nav.about} />
       <section className={`relative min-h-[80vh] py-16 md:py-24 ${geometria.className}`}>
         {/* Background image as real background */}
         <Image
@@ -77,21 +77,19 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
           </div>
 
           {/* Cards row */}
-          <div className="mx-auto mt-10 md:mt-14 grid max-w-[1280px] grid-cols-1 gap-7 md:gap-8 px-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mx-auto mt-10 md:mt-14 grid max-w-[1280px] grid-cols-2 gap-4 px-2 sm:gap-7 sm:px-4 lg:grid-cols-4">
             {t.cards.map((c) => (
               <div
                 key={c.key}
-                className="relative w-full overflow-hidden rounded-[20px] bg-black"
+                className="mission-card relative w-full min-w-0 overflow-hidden rounded-[20px] bg-black sm:min-w-[260px]"
                 style={{
-                  aspectRatio: '282 / 153',
                   margin: '0 auto',
-                  minWidth: '260px',
                 }}
               >
                 {/* same layers as Services cards */}
                 <Image src="/images/about_us/hero_card_background.png" alt="" fill className="object-cover [filter:contrast(1.05)_saturate(0.9)]" />
                 <div className="absolute inset-0" style={{ background: '#2E6456', mixBlendMode: 'multiply', opacity: 0.75 }} />
-                <div className="absolute inset-0 grid place-items-center p-4">
+                {/* <div className="absolute inset-0 grid place-items-center p-4"> */}
                   <div className="h-full w-full rounded-[14px] border border-white/20 relative overflow-hidden shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05),inset_0_0_0_2px_rgba(255,255,255,0.06)]" style={{ background: 'rgba(255,255,255,0.05)' }}>
                     <div
                       className="pointer-events-none absolute inset-0 rounded-[14px] mix-blend-screen"
@@ -101,11 +99,11 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
                       }}
                     />
                   </div>
-                </div>
+                {/* </div> */}
                 {/* Icon and title */}
-                <div className="pointer-events-none absolute inset-0 grid place-items-center p-6">
-                  <div className="flex flex-col items-center gap-3">
-                    <Image src={c.icon} alt="" width={56} height={56} className="mission-icon h-14 w-14 object-contain" />
+                <div className="mission-content pointer-events-none absolute inset-0 grid place-items-center p-6">
+                  <div className="mission-stack flex flex-col items-center gap-3">
+                    <Image src={c.icon} alt="" width={56} height={56} className="mission-icon h-14 w-14 object-contain" style={{ height: 'clamp(10px, 8vw, 34px)' }} />
                     <div className="mission-title text-center text-[clamp(12px,2.2vw,16px)] font-semibold text-white">{c.title}</div>
                   </div>
                 </div>
@@ -127,8 +125,28 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
               line-height:1.2;
               max-width:100%;
             }
+            .mission-card{
+              aspect-ratio: 282 / 153;
+            }
             @media (max-width: 640px){
-              .mission-title{font-size:16px}
+              .mission-card{
+                aspect-ratio: 282 / 148;
+                border-radius: 15px;
+              }
+              .mission-content{
+                padding: 10px;
+              }
+              .mission-stack{
+                gap: 6px;
+              }
+              .mission-icon{
+                width: clamp(20px, 8vw, 34px);
+                height: clamp(20px, 8vw, 34px);
+              }
+              .mission-title{
+                font-size: clamp(10px, 3vw, 12px);
+                white-space: normal;
+              }
             }
           `}</style>
         </div>
@@ -211,7 +229,7 @@ export default function AboutPage({ params: { locale } }: { params: { locale: 'r
   )
 }
 
-function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
+function Header({ msg, locale, title }: { msg: any; locale: 'ru' | 'en'; title: string }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const link = (href: string, label: string) => (
     <a href={href} className="block py-2 px-3 rounded-lg text-[14px] text-white/90 hover:text-white hover:bg-white/10 transition-colors text-center w-full" onClick={() => setIsMenuOpen(false)}>
@@ -222,19 +240,30 @@ function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
     <header className="sticky top-0 z-20 bg-black/85 backdrop-blur supports-[backdrop-filter]:bg-black/70 relative">
       <div className="container-max py-3">
         {/* Mobile bar */}
-        <div className="md:hidden flex items-center justify-between">
-          <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-9 w-auto" priority />
-          <button
-            type="button"
-            aria-label="Open menu"
-            aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen((v) => !v)}
-            className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white"
+        <div className="md:hidden flex items-center gap-3">
+          <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-[50px] w-auto" priority />
+          <div
+            className="relative flex-1 h-[50px] rounded-full border border-white/10 text-white overflow-hidden bg-center bg-cover"
+            style={{ backgroundImage: 'url(/images/mobile_menu_background.png)' }}
           >
-            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-1.5'}`} />
-            <span className={`absolute h-0.5 w-5 bg-white transition-opacity duration-200 ${isMenuOpen ? 'opacity-0' : 'opacity-90'}`} />
-            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1.5'}`} />
-          </button>
+            <button
+              type="button"
+              aria-label="Open menu"
+              aria-expanded={isMenuOpen}
+              onClick={() => setIsMenuOpen((v) => !v)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-white z-10"
+            >
+              <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
+              <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
+              <span className="block w-[22px] h-[2px] bg-white" />
+            </button>
+            <div className={`absolute inset-0 flex items-center justify-center text-[21px] font-semibold -translate-x-2 pointer-events-none ${geometria.className}`}>
+              {title}
+            </div>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10">
+              <MobileLangSwitch />
+            </div>
+          </div>
         </div>
 
         {/* Desktop nav */}
@@ -319,6 +348,45 @@ function LanguageSwitch() {
           boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 1px 2px rgba(0,0,0,0.4)'
         }}
       />
+    </button>
+  )
+}
+
+function MobileLangSwitch() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const current = pathname?.split('/')?.[1] === 'en' ? 'en' : 'ru'
+  const [isEN, setIsEN] = useState(current === 'en')
+  return (
+    <button
+      type="button"
+      aria-label="Language switch"
+      onClick={() => {
+        const nextLocale = isEN ? 'ru' : 'en'
+        setIsEN(!isEN)
+        let newPath = pathname || '/'
+        const segs = newPath.split('/').filter(Boolean)
+        if (segs.length && (segs[0] === 'ru' || segs[0] === 'en')) {
+          segs[0] = nextLocale
+          newPath = '/' + segs.join('/')
+        } else {
+          newPath = '/' + nextLocale + (newPath.startsWith('/') ? newPath : '/' + newPath)
+        }
+        router.push(newPath)
+      }}
+      className={`relative h-[40px] w-[69px] overflow-hidden rounded-full text-center text-[20px] font-medium text-white shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] transition-transform duration-100 active:scale-[0.96] ${geometria.className}`}
+    >
+      <Image
+        src="/images/mobile_switch_lang_icon.png"
+        alt=""
+        width={69}
+        height={40}
+        className="absolute inset-0 h-full w-full"
+        aria-hidden
+      />
+      <span className="relative z-10 flex h-full w-full items-center justify-center">
+        {isEN ? 'EN' : 'RU'}
+      </span>
     </button>
   )
 }

@@ -36,7 +36,7 @@ export default function Page() {
   })[locale], [locale])
   return (
     <>
-      <Header msg={msg} locale={locale} />
+      <Header msg={msg} locale={locale} title={msg.nav.main} />
       <main>
         <Hero msg={msg} locale={locale} />
         <Services msg={msg} locale={locale} />
@@ -439,7 +439,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
                     </svg>
                   </button>
                 </div>
-                <div className="mt-2 md:mt-3 flex items-center justify-center gap-3">
+                <div className="mt-2 md:mt-3 flex items-center justify-center gap-2 md:gap-3">
                   {clients.map((_, i) => {
                     const dist = Math.abs(i - idx)
                     const op = dist === 0 ? 1 : dist === 1 ? 0.6 : dist === 2 ? 0.35 : 0.2
@@ -508,7 +508,10 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
         @media (min-width: 768px){ .arrow-svg{ transform: translateX(25px) scale(2.6); } }
         @media (min-width: 1440px){ .arrow-svg{ transform: translateX(40px) scale(3.8); } }
         /* Индикаторные точки: меньше на мобилке */
-        .clients-dot{ width: clamp(6px, 1.6vw, 10px); height: clamp(6px, 1.6vw, 10px); }
+        .clients-dot{ width: clamp(4px, 1.2vw, 8px); height: clamp(4px, 1.2vw, 8px); }
+        @media (max-width: 640px){
+          .clients-dot{ width: 4px; height: 4px; }
+        }
       `}</style>
     </section>
   )
@@ -594,9 +597,9 @@ function TestimonialsNew({ locale }: { locale: 'ru' | 'en' }) {
         <div className="relative t-inner">
           <div className="container-max">
             <div className="grid items-center">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-7 md:gap-10 max-w-[1220px] mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-20 md:gap-10 max-w-[1220px] mx-auto">
                 {items.map((it, i) => (
-                  <div key={i} className="relative rounded-[18px] border border-black/5 bg-white/35 backdrop-blur-[2px] shadow-[0_6px_24px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(255,255,255,0.35)]">
+                  <div key={i} className="relative rounded-[18px] border border-black/5 bg-white/35 backdrop-blur-[2px] shadow-[0_6px_24px_rgba(0,0,0,0.08),inset_0_0_0_1px_rgba(255,255,255,0.35)] tm-card">
                     <div className="absolute inset-0 rounded-[18px] pointer-events-none" style={{ background: 'radial-gradient(120% 120% at 30% 20%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.2) 45%, rgba(255,255,255,0.08) 100%)' }} />
                     <svg className="absolute -top-7 left-4 text-black/70" width="72" height="56" viewBox="0 0 36 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M16 2 L8 12 L16 22" stroke="currentColor" strokeWidth="1" fill="none" />
@@ -606,7 +609,7 @@ function TestimonialsNew({ locale }: { locale: 'ru' | 'en' }) {
                       <path d="M16 2 L8 12 L16 22" stroke="currentColor" strokeWidth="1" fill="none" />
                       <path d="M28 2 L20 12 L28 22" stroke="currentColor" strokeWidth="1" fill="none" />
                     </svg>
-                    <div className="relative p-7 md:p-8 text-[#0a0a0a]">
+                    <div className="relative p-7 md:p-8 text-[#0a0a0a] tm-body">
                       <div className="font-semibold mb-4 tm-name">{it.name}</div>
                       <div className="tm-text text-[#0a0a0a]/75">{it.text}</div>
                     </div>
@@ -625,6 +628,12 @@ function TestimonialsNew({ locale }: { locale: 'ru' | 'en' }) {
         .t-shade{position:absolute;inset:0;background:rgba(255,255,255,0.30)}
         .tm-name{font-size: clamp(18px, 5vw, 24px)}
         .tm-text{font-size: clamp(14px, 4.2vw, 17px); line-height: clamp(20px, 6vw, 28px)}
+        .tm-card{aspect-ratio:1/1}
+        .tm-body{height:100%;display:flex;flex-direction:column;justify-content:center}
+        @media (max-width: 640px){
+          .t-section{min-height:0;padding:44px 0}
+          .t-inner{min-height:0;align-items:start}
+        }
       `}</style>
     </section>
   )
@@ -1047,7 +1056,7 @@ function PhysicalLensCard({
   )
 }
 
-function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
+function Header({ msg, locale, title }: { msg: any; locale: 'ru' | 'en'; title: string }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const link = (href: string, label: string) => (
     <a href={href} className="block py-2 px-3 rounded-lg text-[14px] text-white/90 hover:text-white hover:bg-white/10 transition-colors text-center w-full" onClick={() => setIsMenuOpen(false)}>
@@ -1058,19 +1067,30 @@ function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
     <header className="sticky top-0 z-20 bg-black/85 backdrop-blur supports-[backdrop-filter]:bg-black/70 relative">
       <div className="container-max py-3">
         {/* Mobile bar */}
-        <div className="md:hidden flex items-center justify-between">
-          <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-9 w-auto" priority />
-          <button
-            type="button"
-            aria-label="Open menu"
-            aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen((v) => !v)}
-            className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white"
+        <div className="md:hidden flex items-center gap-3">
+          <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-[50px] w-auto" priority />
+          <div
+            className="relative flex-1 h-[50px] rounded-full border border-white/10 text-white overflow-hidden bg-center bg-cover"
+            style={{ backgroundImage: 'url(/images/mobile_menu_background.png)' }}
           >
-            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-1.5'}`} />
-            <span className={`absolute h-0.5 w-5 bg-white transition-opacity duration-200 ${isMenuOpen ? 'opacity-0' : 'opacity-90'}`} />
-            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1.5'}`} />
-          </button>
+            <button
+              type="button"
+              aria-label="Open menu"
+              aria-expanded={isMenuOpen}
+              onClick={() => setIsMenuOpen((v) => !v)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-white z-10"
+            >
+              <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
+              <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
+              <span className="block w-[22px] h-[2px] bg-white" />
+            </button>
+            <div className={`absolute inset-0 flex items-center justify-center text-[21px] font-semibold -translate-x-2 pointer-events-none ${geometria.className}`}>
+              {title}
+            </div>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10">
+              <MobileLangSwitch />
+            </div>
+          </div>
         </div>
 
         {/* Desktop nav */}
@@ -1163,6 +1183,45 @@ function LanguageSwitch() {
   )
 }
 
+function MobileLangSwitch() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const current = pathname?.split('/')?.[1] === 'en' ? 'en' : 'ru'
+  const [isEN, setIsEN] = useState(current === 'en')
+  return (
+    <button
+      type="button"
+      aria-label="Language switch"
+      onClick={() => {
+        const nextLocale = isEN ? 'ru' : 'en'
+        setIsEN(!isEN)
+        let newPath = pathname || '/'
+        const segs = newPath.split('/').filter(Boolean)
+        if (segs.length && (segs[0] === 'ru' || segs[0] === 'en')) {
+          segs[0] = nextLocale
+          newPath = '/' + segs.join('/')
+        } else {
+          newPath = '/' + nextLocale + (newPath.startsWith('/') ? newPath : '/' + newPath)
+        }
+        router.push(newPath)
+      }}
+      className={`relative h-[40px] w-[69px] overflow-hidden rounded-full text-center text-[20px] font-medium text-white shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] transition-transform duration-100 active:scale-[0.96] ${geometria.className}`}
+    >
+      <Image
+        src="/images/mobile_switch_lang_icon.png"
+        alt=""
+        width={69}
+        height={40}
+        className="absolute inset-0 h-full w-full"
+        aria-hidden
+      />
+      <span className="relative z-10 flex h-full w-full items-center justify-center">
+        {isEN ? 'EN' : 'RU'}
+      </span>
+    </button>
+  )
+}
+
 function Hero({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
   const lines = {
     ru: [
@@ -1180,10 +1239,10 @@ function Hero({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
     <section className="relative overflow-hidden bg-black">
       <div className={`container-max grid min-h-[680px] grid-cols-1 items-center gap-12 py-20 md:grid-cols-2 ${geometria.className}`}>
         <div>
-          <h1 className="mb-16 font-bold leading-tight text-center md:text-left hero-title">
+          <h1 className="mb-16 font-bold leading-tight text-left hero-title">
             PRIX Club
           </h1>
-          <div className="space-y-1 font-semibold text-center md:text-left">
+          <div className="space-y-1 font-semibold text-left">
             <div className="text-white/90 hero-line">{lines[locale][0]}</div>
             <div
               className="inline-block bg-clip-text text-transparent leading-[1.15] pb-[2px] md:pb-[3px] hero-accent"
@@ -1240,7 +1299,7 @@ function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
     <section id="services" className="relative py-20 bg-white text-[#0a0a0a]">
       <div className="container-max">
         {/* Intro paragraph */}
-        <p className="mx-auto mb-10 max-w-[820px] text-center text-[20px] leading-[28px] md:text-[27px] md:leading-[34px] font-medium">
+        <p className="mx-auto mb-10 max-w-[820px] text-left md:text-center text-[20px] leading-[28px] md:text-[27px] md:leading-[34px] font-medium">
           <span
             className="inline-block bg-clip-text text-transparent"
             style={{
@@ -1260,8 +1319,8 @@ function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
             <div key={c.key} className="relative overflow-hidden rounded-[20px] bg-black srv-card mx-auto">
               <Image src={c.img} alt="" fill className="object-cover [filter:contrast(1.05)_saturate(0.9)]" />
               <div className="absolute inset-0" style={{ background: '#2E6456', mixBlendMode: 'multiply', opacity: 0.75 }} />
-              <div className="absolute inset-0 grid place-items-center p-4">
-                <div className="h-full w-full rounded-[14px] border border-white/20 relative overflow-hidden shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05),inset_0_0_0_2px_rgba(255,255,255,0.06)]" style={{ background: 'rgba(255,255,255,0.05)' }}>
+              <div className="absolute inset-0 grid place-items-center p-4 srv-pad">
+                <div className="h-full w-full rounded-[14px] border border-white/20 relative overflow-hidden shadow-[inset_0_0_0_1px_rgba(255,255,255,0.05),inset_0_0_0_2px_rgba(255,255,255,0.06)] srv-frame" style={{ background: 'rgba(255,255,255,0.05)' }}>
                   <div
                     className="pointer-events-none absolute inset-0 rounded-[14px] mix-blend-screen"
                     style={{
@@ -1282,8 +1341,11 @@ function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
         <style jsx>{`
           .srv-card{aspect-ratio:282/153;width:100%}
           @media (max-width:640px){
-            .srv-card{width:80%;aspect-ratio:210/120;border-radius:12px}
-            .srv-title{font-size:18px}
+            .srv-card{width:100%;height:125px;aspect-ratio:auto;border-radius:16.31px}
+            .srv-card :global(img){opacity:0.75;mix-blend-mode:luminosity}
+            .srv-pad{padding:12px}
+            .srv-frame{width:100%;height:100%;border-radius:11.42px}
+            .srv-title{font-size:22.02px;line-height:110%}
           }
           @media (min-width:641px){
             .srv-title{font-size:27px}
