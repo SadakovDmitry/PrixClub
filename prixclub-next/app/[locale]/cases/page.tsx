@@ -595,23 +595,26 @@ function Header({ msg, locale, title }: { msg: any; locale: "ru" | "en"; title: 
             <div className="container-max py-3">
                 {/* Mobile bar */}
                 <div className="md:hidden flex items-center gap-3">
-                    <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-9 w-auto" priority />
-                    <div className="relative flex-1 h-[50px] rounded-full border border-white/10 bg-white/10 text-white overflow-hidden">
+                    <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-[50px] w-auto" priority />
+                    <div
+                        className="relative flex-1 h-[50px] rounded-full border border-white/10 text-white overflow-hidden bg-center bg-cover"
+                        style={{ backgroundImage: 'url(/images/mobile_menu_background.png)' }}
+                    >
                         <button
                             type="button"
                             aria-label="Open menu"
                             aria-expanded={isMenuOpen}
                             onClick={() => setIsMenuOpen((v) => !v)}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 h-6 w-6 text-white"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-white z-10"
                         >
                             <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
                             <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
                             <span className="block w-[22px] h-[2px] bg-white" />
                         </button>
-                        <div className={`absolute inset-0 flex items-center justify-center text-[21px] font-semibold ${geometria.className}`}>
+                        <div className={`absolute inset-0 flex items-center justify-center text-[21px] font-semibold -translate-x-2 pointer-events-none ${geometria.className}`}>
                             {title}
                         </div>
-                        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                        <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10">
                             <MobileLangSwitch />
                         </div>
                     </div>
@@ -653,7 +656,7 @@ function Header({ msg, locale, title }: { msg: any; locale: "ru" | "en"; title: 
                             <nav className={`flex flex-col items-center ${geometria.className}`}>
                                 {link(`/${locale}`, msg.nav.main)}
                                 {link(`/${locale}/about`, msg.nav.about)}
-                                {link(`/${locale}/team`, msg.nav.team)}
+                                {/*{link(`/${locale}/team`, msg.nav.team)}*/}
                                 {link(`/${locale}/cases`, msg.nav.works)}
                                 {link(`/${locale}/services`, msg.nav.services)}
                                 {link(`/${locale}/contacts`, msg.nav.contacts)}
@@ -725,9 +728,17 @@ function MobileLangSwitch() {
                 }
                 router.push(newPath)
             }}
-            className={`relative h-[40px] w-[69px] rounded-full bg-black/10 text-center text-[20px] font-medium text-white shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] ${geometria.className}`}
+            className={`relative h-[40px] w-[69px] overflow-hidden rounded-full text-center text-[20px] font-medium text-white shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] transition-transform duration-100 active:scale-[0.96] ${geometria.className}`}
         >
-            <span className="absolute inset-0 flex items-center justify-center rounded-full bg-[#53897B]/25">
+            <Image
+                src="/images/mobile_switch_lang_icon.png"
+                alt=""
+                width={69}
+                height={40}
+                className="absolute inset-0 h-full w-full"
+                aria-hidden
+            />
+            <span className="relative z-10 flex h-full w-full items-center justify-center">
                 {isEN ? 'EN' : 'RU'}
             </span>
         </button>

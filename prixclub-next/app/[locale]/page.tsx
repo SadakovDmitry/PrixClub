@@ -1225,14 +1225,14 @@ function MobileLangSwitch() {
 function Hero({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
   const lines = {
     ru: [
-      'Соединяем',
-      'Информацию',
-      'для роста бизнеса',
+      'Имиджевое',
+      'Агенство',
+      'полного цикла',
     ],
     en: [
-      'Connecting',
-      'Information',
-      'to grow your business',
+      'Full-service',
+      'image agency',
+      '',
     ],
   }
   return (

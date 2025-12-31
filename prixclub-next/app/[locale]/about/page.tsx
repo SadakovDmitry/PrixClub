@@ -308,7 +308,7 @@ function Header({ msg, locale, title }: { msg: any; locale: 'ru' | 'en'; title: 
               <nav className={`flex flex-col items-center ${geometria.className}`}>
                 {link(`/${locale}`, msg.nav.main)}
                 {link(`/${locale}/about`, msg.nav.about)}
-                {link(`/${locale}/team`, msg.nav.team)}
+                {/*{link(`/${locale}/team`, msg.nav.team)}*/}
                 {link(`/${locale}/cases`, msg.nav.works)}
                 {link(`/${locale}/services`, msg.nav.services)}
                 {link(`/${locale}/contacts`, msg.nav.contacts)}

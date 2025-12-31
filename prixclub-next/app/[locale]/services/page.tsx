@@ -43,6 +43,9 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
                     alt=""
                     className="bg-photo"
                 />
+                <div className="hero-hue" aria-hidden />
+                <div className="hero-grad-left" aria-hidden />
+                <div className="hero-grad-right" aria-hidden />
 
                 {/* Hue overlay with multiply blend mode */}
                 {/* <div className="rectangle-3296" aria-hidden />
@@ -73,23 +76,53 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
         /* Main container - height determined by background image */
         .services-hero {
           position: relative;
-          width: 1440px;
+          width: 100%;
           height: 790px; /* Match background image height */
           margin: 0 auto;
           background: #000000;
           color: #fff;
           overflow: hidden;
+          --hero-pad: clamp(20px, 8vw, 120px);
         }
 
-        /* Background photo layer: natural size, no cropping */
+        /* Background photo layer */
         .bg-photo {
           position: absolute;
-          width: 1813px;
-          height: 957px;
-          right: 0px;
-          top: -90px;
-          object-fit: none; /* Do not scale/crop the image */
+          width: 100%;
+          height: 100%;
+          right: 0;
+          top: 0;
+          object-fit: cover;
           pointer-events: none;
+          z-index: 0;
+        }
+        .hero-hue,
+        .hero-grad-left,
+        .hero-grad-right {
+          position: absolute;
+          pointer-events: none;
+          z-index: 1;
+        }
+        .hero-hue {
+          inset: 0;
+          background: #74aa9c;
+          mix-blend-mode: hue;
+          opacity: 0.85;
+        }
+        .hero-grad-left {
+          top: 0;
+          left: 0;
+          width: 140px;
+          height: 100%;
+          background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0) 100%);
+        }
+        .hero-grad-right {
+          top: 0;
+          right: 0;
+          width: 140px;
+          height: 100%;
+          background: linear-gradient(90deg, #000 0%, rgba(0, 0, 0, 0) 100%);
+          transform: scaleX(-1);
         }
 
         /* Rectangle 3296: width 145px, height 957px, left 1295px, top 0px */
@@ -184,9 +217,9 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
         /* Main Title: width 408px, height 104px, left 120px, top 169px */
         .hero-title {
           position: absolute;
-          width: 408px;
-          height: 104px;
-          left: 120px;
+          width: min(408px, calc(100% - var(--hero-pad) * 2));
+          height: auto;
+          left: var(--hero-pad);
           top: 169px;
           margin: 0;
           font-family: 'Geometria';
@@ -195,14 +228,15 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
           font-size: 82.5208px;
           line-height: 104px;
           color: #FFFFFF;
+          z-index: 2;
         }
 
         /* Text 1: width 606px, height 102px, left 120px, top 354px */
         .hero-text1 {
           position: absolute;
-          width: 606px;
-          height: 102px;
-          left: 120px;
+          width: min(606px, calc(100% - var(--hero-pad) * 2));
+          height: auto;
+          left: var(--hero-pad);
           top: 354px;
           margin: 0;
           font-family: 'Geometria';
@@ -211,14 +245,15 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
           font-size: 27px;
           line-height: 34px;
           color: #FFFFFF;
+          z-index: 2;
         }
 
         /* Text 2: width 579px, height 50px, left 120px, top 559px */
         .hero-text2 {
           position: absolute;
-          width: 579px;
-          height: 50px;
-          left: 120px;
+          width: min(579px, calc(100% - var(--hero-pad) * 2));
+          height: auto;
+          left: var(--hero-pad);
           top: 559px;
           margin: 0;
           font-family: 'Geometria';
@@ -227,14 +262,15 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
           font-size: 20px;
           line-height: 25px;
           color: #FFFFFF;
+          z-index: 2;
         }
 
         /* Text 3: width 500px, height 75px, left 120px, top 631px */
         .hero-text3 {
           position: absolute;
-          width: 500px;
-          height: 75px;
-          left: 120px;
+          width: min(500px, calc(100% - var(--hero-pad) * 2));
+          height: auto;
+          left: var(--hero-pad);
           top: 631px;
           margin: 0;
           font-family: 'Geometria';
@@ -243,71 +279,88 @@ export default function ServicesPage({ params: { locale } }: { params: { locale:
           font-size: 20px;
           line-height: 25px;
           color: #FFFFFF;
-        }
-
-        /* Scaling for screens <1440px - maintain proportions */
-        @media (max-width: 1440px) {
-          .services-hero {
-            transform: scale(calc(100vw / 1440));
-            transform-origin: top center;
-            height: calc(957px * (100vw / 1440));
-          }
+          z-index: 2;
         }
 
         /* Mobile layout */
         @media (max-width: 768px) {
           .services-hero {
-            transform: none;
             width: 100%;
-            height: auto;
-            min-height: 520px;
-            padding: 64px 20px 40px;
+            height: 936px;
+            padding: 0;
+            background-image: url('/images/services_main_mobile.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
           }
-          .services-hero::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.35) 100%);
-            pointer-events: none;
+          .hero-grad-left,
+          .hero-grad-right {
+            display: none;
           }
           .bg-photo {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            right: auto;
-            object-fit: cover;
-            opacity: .9;
+            display: none;
+          }
+          .hero-hue {
+            top: calc(50% - 516px);
+            left: calc(50% - 1323px);
+            width: 1864px;
+            height: 984px;
+          }
+          .hero-grad-left {
+            top: 474px;
+            left: calc(50% + 189px);
+            width: 147px;
+            height: 379px;
+            transform: rotate(-90deg);
+            transform-origin: 0 0;
+          }
+          .hero-grad-right {
+            top: 730px;
+            left: calc(50% + 189px);
+            width: 145px;
+            height: 379px;
+            transform: rotate(90deg);
+            transform-origin: 0 0;
           }
           .hero-title,
           .hero-text1,
           .hero-text2,
           .hero-text3 {
-            position: relative;
-            left: auto;
-            top: auto;
-            width: auto;
-            height: auto;
+            position: absolute;
             z-index: 1;
           }
           .hero-title {
-            font-size: 40px;
-            line-height: 1.1;
-            margin: 0 0 16px 0;
+            top: 80px;
+            left: 24px;
+            width: 216px;
+            height: 40px;
+            font-size: 32px;
+            line-height: 40px;
+            margin: 0;
           }
           .hero-text1 {
-            font-size: 18px;
-            line-height: 1.35;
-            margin: 0 0 10px 0;
-            max-width: none;
-          }
-          .hero-text2,
-          .hero-text3 {
+            top: 178px;
+            left: 24px;
+            width: 216px;
             font-size: 15px;
-            line-height: 1.5;
-            margin: 0 0 8px 0;
-            max-width: none;
+            line-height: 18px;
+            margin: 0;
+          }
+          .hero-text3 {
+            top: 308px;
+            left: 24px;
+            width: 232px;
+            font-size: 15px;
+            line-height: 18px;
+            margin: 0;
+          }
+          .hero-text2 {
+            top: 785px;
+            left: 24px;
+            width: 246px;
+            font-size: 15px;
+            line-height: 18px;
+            margin: 0;
           }
         }
       `}</style>
@@ -500,24 +553,12 @@ function ServicesSection({ locale }: { locale: "ru" | "en" }) {
                 <AccordionItem key={i} it={it} />
             ))}
 
-            {/* масштаб под 1440 — оставляем как было */}
             <style jsx>{`
         .srv-acc{
           position: relative;
-          width: 1440px;
+          width: 100%;
           margin: 0 auto 0px;
-        }
-        @media (max-width:1440px){
-          .srv-acc{
-            transform: scale(calc(100vw / 1440));
-            transform-origin: top center;
-          }
-        }
-        @media (max-width: 768px){
-          .srv-acc{
-            width: 100%;
-            transform: none;
-          }
+          padding: 0;
         }
       `}</style>
         </section>
@@ -563,7 +604,7 @@ function AccordionItem({ it }: {
 
             {/* Стили — точная копия твоих, без изменений */}
             <style jsx>{`
-        :root { --padX: 120px; }
+        :root { --padX: clamp(16px, 6vw, 120px); }
         .acc-block{ margin-bottom: -8px; }
 
         .head{ position: relative; width: 100%; height: 150px; border: 0; background: transparent; padding: 0; cursor: pointer; }
@@ -600,13 +641,19 @@ function AccordionItem({ it }: {
         .lead-text{ margin:0; max-width: 640px; font-weight:600; font-size:32px; line-height:40px; color:#1a1a1a; }
 
         .cards{
-          display:grid; grid-template-columns: repeat(3, 384px); gap:24px;
-          width: fit-content; margin:0 auto; padding-bottom:160px; justify-content:center;
+          display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:24px;
+          width: 100%; margin:0 auto; padding: 0 20px 160px; justify-content:center; justify-items:center;
         }
-        .card{ position:relative; width:384px; height:153px; border-radius:22px; overflow:hidden; background:#0b0b0b; box-shadow: 0 6px 0 rgba(0,0,0,.45) inset; }
+        .card{ position:relative; width:100%; max-width:384px; height:153px; border-radius:22px; overflow:hidden; background:#0b0b0b; box-shadow: 0 6px 0 rgba(0,0,0,.45) inset; }
         .card-photo{ position:absolute; inset:0; background-position:center; background-size:cover; background-repeat:no-repeat; opacity:.48; }
         .card-border{ position:absolute; inset:10px; border-radius:14px; border:2px solid rgba(255,255,255,.12); pointer-events:none; }
         .card-text{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:0 16px; text-align:center; font-weight:800; font-size:28px; line-height:1.15; color:#fff; letter-spacing:.2px; z-index:1; text-shadow:0 1px 0 rgba(0,0,0,.45); }
+
+        @media (max-width: 1100px){
+          .lead{ grid-template-columns: 1fr; gap: 24px; align-items: start; justify-items: start; }
+          .lead-ico{ justify-self: start; }
+          .lead-text{ max-width: none; }
+        }
 
         /* Mobile overrides */
         @media (max-width: 768px){
@@ -619,13 +666,12 @@ function AccordionItem({ it }: {
           .panel{ max-height: 0; }
           .panel.open{ max-height: 9999px; }
 
-          .panel-inner{ padding: 24px 16px 32px; }
-          .panel-inner{ padding: 24px 16px 32px; text-align: center; }
-          .lead{ grid-template-columns: 1fr; gap: 16px; align-items: center; justify-items: center; margin-bottom: 24px; padding-top: 8px; }
-          .lead-ico{ width: 56px; justify-self: center; }
-          .lead-text{ max-width: none; font-size: 18px; line-height: 24px; text-align: center; }
+          .panel-inner{ padding: 24px 16px 32px; text-align: left; }
+          .lead{ grid-template-columns: 1fr; gap: 16px; align-items: center; justify-items: start; margin-bottom: 24px; padding-top: 8px; }
+          .lead-ico{ width: 56px; justify-self: start; }
+          .lead-text{ max-width: none; font-size: 18px; line-height: 24px; text-align: left; }
 
-          .cards{ grid-template-columns: 1fr; gap: 12px; width: 100%; padding-bottom: 40px; justify-items: center; }
+          .cards{ grid-template-columns: 1fr; gap: 12px; width: 100%; padding: 0 20px 40px; justify-items: center; }
           .card{ width: 100%; height: 112px; border-radius: 16px; margin: 0 auto; }
           .card-border{ inset: 8px; border-radius: 12px; }
           .card-text{ font-size: 18px; padding: 0 12px; }
@@ -649,8 +695,8 @@ function LastSection({ locale }: { locale: "ru" | "en" }) {
             <style jsx>{`
         .last-wrap{
           position: relative;
-          width: 1440px;
-          height: 760px;                 /* пропорции под макет */
+          width: 100%;
+          height: clamp(520px, 52vw, 760px);
           margin: 0 auto;
           background: url('/images/services/last_section_background.svg') center/cover no-repeat;
           overflow: hidden;
@@ -677,16 +723,8 @@ function LastSection({ locale }: { locale: "ru" | "en" }) {
           letter-spacing: .2px;
           text-shadow: 0 2px 2px rgba(0,0,0,.35);
         }
-        @media (max-width:1440px){
-          .last-wrap{
-            transform: scale(calc(100vw / 1440));
-            transform-origin: top center;
-            height: calc(760px * (100vw / 1440));
-          }
-        }
         @media (max-width: 768px){
           .last-wrap{
-            transform: none;
             width: 100%;
             height: auto;
             min-height: 500px;
@@ -697,6 +735,7 @@ function LastSection({ locale }: { locale: "ru" | "en" }) {
             font-size: 20px;
             line-height: 1.35;
             padding: 0 20px;
+            text-align: left;
           }
         }
       `}</style>
@@ -721,23 +760,26 @@ function Header({ msg, locale, title }: { msg: any; locale: "ru" | "en"; title: 
             <div className="container-max py-3">
                 {/* Mobile bar */}
                 <div className="md:hidden flex items-center gap-3">
-                    <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-9 w-auto" priority />
-                    <div className="relative flex-1 h-[50px] rounded-full border border-white/10 bg-white/10 text-white overflow-hidden">
+                    <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-[50px] w-auto" priority />
+                    <div
+                        className="relative flex-1 h-[50px] rounded-full border border-white/10 text-white overflow-hidden bg-center bg-cover"
+                        style={{ backgroundImage: 'url(/images/mobile_menu_background.png)' }}
+                    >
                         <button
                             type="button"
                             aria-label="Open menu"
                             aria-expanded={isMenuOpen}
                             onClick={() => setIsMenuOpen((v) => !v)}
-                            className="absolute left-3 top-1/2 -translate-y-1/2 h-6 w-6 text-white"
+                            className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-white z-10"
                         >
                             <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
                             <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
                             <span className="block w-[22px] h-[2px] bg-white" />
                         </button>
-                        <div className={`absolute inset-0 flex items-center justify-center text-[21px] font-semibold ${geometria.className}`}>
+                        <div className={`absolute inset-0 flex items-center justify-center text-[21px] font-semibold -translate-x-2 pointer-events-none ${geometria.className}`}>
                             {title}
                         </div>
-                        <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                        <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10">
                             <MobileLangSwitch />
                         </div>
                     </div>
@@ -779,7 +821,7 @@ function Header({ msg, locale, title }: { msg: any; locale: "ru" | "en"; title: 
                             <nav className={`flex flex-col items-center ${geometria.className}`}>
                                 {link(`/${locale}`, msg.nav.main)}
                                 {link(`/${locale}/about`, msg.nav.about)}
-                                {link(`/${locale}/team`, msg.nav.team)}
+                                {/*{link(`/${locale}/team`, msg.nav.team)}*/}
                                 {link(`/${locale}/cases`, msg.nav.works)}
                                 {link(`/${locale}/services`, msg.nav.services)}
                                 {link(`/${locale}/contacts`, msg.nav.contacts)}
@@ -851,9 +893,17 @@ function MobileLangSwitch() {
                 }
                 router.push(newPath)
             }}
-            className={`relative h-[40px] w-[69px] rounded-full bg-black/10 text-center text-[20px] font-medium text-white shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] ${geometria.className}`}
+            className={`relative h-[40px] w-[69px] overflow-hidden rounded-full text-center text-[20px] font-medium text-white shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] transition-transform duration-100 active:scale-[0.96] ${geometria.className}`}
         >
-            <span className="absolute inset-0 flex items-center justify-center rounded-full bg-[#53897B]/25">
+            <Image
+                src="/images/mobile_switch_lang_icon.png"
+                alt=""
+                width={69}
+                height={40}
+                className="absolute inset-0 h-full w-full"
+                aria-hidden
+            />
+            <span className="relative z-10 flex h-full w-full items-center justify-center">
                 {isEN ? 'EN' : 'RU'}
             </span>
         </button>

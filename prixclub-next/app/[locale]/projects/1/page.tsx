@@ -124,7 +124,7 @@ export default function ProjectsPage({ params: { locale } }: { params: { locale:
 
   return (
     <div className={geometria.className}>
-      <Header msg={msg} locale={locale} />
+      <Header msg={msg} locale={locale} title={msg.nav.works} />
 
       {/* Frame 173 — HERO full-bleed с сохранением пропорций */}
       <section className="relative isolate w-screen left-1/2 right-1/2 ml-[-50vw] mr-[-50vw] bg-transparent opacity-100">
@@ -368,7 +368,7 @@ export default function ProjectsPage({ params: { locale } }: { params: { locale:
   )
 }
 
-function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
+function Header({ msg, locale, title }: { msg: any; locale: 'ru' | 'en'; title: string }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const link = (href: string, label: string) => (
     <a href={href} className="block py-2 px-3 rounded-lg text-[14px] text-white/90 hover:text-white hover:bg-white/10 transition-colors text-center w-full" onClick={() => setIsMenuOpen(false)}>
@@ -379,19 +379,30 @@ function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
     <header className="sticky top-0 z-20 bg-black/85 backdrop-blur supports-[backdrop-filter]:bg-black/70 relative">
       <div className="container-max py-3">
         {/* Mobile bar */}
-        <div className="md:hidden flex items-center justify-between">
-          <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-9 w-auto" priority />
-          <button
-            type="button"
-            aria-label="Open menu"
-            aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen((v) => !v)}
-            className="group relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white"
+        <div className="md:hidden flex items-center gap-3">
+          <Image src="/images/header_logo.svg" alt="PRIX Club" width={112} height={36} className="h-[50px] w-auto" priority />
+          <div
+            className="relative flex-1 h-[50px] rounded-full border border-white/10 text-white overflow-hidden bg-center bg-cover"
+            style={{ backgroundImage: 'url(/images/mobile_menu_background.png)' }}
           >
-            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 rotate-45' : '-translate-y-1.5'}`} />
-            <span className={`absolute h-0.5 w-5 bg-white transition-opacity duration-200 ${isMenuOpen ? 'opacity-0' : 'opacity-90'}`} />
-            <span className={`absolute h-0.5 w-5 bg-white transition-all duration-200 ${isMenuOpen ? 'translate-y-0 -rotate-45' : 'translate-y-1.5'}`} />
-          </button>
+            <button
+              type="button"
+              aria-label="Open menu"
+              aria-expanded={isMenuOpen}
+              onClick={() => setIsMenuOpen((v) => !v)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-white z-10"
+            >
+              <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
+              <span className="block w-[22px] h-[2px] bg-white mb-[5px]" />
+              <span className="block w-[22px] h-[2px] bg-white" />
+            </button>
+            <div className={`absolute inset-0 flex items-center justify-center text-[21px] font-semibold -translate-x-2 pointer-events-none ${geometria.className}`}>
+              {title}
+            </div>
+            <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10">
+              <MobileLangSwitch />
+            </div>
+          </div>
         </div>
 
         {/* Desktop nav */}
@@ -430,7 +441,7 @@ function Header({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
               <nav className={`flex flex-col items-center ${geometria.className}`}>
                 {link(`/${locale}`, msg.nav.main)}
                 {link(`/${locale}/about`, msg.nav.about)}
-                {link(`/${locale}/team`, msg.nav.team)}
+                {/*{link(`/${locale}/team`, msg.nav.team)}*/}
                 {link(`/${locale}/cases`, msg.nav.works)}
                 {link(`/${locale}/services`, msg.nav.services)}
                 {link(`/${locale}/contacts`, msg.nav.contacts)}
@@ -477,6 +488,45 @@ function LanguageSwitch() {
           boxShadow: '0 0 0 1px rgba(255,255,255,0.08), 0 1px 2px rgba(0,0,0,0.4)'
         }}
       />
+    </button>
+  )
+}
+
+function MobileLangSwitch() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const current = pathname?.split('/')?.[1] === 'en' ? 'en' : 'ru'
+  const [isEN, setIsEN] = useState(current === 'en')
+  return (
+    <button
+      type="button"
+      aria-label="Language switch"
+      onClick={() => {
+        const nextLocale = isEN ? 'ru' : 'en'
+        setIsEN(!isEN)
+        let newPath = pathname || '/'
+        const segs = newPath.split('/').filter(Boolean)
+        if (segs.length && (segs[0] === 'ru' || segs[0] === 'en')) {
+          segs[0] = nextLocale
+          newPath = '/' + segs.join('/')
+        } else {
+          newPath = '/' + nextLocale + (newPath.startsWith('/') ? newPath : '/' + newPath)
+        }
+        router.push(newPath)
+      }}
+      className={`relative h-[40px] w-[69px] overflow-hidden rounded-full text-center text-[20px] font-medium text-white shadow-[inset_0_2px_6px_rgba(0,0,0,0.6)] transition-transform duration-100 active:scale-[0.96] ${geometria.className}`}
+    >
+      <Image
+        src="/images/mobile_switch_lang_icon.png"
+        alt=""
+        width={69}
+        height={40}
+        className="absolute inset-0 h-full w-full"
+        aria-hidden
+      />
+      <span className="relative z-10 flex h-full w-full items-center justify-center">
+        {isEN ? 'EN' : 'RU'}
+      </span>
     </button>
   )
 }
