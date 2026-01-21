@@ -561,15 +561,19 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
         </div>
 
         {/* Desktop layout */}
-        <div className="hidden md:grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
+        <div className="hidden md:grid items-center gap-2 md:gap-3 md:grid-cols-[auto,1fr,auto]">
           <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
             <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
           </div>
-          <FooterColumn title="Навигация" rows={[msg.nav.main, msg.nav.about, msg.nav.team]} />
-          <FooterColumn title="Разделы" rows={[msg.nav.works, msg.nav.services, msg.nav.contacts]} />
-          <FooterColumn title="Инфо" rows={[msg.nav.news, msg.nav.reviews]} />
-          <div className="md:col-span-3" />
-          <div className="text-right">
+          <nav className={`flex items-center justify-between text-[16px] font-bold text-white/80 ${geometria.className}`}>
+            <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+            <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+            <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+            <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+            <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+            <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+          </nav>
+          <div className="text-right md:ml-24">
             <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
               <span className="inline-flex items-center gap-2">
                 <span>+7 424 424 42 42</span>
@@ -586,18 +590,5 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
         <div className="pt-3 text-center text-white/60 text-[12px]">{msg.footer.copy}</div>
       </div>
     </footer>
-  )
-}
-
-function FooterColumn({ title, rows }: { title: string; rows: string[] }) {
-  return (
-    <div>
-      <div className="mb-2 text-[16px] font-semibold text-white">{title}</div>
-      <div className="space-y-1 text-[13px] text-white/60">
-        {rows.map((r, i) => (
-          <div key={i}>{r}</div>
-        ))}
-      </div>
-    </div>
   )
 }

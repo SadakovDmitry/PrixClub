@@ -1,6 +1,6 @@
 "use client"
 import Image from 'next/image'
-import { useMemo, useState, useRef, useEffect } from 'react'
+import { useMemo, useState, useRef, useEffect, type CSSProperties } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { geometria } from '../../src/fonts/geometria'
@@ -34,6 +34,7 @@ export default function Page() {
       footer: { contacts: 'Contacts', nav: 'Navigation', copy: '© PRIX Club, 2025' }
     }
   })[locale], [locale])
+  const [isConsultationOpen, setConsultationOpen] = useState(false)
   return (
     <>
       <Header msg={msg} locale={locale} title={msg.nav.main} />
@@ -44,10 +45,11 @@ export default function Page() {
         <ClientsSection locale={locale} />
         <ServicesNew locale={locale} />
         <TestimonialsNew locale={locale} />
-        <ContactSection locale={locale} />
+        <ContactSection locale={locale} onOpen={() => setConsultationOpen(true)} />
         {/* <Team msg={msg} locale={locale} /> */}
       </main>
       <Footer msg={msg} locale={locale} />
+      <ConsultationModal open={isConsultationOpen} onClose={() => setConsultationOpen(false)} locale={locale} />
     </>
   )
 }
@@ -78,6 +80,15 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
   const list = locale === 'en'
     ? ['IT', 'FINANCE', 'CONSULTING', 'CONSTRUCTION', 'EVENTS']
     : ['IT', 'ФИНАНСЫ', 'КОНСАЛТИНГ', 'СТРОИТЕЛЬСТВО', 'МЕРОПРИЯТИЯ']
+  const majorClientLogos = [
+    { src: '/images/Сбермаркетинг.svg', alt: 'СберМаркетинг' },
+    { src: '/images/Main Division.png', alt: 'СберМаркетинг' },
+    { src: '/images/АЭИ.png', alt: 'СберМаркетинг' },
+    { src: '/images/Хабаровский край.png', alt: 'СберМаркетинг' },
+  ]
+  const majorClientLogoPadding = 'clamp(32px, 5.8vw, 100px)'
+  const majorClientLogoScaleTop = '0.5'
+  const majorClientLogoGap = '40px'
 
   return (
     <section id="stats" className={`${geometria.className}`}>
@@ -121,9 +132,25 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
         <div className="card bottom-wide">
           <Image src="/images/Heart_icon.svg" alt="heart" width={60} height={60} style={{ width: '4vw', height: '4vw', position: 'absolute', left: '4%', top: '18%', opacity: 0.99, zIndex: 2 }} />
           <div className="clients dim">{t.clients}</div>
-          <div className="logos">
-            {['/images/Сбер.png', '/images/Main Division.png', '/images/АЭИ.png', '/images/Хабаровский край.png'].map((src, i) => (
-              <Image key={i} src={src} alt="client" width={62} height={40} className="op" />
+          <div
+            className="logos"
+            style={{ '--logo-pad': majorClientLogoPadding, '--logo-gap': majorClientLogoGap } as CSSProperties}
+          >
+            {majorClientLogos.map((logo, i) => (
+              <div
+                key={i}
+                className="logo-cell"
+                style={{ '--logo-scale': i < 2 ? majorClientLogoScaleTop : 1 } as CSSProperties}
+              >
+                <Image
+                  src={logo.src}
+                  alt={logo.alt}
+                  fill
+                  sizes="(min-width: 1200px) 260px, (min-width: 768px) 22vw, 28vw"
+                  className="logo-img op"
+                  style={{ objectFit: 'contain', objectPosition: 'center' }}
+                />
+              </div>
             ))}
           </div>
         </div>
@@ -175,7 +202,33 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
           word-break: break-word;
           overflow-wrap: anywhere;
         }
-        .logos{position:absolute;left:24.595%;top:42%;display:flex;gap:12%;z-index:2;align-items:center}
+        .logos{
+          position:absolute;
+          left:24.595%;
+          top:14%;
+          right:4.2%;
+          bottom:14%;
+          display:grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-rows: repeat(2, minmax(0, 1fr));
+          column-gap: var(--logo-gap);
+          z-index:2;
+        }
+        .logo-cell{
+          position:relative;
+          display:flex;
+          align-items:center;
+          justify-content:center;
+        }
+        .logo-img{
+          position:absolute;
+          inset:0;
+          width:100%;
+          height:100%;
+          padding: var(--logo-pad);
+          transform: scale(var(--logo-scale, 1));
+          transform-origin: center;
+        }
         .logos :global(img){
           width:auto;
           height:clamp(6px, 1.6vw, 72px);
@@ -214,7 +267,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
       },
     },
     {
-      src: '/images/SKY consulting.png',
+      src: '/images/Sky Consulting.png',
       desc: {
         ru: 'Консалтинговая компания в ОАЭ, эксперты в сфере управления, HR и развития команд, сопровождающая трансформацию бизнеса и лидеров.',
         en: 'A UAE-based consulting firm specializing in management, HR, and team development, supporting business and leadership transformation.',
@@ -639,7 +692,7 @@ function TestimonialsNew({ locale }: { locale: 'ru' | 'en' }) {
   )
 }
 
-function ContactSection({ locale }: { locale: 'ru' | 'en' }) {
+function ContactSection({ locale, onOpen }: { locale: 'ru' | 'en'; onOpen: () => void }) {
   const t = locale === 'en'
     ? {
       title: 'Contact us to discuss your tasks',
@@ -650,8 +703,7 @@ function ContactSection({ locale }: { locale: 'ru' | 'en' }) {
     : {
       title: 'Свяжитесь с нами, чтобы\nобсудить ваши задачи',
       cta: 'Получить консультацию',
-      dl1: 'Скачать презентацию компании',
-      dl2: 'Запросить прайс‑лист',
+      
     }
   return (
     <section id="contact" className={`relative overflow-hidden py-16 md:py-24 bg-white ${geometria.className}`}>
@@ -669,7 +721,11 @@ function ContactSection({ locale }: { locale: 'ru' | 'en' }) {
         </h2>
 
         <div className="mx-auto flex flex-col items-center gap-6">
-          <button className="relative rounded-full px-8 md:px-10 py-4 md:py-5 text-white text-[18px] md:text-[20px] font-semibold shadow-[0_8px_24px_rgba(0,0,0,0.15)] overflow-hidden border border-black/20">
+          <button
+            type="button"
+            onClick={onOpen}
+            className="relative rounded-full px-8 md:px-10 py-4 md:py-5 text-white text-[18px] md:text-[20px] font-semibold shadow-[0_8px_24px_rgba(0,0,0,0.15)] overflow-hidden border border-black/20"
+          >
             {/* background image with filters (like Services) */}
             <span
               className="absolute inset-0 rounded-[14px] bg-center bg-cover blur-[0px] brightness-100 saturate-145"
@@ -697,6 +753,176 @@ function ContactSection({ locale }: { locale: 'ru' | 'en' }) {
         </div>
       </div>
     </section>
+  )
+}
+
+function ConsultationModal({
+  open,
+  onClose,
+  locale,
+}: {
+  open: boolean
+  onClose: () => void
+  locale: 'ru' | 'en'
+}) {
+  const t = locale === 'en'
+    ? {
+      title: 'Get a consultation',
+      subtitle: 'Leave your details and we will contact you shortly.',
+      name: 'Name',
+      phone: 'Phone number',
+      question: 'Your question',
+      send: 'Send',
+      sending: 'Sending...',
+      success: 'Your request has been sent.',
+      error: 'Could not send the request. Please try again.',
+    }
+    : {
+      title: 'Получить консультацию',
+      subtitle: 'Оставьте ваши данные — мы свяжемся с вами.',
+      name: 'Имя',
+      phone: 'Номер телефона',
+      question: 'Ваш вопрос',
+      send: 'Отправить',
+      sending: 'Отправка...',
+      success: 'Заявка отправлена.',
+      error: 'Не удалось отправить. Попробуйте позже.',
+    }
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [question, setQuestion] = useState('')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+
+  useEffect(() => {
+    if (!open) return
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', handleKey)
+    return () => {
+      document.body.style.overflow = originalOverflow
+      document.removeEventListener('keydown', handleKey)
+    }
+  }, [open, onClose])
+
+  useEffect(() => {
+    if (open) {
+      setStatus('idle')
+    }
+  }, [open])
+
+  if (!open) return null
+
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) onClose()
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (status === 'sending') return
+    setStatus('sending')
+    try {
+      const response = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          phone,
+          question,
+          locale,
+        }),
+      })
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        throw new Error(data?.error || 'Request failed')
+      }
+      setStatus('success')
+      setName('')
+      setPhone('')
+      setQuestion('')
+    } catch (error) {
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+      onClick={handleOverlayClick}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="consultation-title"
+    >
+      <div className={`w-full max-w-[540px] rounded-[20px] border border-white/10 bg-[#0b0f0e] p-6 md:p-8 text-white shadow-[0_20px_60px_rgba(0,0,0,0.45)] ${geometria.className}`}>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 id="consultation-title" className="text-[22px] md:text-[26px] font-semibold">
+              {t.title}
+            </h3>
+            <p className="mt-1 text-[13px] md:text-[14px] text-white/70">{t.subtitle}</p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="h-9 w-9 rounded-full border border-white/15 text-white/80 hover:text-white hover:border-white/30"
+          >
+            ×
+          </button>
+        </div>
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+          <label className="block">
+            <span className="text-[13px] text-white/80">{t.name}</span>
+            <input
+              type="text"
+              name="name"
+              autoComplete="name"
+              required
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              className="mt-2 w-full rounded-[12px] border border-white/15 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/35"
+              placeholder={t.name}
+            />
+          </label>
+          <label className="block">
+            <span className="text-[13px] text-white/80">{t.phone}</span>
+            <input
+              type="tel"
+              name="phone"
+              autoComplete="tel"
+              required
+              value={phone}
+              onChange={(event) => setPhone(event.target.value)}
+              className="mt-2 w-full rounded-[12px] border border-white/15 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/35"
+              placeholder={t.phone}
+            />
+          </label>
+          <label className="block">
+            <span className="text-[13px] text-white/80">{t.question}</span>
+            <textarea
+              name="question"
+              rows={4}
+              required
+              value={question}
+              onChange={(event) => setQuestion(event.target.value)}
+              className="mt-2 w-full resize-none rounded-[12px] border border-white/15 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/35"
+              placeholder={t.question}
+            />
+          </label>
+          <button
+            type="submit"
+            disabled={status === 'sending'}
+            className="w-full rounded-full border border-white/20 bg-white/10 py-3 text-[16px] font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {status === 'sending' ? t.sending : t.send}
+          </button>
+          {status === 'success' && <div className="text-[13px] text-emerald-300">{t.success}</div>}
+          {status === 'error' && <div className="text-[13px] text-red-300">{t.error}</div>}
+        </form>
+      </div>
+    </div>
   )
 }
 
@@ -1399,19 +1625,6 @@ function Services({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
 //               <div className="text-white/70">{p.role}<//   )
 // }
 
-function FooterColumn({ title, rows }: { title: string; rows: string[] }) {
-  return (
-    <div>
-      <div className="mb-2 text-[16px] font-semibold text-white">{title}</div>
-      <div className="space-y-1 text-[13px] text-white/60">
-        {rows.map((r, i) => (
-          <div key={i}>{r}</div>
-        ))}
-      </div>
-    </div>
-  )
-}
-
 function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
   return (
     <footer id="contacts" className="bg-black py-8 md:py-10 text-white">
@@ -1423,14 +1636,14 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
             <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
             <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
             {/*<a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>*/}
-            <a href={`/${locale}/works`} className="hover:text-white">{msg.nav.works}</a>
+            <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
             <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
             <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
           </nav>
           <div className="mt-2">
-            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+7(992)053-98-91">
               <span className="inline-flex items-center gap-2">
-                <span>+7 424 424 42 42</span>
+                <span>+7(992)053-98-91</span>
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
               </span>
             </a>
@@ -1442,20 +1655,22 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
         </div>
 
         {/* Desktop layout */}
-        <div className="hidden md:grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
+        <div className="hidden md:grid items-center gap-2 md:gap-3 md:grid-cols-[auto,1fr,auto]">
           <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
             <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
           </div>
-          <FooterColumn title={msg.nav.main} rows={[msg.nav.main, msg.nav.main, msg.nav.main]} />
-          <FooterColumn title={msg.nav.about} rows={[msg.nav.about, msg.nav.about, msg.nav.about]} />
-          {/*<FooterColumn title={msg.nav.team} rows={[msg.nav.team, msg.nav.team, msg.nav.team]} />*/}
-          <FooterColumn title={msg.nav.works} rows={[msg.nav.works, msg.nav.works, msg.nav.works]} />
-          <FooterColumn title={msg.nav.services} rows={[msg.nav.services, msg.nav.services, msg.nav.services]} />
-          <FooterColumn title={msg.nav.contacts} rows={[msg.nav.contacts, msg.nav.contacts, msg.nav.contacts]} />
-          <div className="text-right">
-            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+          <nav className={`flex items-center justify-between text-[16px] font-bold text-white/80 ${geometria.className}`}>
+            <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+            <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+            {/*<a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>*/}
+            <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+            <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+            <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+          </nav>
+          <div className="text-right md:ml-24">
+            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+7(992)053-98-91">
               <span className="inline-flex items-center gap-2">
-                <span>+7 424 424 42 42</span>
+                <span>+7(992)053-98-91</span>
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
               </span>
             </a>

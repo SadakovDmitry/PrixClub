@@ -948,17 +948,19 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
         </div>
 
         {/* Desktop layout */}
-        <div className="hidden md:grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
+        <div className="hidden md:grid items-center gap-2 md:gap-3 md:grid-cols-[auto,1fr,auto]">
           <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
             <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
           </div>
-          <FooterColumn title={msg.nav.main} rows={[msg.nav.main, msg.nav.main, msg.nav.main]} />
-          <FooterColumn title={msg.nav.about} rows={[msg.nav.about, msg.nav.about, msg.nav.about]} />
-          <FooterColumn title={msg.nav.team} rows={[msg.nav.team, msg.nav.team, msg.nav.team]} />
-          <FooterColumn title={msg.nav.works} rows={[msg.nav.works, msg.nav.works, msg.nav.works]} />
-          <FooterColumn title={msg.nav.services} rows={[msg.nav.services, msg.nav.services, msg.nav.services]} />
-          <FooterColumn title={msg.nav.contacts} rows={[msg.nav.contacts, msg.nav.contacts, msg.nav.contacts]} />
-          <div className="text-right">
+          <nav className={`flex items-center justify-between text-[16px] font-bold text-white/80 ${geometria.className}`}>
+            <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+            <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+            <a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>
+            <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+            <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+            <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+          </nav>
+          <div className="text-right md:ml-24">
             <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
               <span className="inline-flex items-center gap-2">
                 <span>+7 424 424 42 42</span>
@@ -974,18 +976,5 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
         <div className="mt-8 h-px w-full bg-white/25" />
       </div>
     </footer>
-  )
-}
-
-function FooterColumn({ title, rows }: { title: string; rows: string[] }) {
-  return (
-    <div>
-      <div className="mb-2 text-[16px] font-semibold text-white">{title}</div>
-      <div className="space-y-1 text-[13px] text-white/60">
-        {rows.map((r, i) => (
-          <div key={i}>{r}</div>
-        ))}
-      </div>
-    </div>
   )
 }

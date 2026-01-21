@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { useEffect, useState, type FormEvent, type MouseEvent } from 'react'
 import { geometria } from '../../../src/fonts/geometria'
 
 export default function ContactsPage({ params: { locale } }: { params: { locale: 'ru' | 'en' } }) {
@@ -9,6 +9,7 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
     ru: { nav: { main: 'Главная', about: 'О нас', team: 'Команда', works: 'Работы', services: 'Услуги', contacts: 'Контакты', news: 'НОВОСТИ', reviews: 'ОТЗЫВЫ' }, footer: { copy: '© PRIX Club, 2025' } },
     en: { nav: { main: 'Main Page', about: 'About Us', team: 'Team', works: 'Works', services: 'Services', contacts: 'Contacts', news: 'NEWS', reviews: 'REVIEWS' }, footer: { copy: '© PRIX Club, 2025' } },
   }[locale]
+  const [isConsultationOpen, setConsultationOpen] = useState(false)
 
   return (
     <div className={geometria.className}>
@@ -156,21 +157,21 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
 
             {/* Телефон */}
             <div className="absolute contacts-info-phone">
-              <a href="tel:+79778848332" className="contacts-link-phone">
-                +7 977 884 83 32
+              <a href="tel:+79920539891" className="contacts-link-phone">
+                +7(992)053-98-91
               </a>
             </div>
 
             {/* Email */}
             <div className="absolute contacts-info-email">
-              <a href="mailto:info@prixclub.com" className="contacts-link-email">
-                info@prixclub.com
+              <a href="mailto:prix@prixclub.ru" className="contacts-link-email">
+                prix@prixclub.ru
               </a>
             </div>
 
             {/* Иконки WhatsApp и Telegram */}
             <div className="absolute contacts-info-whatsapp">
-              <a href="https://wa.me/79778848332" target="_blank" rel="noopener noreferrer" className="block">
+              <a href="https://wa.me/79920539891" target="_blank" rel="noopener noreferrer" className="block">
                 <Image
                   src="/images/contacts/Vector.svg"
                   alt="WhatsApp"
@@ -180,7 +181,7 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
               </a>
             </div>
             <div className="absolute contacts-info-telegram">
-              <a href="https://t.me/prixclub" target="_blank" rel="noopener noreferrer" className="block">
+              <a href="https://t.me/polinakonder" target="_blank" rel="noopener noreferrer" className="block">
                 <Image
                   src="/images/contacts/Exclude.svg"
                   alt="Telegram"
@@ -223,94 +224,14 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
               : 'Есть задача по PR или digital? Расскажите нам – мы готовы проконсультировать'}
           </h2>
 
-          {/* Форма */}
-          <form className="contacts-form">
-            {/* Ваше имя */}
-            <input
-              type="text"
-              placeholder={locale === 'en' ? 'Your name' : 'Ваше имя'}
-              className="contacts-form-input"
-            />
-
-            {/* E-mail */}
-            <input
-              type="email"
-              placeholder="E-mail"
-              className="contacts-form-input"
-            />
-
-            {/* Номер телефона */}
-            <input
-              type="tel"
-              placeholder={locale === 'en' ? 'Phone number' : 'Номер телефона'}
-              className="contacts-form-input"
-            />
-
-            {/* Название компании */}
-            <input
-              type="text"
-              placeholder={locale === 'en' ? 'Company name' : 'Название компании'}
-              className="contacts-form-input"
-            />
-
-            {/* Описание задачи */}
-            <textarea
-              placeholder={locale === 'en' ? 'Task description' : 'Описание задачи'}
-              className="contacts-form-textarea"
-              rows={4}
-            />
-
-            {/* Кнопка отправки */}
-            <button type="submit" className="contacts-form-button">
-              {locale === 'en' ? 'Send request' : 'Отправить запрос'}
+          <div className="contacts-form-cta-wrap">
+            <button
+              type="button"
+              onClick={() => setConsultationOpen(true)}
+              className="contacts-form-button contacts-form-cta"
+            >
+              {locale === 'en' ? 'Tell us' : 'Рассказать'}
             </button>
-          </form>
-        </div>
-      </section>
-
-      {/* Email Subscription Section */}
-      <section className="contacts-email-section relative w-full min-h-[820px] md:min-h-[920px] py-16 md:py-24 pb-28 md:pb-36 overflow-visible">
-        {/* Background image */}
-        <img
-          src="/images/contacts/fc21c6a2cfabe44c24a03a6c32f2a6dd2cdef7b1.jpg"
-          alt=""
-          className="absolute inset-0 z-0 w-full h-full object-cover object-[50%_32%] pointer-events-none"
-        />
-
-        {/* Content wrapper */}
-        <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 md:px-10 flex flex-col items-center justify-center text-center gap-6 md:gap-8 md:pt-8">
-          {/* Menu container with logo */}
-          <div className="contacts-email-menu relative mx-auto w-full max-w-[1100px] mt-6 md:mt-8 mb-6 md:mb-8 rounded-[28px] bg-white backdrop-blur-xl backdrop-saturate-150 border border-white/25 ring-1 ring-white/10 shadow-[0_10px_50px_rgba(0,0,0,0.35)]" style={{ opacity: 'var(--logo-container-opacity, 0.8)' }}>
-            <div className="contacts-email-logo-wrapper">
-              <Image
-                src="/images/contacts/Vector(2).svg"
-                alt="Logo"
-                width={276}
-                height={334}
-                className="contacts-email-logo"
-              />
-            </div>
-          </div>
-
-          {/* Title */}
-          <h2 className="contacts-email-title mx-auto text-center leading-tight max-w-[1100px]">
-            {locale === 'en'
-              ? 'Leave your e-mail — we will send you a presentation and a basic price list of our services'
-              : 'Оставьте свой e-mail – мы пришлём презентацию и базовый прайс-лист наших услуг'}
-          </h2>
-
-          {/* Email form */}
-          <div className="contacts-email-form-wrapper relative z-10 mx-auto w-full max-w-[960px] mt-6 md:mt-8">
-            <form className="contacts-email-form">
-              <input
-                type="email"
-                placeholder="E-mail"
-                className="contacts-email-input block w-full mx-auto text-center placeholder:text-center"
-              />
-              <button type="submit" className="contacts-email-button block mx-auto w-full max-w-[720px]">
-                {locale === 'en' ? 'Send request' : 'Отправить запрос'}
-              </button>
-            </form>
           </div>
         </div>
       </section>
@@ -400,140 +321,8 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
         {/* </div> */}
       {/* </section> */}
 
-      {/* FAQ Section */}
-      <section className="contacts-faq-section">
-        <h2 className="contacts-faq-title">
-          {locale === 'en' ? 'FAQ: Most Frequently Asked Questions' : 'FAQ: Наиболее часто задаваемые вопросы'}
-        </h2>
-
-        {/* Question buttons */}
-        <button className="contacts-faq-question contacts-faq-question-1">
-          {locale === 'en' ? 'Question Name #1' : 'Название вопроса №1'}
-        </button>
-
-        {/* Expanded answer card for question #1 */}
-        <div className="contacts-faq-card">
-          <p className="contacts-faq-text">
-            {locale === 'en'
-              ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-              : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
-          </p>
-        </div>
-        <button className="contacts-faq-question contacts-faq-question-2">
-          {locale === 'en' ? 'Question Name #2' : 'Название вопроса №2'}
-        </button>
-        <button className="contacts-faq-question contacts-faq-question-3">
-          {locale === 'en' ? 'Question Name #3' : 'Название вопроса №3'}
-        </button>
-        <button className="contacts-faq-question contacts-faq-question-4">
-          {locale === 'en' ? 'Question Name #4' : 'Название вопроса №4'}
-        </button>
-        <button className="contacts-faq-question contacts-faq-question-5">
-          {locale === 'en' ? 'Question Name #5' : 'Название вопроса №5'}
-        </button>
-        <button className="contacts-faq-question contacts-faq-question-6">
-          {locale === 'en' ? 'Question Name #6' : 'Название вопроса №6'}
-        </button>
-        <button className="contacts-faq-question contacts-faq-question-7">
-          {locale === 'en' ? 'Question Name #7' : 'Название вопроса №7'}
-        </button>
-      </section>
-
-      {/* News Carousel Section */}
-      <section className="contacts-news-section">
-        {/* Background image */}
-        <div className="absolute contacts-news-bg-image">
-          <Image
-            src="/images/contacts/fc21c6a2cfabe44c24a03a6c32f2a6dd2cdef7b1.jpg"
-            alt=""
-            fill
-            className="object-cover"
-            sizes="100vw"
-            style={{ transform: 'matrix(1, 0, 0, -1, 0, 0)' }}
-          />
-        </div>
-
-        {/* Filter 1 - green with color blend */}
-        <div className="absolute contacts-news-filter-green">
-          <Image
-            src="/images/contacts/Rectangle 3265(1) (копия).svg"
-            alt=""
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
-
-        {/* Filter 2 - gradient with multiply blend */}
-        <div className="absolute contacts-news-filter-gradient">
-          <Image
-            src="/images/contacts/Rectangle 3266 (другая копия).svg"
-            alt=""
-            fill
-            className="object-cover"
-            sizes="100vw"
-          />
-        </div>
-
-        {/* News card container */}
-        <div className="absolute contacts-news-card">
-          {/* News image */}
-          <div className="absolute contacts-news-image">
-            <Image
-              src="/images/contacts/shutterstock_1254971608 1.svg"
-              alt=""
-              fill
-              className="object-cover"
-              sizes="(max-width: 768px) 90vw, 745.06px"
-            />
-          </div>
-        </div>
-
-        {/* News content */}
-        <h3 className="absolute contacts-news-title">
-          {locale === 'en' ? 'News #1' : 'Новость №1'}
-        </h3>
-        <h4 className="absolute contacts-news-subtitle">
-          {locale === 'en'
-            ? 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-            : 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'}
-        </h4>
-        <p className="absolute contacts-news-text">
-          {locale === 'en'
-            ? 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
-            : 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}
-        </p>
-
-        {/* Navigation arrows */}
-        <button className="absolute contacts-news-arrow-right" aria-label="Next">
-          <Image
-            src="/images/contacts/Group 45.svg"
-            alt="Next"
-            width={73.04}
-            height={145}
-          />
-        </button>
-        <button className="absolute contacts-news-arrow-left" aria-label="Previous">
-          <Image
-            src="/images/contacts/Group 46.svg"
-            alt="Previous"
-            width={73.04}
-            height={145}
-          />
-        </button>
-
-        {/* Dots indicator */}
-        <div className="absolute contacts-news-dots">
-          <Image
-            src="/images/contacts/Group 49.svg"
-            alt=""
-            width={135}
-            height={7}
-          />
-        </div>
-      </section>
-
       <Footer msg={msg} locale={locale} />
+      <ConsultationModal open={isConsultationOpen} onClose={() => setConsultationOpen(false)} locale={locale} />
 
       <style jsx>{`
         /* Hero Section - на весь экран */
@@ -813,8 +602,8 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
           width: 83.33vw; /* 1200/1440 * 100 */
           max-width: 1200px;
           margin: 0 auto;
-          padding-top: clamp(40px, 9.33vw, 88px);
-          padding-bottom: clamp(40px, 9.33vw, 88px);
+          padding-top: clamp(32px, 7.5vw, 72px);
+          padding-bottom: clamp(32px, 7.5vw, 72px);
         }
 
         /* Заголовок */
@@ -829,6 +618,15 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
           line-height: 100%;
           text-align: center;
           color: #000000;
+        }
+
+        .contacts-form-cta-wrap {
+          max-width: 520px;
+          margin: 0 auto;
+        }
+
+        .contacts-form-button.contacts-form-cta {
+          margin-top: 0;
         }
 
         /* Форма */
@@ -949,8 +747,8 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
 
           .contacts-form-section {
             height: auto;
-            min-height: 600px;
-            padding: clamp(40px, 8vw, 60px) clamp(16px, 4vw, 24px);
+            min-height: 520px;
+            padding: clamp(32px, 6vw, 48px) clamp(16px, 4vw, 24px);
           }
 
           .contacts-form-content {
@@ -1734,6 +1532,209 @@ export default function ContactsPage({ params: { locale } }: { params: { locale:
   )
 }
 
+function ConsultationModal({
+  open,
+  onClose,
+  locale,
+}: {
+  open: boolean
+  onClose: () => void
+  locale: 'ru' | 'en'
+}) {
+  const t = locale === 'en'
+    ? {
+      title: 'Tell us about your task',
+      subtitle: 'Leave your details and we will contact you shortly.',
+      name: 'Name',
+      email: 'E-mail',
+      phone: 'Phone number',
+      company: 'Company name',
+      question: 'Task description',
+      send: 'Send request',
+      sending: 'Sending...',
+      success: 'Your request has been sent.',
+      error: 'Could not send the request. Please try again.',
+    }
+    : {
+      title: 'Расскажите о задаче',
+      subtitle: 'Оставьте ваши данные — мы свяжемся с вами.',
+      name: 'Имя',
+      email: 'E-mail',
+      phone: 'Номер телефона',
+      company: 'Название компании',
+      question: 'Описание задачи',
+      send: 'Отправить запрос',
+      sending: 'Отправка...',
+      success: 'Заявка отправлена.',
+      error: 'Не удалось отправить. Попробуйте позже.',
+    }
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [company, setCompany] = useState('')
+  const [question, setQuestion] = useState('')
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+
+  useEffect(() => {
+    if (!open) return
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose()
+    }
+    const originalOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    document.addEventListener('keydown', handleKey)
+    return () => {
+      document.body.style.overflow = originalOverflow
+      document.removeEventListener('keydown', handleKey)
+    }
+  }, [open, onClose])
+
+  useEffect(() => {
+    if (open) setStatus('idle')
+  }, [open])
+
+  if (!open) return null
+
+  const handleOverlayClick = (event: MouseEvent<HTMLDivElement>) => {
+    if (event.target === event.currentTarget) onClose()
+  }
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (status === 'sending') return
+    setStatus('sending')
+    try {
+      const response = await fetch('/api/consultation', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          company,
+          question,
+          locale,
+        }),
+      })
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}))
+        throw new Error(data?.error || 'Request failed')
+      }
+      setStatus('success')
+      setName('')
+      setEmail('')
+      setPhone('')
+      setCompany('')
+      setQuestion('')
+    } catch (error) {
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4"
+      onClick={handleOverlayClick}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="contacts-consultation-title"
+    >
+      <div className="w-full max-w-[560px] rounded-[20px] border border-white/10 bg-[#0b0f0e] p-6 md:p-8 text-white shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h3 id="contacts-consultation-title" className="text-[22px] md:text-[26px] font-semibold">
+              {t.title}
+            </h3>
+            <p className="mt-1 text-[13px] md:text-[14px] text-white/70">{t.subtitle}</p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            aria-label="Close"
+            className="h-9 w-9 rounded-full border border-white/15 text-white/80 hover:text-white hover:border-white/30"
+          >
+            ×
+          </button>
+        </div>
+        <form className="mt-6 space-y-4" onSubmit={handleSubmit}>
+          <label className="block">
+            <span className="text-[13px] text-white/80">{t.name}</span>
+            <input
+              type="text"
+              name="name"
+              autoComplete="name"
+              required
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              className="mt-2 w-full rounded-[12px] border border-white/15 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/35"
+              placeholder={t.name}
+            />
+          </label>
+          <label className="block">
+            <span className="text-[13px] text-white/80">{t.email}</span>
+            <input
+              type="email"
+              name="email"
+              autoComplete="email"
+              required
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              className="mt-2 w-full rounded-[12px] border border-white/15 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/35"
+              placeholder={t.email}
+            />
+          </label>
+          <label className="block">
+            <span className="text-[13px] text-white/80">{t.phone}</span>
+            <input
+              type="tel"
+              name="phone"
+              autoComplete="tel"
+              required
+              value={phone}
+              onChange={(event) => setPhone(event.target.value)}
+              className="mt-2 w-full rounded-[12px] border border-white/15 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/35"
+              placeholder={t.phone}
+            />
+          </label>
+          <label className="block">
+            <span className="text-[13px] text-white/80">{t.company}</span>
+            <input
+              type="text"
+              name="company"
+              autoComplete="organization"
+              value={company}
+              onChange={(event) => setCompany(event.target.value)}
+              className="mt-2 w-full rounded-[12px] border border-white/15 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/35"
+              placeholder={t.company}
+            />
+          </label>
+          <label className="block">
+            <span className="text-[13px] text-white/80">{t.question}</span>
+            <textarea
+              name="question"
+              rows={4}
+              required
+              value={question}
+              onChange={(event) => setQuestion(event.target.value)}
+              className="mt-2 w-full resize-none rounded-[12px] border border-white/15 bg-white/5 px-4 py-3 text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/35"
+              placeholder={t.question}
+            />
+          </label>
+          <button
+            type="submit"
+            disabled={status === 'sending'}
+            className="w-full rounded-full border border-white/20 bg-white/10 py-3 text-[16px] font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/15 disabled:cursor-not-allowed disabled:opacity-60"
+          >
+            {status === 'sending' ? t.sending : t.send}
+          </button>
+          {status === 'success' && <div className="text-[13px] text-emerald-300">{t.success}</div>}
+          {status === 'error' && <div className="text-[13px] text-red-300">{t.error}</div>}
+        </form>
+      </div>
+    </div>
+  )
+}
+
 function Header({ msg, locale, title }: { msg: any; locale: 'ru' | 'en'; title: string }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const link = (href: string, label: string) => (
@@ -1912,9 +1913,9 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
             <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
           </nav>
           <div className="mt-2">
-            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+7(992)053-98-91">
               <span className="inline-flex items-center gap-2">
-                <span>+7 424 424 42 42</span>
+                <span>+7(992)053-98-91</span>
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
               </span>
             </a>
@@ -1926,18 +1927,22 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
         </div>
 
         {/* Desktop layout */}
-        <div className="hidden md:grid items-start gap-2 md:gap-3 md:grid-cols-[auto,1fr,1fr,1fr,1fr,1fr,1fr,auto]">
+        <div className="hidden md:grid items-center gap-2 md:gap-3 md:grid-cols-[auto,1fr,auto]">
           <div className="pt-2 md:mr-24 -mt-2 md:-mt-3">
             <Image src="/images/footer_logo.svg" alt="PRIX Club" width={72} height={72} className="h-18 w-auto opacity-80" />
           </div>
-          <FooterColumn title="Навигация" rows={[msg.nav.main, msg.nav.about, msg.nav.team]} />
-          <FooterColumn title="Разделы" rows={[msg.nav.works, msg.nav.services, msg.nav.contacts]} />
-          {/*<FooterColumn title="Инфо" rows={[msg.nav.news, msg.nav.reviews]} />*/}
-          <div className="md:col-span-3" />
-          <div className="text-right">
-            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+74244242442">
+          <nav className={`flex items-center justify-between text-[16px] font-bold text-white/80 ${geometria.className}`}>
+            <a href={`/${locale}`} className="hover:text-white">{msg.nav.main}</a>
+            <a href={`/${locale}/about`} className="hover:text-white">{msg.nav.about}</a>
+            {/*<a href={`/${locale}/team`} className="hover:text-white">{msg.nav.team}</a>*/}
+            <a href={`/${locale}/cases`} className="hover:text-white">{msg.nav.works}</a>
+            <a href={`/${locale}/services`} className="hover:text-white">{msg.nav.services}</a>
+            <a href={`/${locale}/contacts`} className="hover:text-white">{msg.nav.contacts}</a>
+          </nav>
+          <div className="text-right md:ml-24">
+            <a className="block text-[16px] font-semibold tracking-wide" href="tel:+7(992)053-98-91">
               <span className="inline-flex items-center gap-2">
-                <span>+7 424 424 42 42</span>
+                <span>+7(992)053-98-91</span>
                 <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-white/30 text-white/80">☎</span>
               </span>
             </a>
@@ -1951,18 +1956,5 @@ function Footer({ msg, locale }: { msg: any; locale: 'ru' | 'en' }) {
         <div className="pt-3 text-center text-white/60 text-[12px]">{msg.footer.copy}</div>
       </div>
     </footer>
-  )
-}
-
-function FooterColumn({ title, rows }: { title: string; rows: string[] }) {
-  return (
-    <div>
-      <div className="mb-2 text-[16px] font-semibold text-white">{title}</div>
-      <div className="space-y-1 text-[13px] text-white/60">
-        {rows.map((r, i) => (
-          <div key={i}>{r}</div>
-        ))}
-      </div>
-    </div>
   )
 }
