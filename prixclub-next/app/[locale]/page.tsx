@@ -82,9 +82,9 @@ function Stats({ locale }: { locale: 'ru' | 'en' }) {
     : ['IT', 'ФИНАНСЫ', 'КОНСАЛТИНГ', 'СТРОИТЕЛЬСТВО', 'МЕРОПРИЯТИЯ']
   const majorClientLogos = [
     { src: '/images/Сбермаркетинг.svg', alt: 'СберМаркетинг' },
-    { src: '/images/Main Division.png', alt: 'СберМаркетинг' },
-    { src: '/images/АЭИ.png', alt: 'СберМаркетинг' },
-    { src: '/images/Хабаровский край.png', alt: 'СберМаркетинг' },
+    { src: '/images/Main Division.png', alt: 'Main Division' },
+    { src: '/images/АЭИ.png', alt: 'АЭИ' },
+    { src: '/images/habarovskiy.png', alt: 'Хабаровский' },
   ]
   const majorClientLogoPadding = 'clamp(32px, 5.8vw, 100px)'
   const majorClientLogoScaleTop = '0.5'
@@ -295,7 +295,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
       },
     },
     {
-      src: '/images/Дом Лазовского.png',
+      src: '/images/Lazovskiy.png',
       desc: {
         ru: 'Девелоперский проект в сфере загородной недвижимости с акцентом на архитектуру, комфорт и продуманные планировочные решения.',
         en: 'A residential development project in the suburban real estate segment, focused on architecture, comfort, and well-designed layouts.',
@@ -372,7 +372,7 @@ function ClientsSection({ locale }: { locale: 'ru' | 'en' }) {
       },
     },
     {
-      src: '/images/Хабаровский край.png',
+      src: '/images/habarovskiy.png',
       desc: {
         ru: 'Один из ключевых регионов Дальнего Востока с высоким промышленным, логистическим и инвестиционным потенциалом.',
         en: 'A key region of the Russian Far East with strong industrial, logistics, and investment potential.',
