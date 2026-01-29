@@ -16,7 +16,6 @@
     "lucide-react": "0.468.0",
     "next": "14.2.7",
     "next-intl": "3.14.0",
-    "nodemailer": "6.9.15",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "tailwind-merge": "2.5.2"

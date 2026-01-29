@@ -1574,6 +1574,7 @@ function ConsultationModal({
   const [company, setCompany] = useState('')
   const [question, setQuestion] = useState('')
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const formspreeEndpoint = process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT
 
   useEffect(() => {
     if (!open) return
@@ -1604,17 +1605,24 @@ function ConsultationModal({
     if (status === 'sending') return
     setStatus('sending')
     try {
-      const response = await fetch('/api/consultation', {
+      if (!formspreeEndpoint) {
+        throw new Error('Formspree endpoint is not configured')
+      }
+      const formData = new FormData()
+      formData.append(
+        'subject',
+        locale === 'en' ? 'Sent from PRIX Club website' : 'Отправлено с сайта PRIX Club'
+      )
+      formData.append('name', name)
+      formData.append('email', email)
+      formData.append('phone', phone)
+      formData.append('company', company)
+      formData.append('question', question)
+      formData.append('locale', locale)
+      const response = await fetch(formspreeEndpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          email,
-          phone,
-          company,
-          question,
-          locale,
-        }),
+        headers: { Accept: 'application/json' },
+        body: formData,
       })
       if (!response.ok) {
         const data = await response.json().catch(() => ({}))
