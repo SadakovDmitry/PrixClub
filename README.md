@@ -1,7 +1,30 @@
 # PrixClub
-# Дизайн: https://www.figma.com/design/K4IK9o4TbU0gci2vFFSbuG/PRIX-club?node-id=118-946&t=xVf8hQityn1UJih4-4
 
-## TODO
-- [ [прод] Нужен деплой на Vercel? Подготовлю next-sitemap, локализованную metadata и CI.]
-- [ ]
+Рабочее приложение находится в `prixclub-next`.
 
+## Запуск локально
+
+```bash
+cd prixclub-next
+npm install
+cp .env.local.example .env.local
+npm run dev
+```
+
+После запуска сайт будет доступен на `http://localhost:3000`.
+
+## Production
+
+```bash
+cd prixclub-next
+npm run build
+npm run start
+```
+
+## Переменные окружения
+
+В `.env.local` при необходимости укажите:
+
+```env
+NEXT_PUBLIC_FORMSPREE_ENDPOINT=...
+```
